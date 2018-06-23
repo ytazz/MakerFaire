@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JoystickApp
+namespace CraneMonitor
 {
     public delegate void MessageEventHandler(object sender, string message);
 

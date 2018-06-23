@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-namespace JoystickApp
+namespace CraneMonitor
 {
     [Serializable]
     public class PlayRecord : IComparable
@@ -191,8 +191,8 @@ namespace JoystickApp
 
         // ------------------------------------------------------------
 
-        SocketClient DisplayClient = new JoystickApp.SocketClient();
-        //UdpClient DisplayClient = new JoystickApp.UdpClient();
+        SocketClient DisplayClient = new CraneMonitor.SocketClient();
+        //UdpClient DisplayClient = new CraneMonitor.UdpClient();
 
         public bool DisplayStart(string ip, int port)
         {
@@ -228,9 +228,9 @@ namespace JoystickApp
 
         // ------------------------------------------------------------
 
-        SerialClient Contact1Client = new JoystickApp.SerialClient();
-        SerialClient Contact2Client = new JoystickApp.SerialClient();
-        SerialClient Contact3Client = new JoystickApp.SerialClient();
+        SerialClient Contact1Client = new CraneMonitor.SerialClient();
+        SerialClient Contact2Client = new CraneMonitor.SerialClient();
+        SerialClient Contact3Client = new CraneMonitor.SerialClient();
 
         private bool ContactStart(SerialClient contact, string port, MessageEventHandler ReceiveHandler, string[] InitializeCommand)
         {

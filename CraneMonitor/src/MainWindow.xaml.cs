@@ -23,7 +23,7 @@ using MeterDisplay;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace JoystickApp
+namespace CraneMonitor
 {
     public class Parameters
     {
@@ -776,7 +776,7 @@ namespace JoystickApp
 
         // ------------------------------------------------------------
 
-        SocketClient MotorClient = new JoystickApp.SocketClient();
+        SocketClient MotorClient = new CraneMonitor.SocketClient();
 
         private bool MotorStart()
         {
@@ -796,7 +796,7 @@ namespace JoystickApp
 
         // ------------------------------------------------------------
 
-        SocketClient ImuClient = new JoystickApp.SocketClient();
+        SocketClient ImuClient = new CraneMonitor.SocketClient();
 
         private bool ImuStart()
         {
@@ -816,7 +816,7 @@ namespace JoystickApp
 
         // ------------------------------------------------------------
 
-        SerialClient ControllerClient = new JoystickApp.SerialClient();
+        SerialClient ControllerClient = new CraneMonitor.SerialClient();
 
         private bool ControllerStart()
         {
@@ -902,7 +902,7 @@ namespace JoystickApp
             String appPath = String.Format(
                 "{0}\\{1}",
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "JoystickApp\\settings.xml");
+                "CraneMonitor\\settings.xml");
 
             if (File.Exists(appPath))
             {
@@ -922,7 +922,7 @@ namespace JoystickApp
                 String folderPath = String.Format(
                     "{0}\\{1}",
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                    "JoystickApp");
+                    "CraneMonitor");
                 System.IO.Directory.CreateDirectory(folderPath);
                 param.SetInitValue();
             }
@@ -934,7 +934,7 @@ namespace JoystickApp
             String appPath = String.Format(
                 "{0}\\{1}",
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "JoystickApp\\settings.xml");
+                "CraneMonitor\\settings.xml");
             XmlSerializer serializer = new XmlSerializer(typeof(Parameters));
 
             using (FileStream stream = new FileStream(appPath, FileMode.Create))
