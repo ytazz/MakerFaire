@@ -74,16 +74,20 @@
     <Compile Include="BoeingMeter.xaml.cs">
       <DependentUpon>BoeingMeter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CourseControl.cs" />
+    <Compile Include="CameraIp.cs" />
+    <Compile Include="CameraUsb.cs" />
+    <Compile Include="Controller.cs" />
     <Compile Include="EnableButton.cs" />
     <Compile Include="Graph2D1D.xaml.cs">
       <DependentUpon>Graph2D1D.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ImuDataProc.cs" />
+    <Compile Include="Joystick.cs" />
     <Compile Include="MeterControl.cs" />
     <Compile Include="MeterGrid.xaml.cs">
       <DependentUpon>MeterGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MotorDriver.cs" />
+    <Compile Include="Param.cs" />
     <Compile Include="RegisterUser.xaml.cs">
       <DependentUpon>RegisterUser.xaml</DependentUpon>
     </Compile>

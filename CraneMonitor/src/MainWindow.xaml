@@ -35,18 +35,17 @@
         <StackPanel Grid.Row="2" Grid.Column="0" Margin="10,0,10,0">
             <TextBlock Text="Functions" HorizontalAlignment="Stretch" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center"/>
             <lib:EnableButton x:Name="BtnLight" Content="Light"          HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
-            <lib:EnableButton x:Name="BtnRegister" Content="Register"    HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow" OnEnable="GameRegister" OnDisable="DummyEnableHandler"/>
+            <lib:EnableButton x:Name="BtnRegister" Content="Register"    HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
             <lib:EnableButton x:Name="BtnAutoStart" Content="Auto Start" HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" Enabled="False"/>
-            <lib:EnableButton x:Name="BtnStart" Content="Start / Stop"   HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="LightGreen" OnEnable="GameStart" OnDisable="GameStop"/>
-            <lib:EnableButton x:Name="BtnPause" Content="Pause"          HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Orange" OnEnable="GameStartPause" OnDisable="GameStopPause"/>
+            <lib:EnableButton x:Name="BtnStart" Content="Start / Stop"   HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="LightGreen" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
+            <lib:EnableButton x:Name="BtnPause" Content="Pause"          HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Orange" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
             <lib:EnableButton x:Name="BtnHalt" Content="HALT"            HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Red" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
             <Button x:Name="BtnGetLog" Content="Log"                     HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Width="75"  FontWeight="Bold" HorizontalContentAlignment="Left" BorderThickness="0" Click="BtnGetLog_Click"/>
-            <Button x:Name="BtnGetJoystick" Content="Joystick Log"       HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" HorizontalContentAlignment="Left" BorderThickness="0" Click="BtnGetJoystick_Click"/>
             <Button x:Name="BtnShutdown" Content="Shutdown"              HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" HorizontalContentAlignment="Left" BorderThickness="0" Background="Red" Click="BtnShutdown_Click"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="1" Margin="10,0,10,0">
-            <TextBlock Text="Connections" HorizontalAlignment="Stretch" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center"/>
+            <TextBlock Text="Connections" HorizontalAlignment="Stretch" Margin="0,10,126,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center"/>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -66,27 +65,12 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Enable" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <lib:EnableButton Grid.Row="1" Grid.Column="0" x:Name="BtnMotor" Content="Motor" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="MotorStart" OnDisable="MotorStop"/>
-                <lib:EnableButton Grid.Row="2" Grid.Column="0" x:Name="BtnCamera" Content="Camera" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="CameraStart" OnDisable="CameraStop"/>
-                <lib:EnableButton Grid.Row="3" Grid.Column="0" x:Name="BtnJoystick" Content="Joystick" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75" Background="Yellow" FontWeight="Bold" OnEnable="JoystickStart"/>
+                <lib:EnableButton Grid.Row="2" Grid.Column="0" x:Name="BtnCamera" Content="Camera" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
                 <lib:EnableButton Grid.Row="4" Grid.Column="0" x:Name="BtnController" Content="Controller" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="ControllerStart" OnDisable="ControllerStop"/>
-                <lib:EnableButton Grid.Row="5" Grid.Column="0" x:Name="BtnDisplay" Content="Display" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="DisplayStart" OnDisable="DisplayStop"/>
-                <lib:EnableButton Grid.Row="6" Grid.Column="0" x:Name="BtnContact1" Content="Contact 1" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75" Background="Yellow" FontWeight="Bold" OnEnable="Contact1Start" OnDisable="Contact1Stop" />
-                <lib:EnableButton Grid.Row="7" Grid.Column="0" x:Name="BtnContact2" Content="Contact 2" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75" Background="Yellow" FontWeight="Bold" OnEnable="Contact2Start" OnDisable="Contact2Stop" />
-                <lib:EnableButton Grid.Row="8" Grid.Column="0" x:Name="BtnContact3" Content="Contact 3" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75" Background="Yellow" FontWeight="Bold" OnEnable="Contact3Start" OnDisable="Contact3Stop" />
-
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="IPs / Ports" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <TextBox Grid.Row="1" Grid.Column="1" x:Name="MotorIp" HorizontalAlignment="Stretch" Margin="5,0,0,0" VerticalAlignment="Top" BorderThickness="0" Foreground="Black" Background="Gray" TextChanged="Ip_TextChanged" />
-                <TextBox Grid.Row="2" Grid.Column="1" x:Name="CameraIp" HorizontalAlignment="Stretch" Margin="5,0,0,0" VerticalAlignment="Top" BorderThickness="0" Foreground="Black" Background="Gray" TextChanged="Ip_TextChanged"/>
-                <TextBox Grid.Row="4" Grid.Column="1" x:Name="ControllerIp" HorizontalAlignment="Stretch" Margin="5,0,0,0" VerticalAlignment="Top" BorderThickness="0" Foreground="Black" Background="Gray" TextChanged="Ip_TextChanged"/>
-                <TextBox Grid.Row="5" Grid.Column="1" x:Name="DisplayIp" HorizontalAlignment="Stretch" Margin="5,0,0,0" VerticalAlignment="Top" BorderThickness="0" Foreground="Black" Background="Gray" TextChanged="Ip_TextChanged"/>
-                <TextBox Grid.Row="6" Grid.Column="1" x:Name="Contact1" HorizontalAlignment="Stretch" Margin="5,0,0,0" VerticalAlignment="Top" BorderThickness="0" Foreground="Black" Background="Gray" TextChanged="Ip_TextChanged" />
-                <TextBox Grid.Row="7" Grid.Column="1" x:Name="Contact2" HorizontalAlignment="Stretch" Margin="5,0,0,0" VerticalAlignment="Top" BorderThickness="0" Foreground="Black" Background="Gray" TextChanged="Ip_TextChanged" />
-                <TextBox Grid.Row="8" Grid.Column="1" x:Name="Contact3" HorizontalAlignment="Stretch" Margin="5,0,0,0" VerticalAlignment="Top" BorderThickness="0" Foreground="Black" Background="Gray" TextChanged="Ip_TextChanged" />
             </Grid>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="2" Margin="10,0,10,0">
-            <TextBlock Text="Motor Parameters" HorizontalAlignment="Stretch" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center"/>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -102,36 +86,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="10" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="X" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="Y" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="Z" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White"/>
-
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="Gain" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <TextBox x:Name="MotorGainX" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" Foreground="Black" Background="Gray" TextChanged="Gain_TextChanged" />
-                <TextBox x:Name="MotorGainY" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" Foreground="Black" Background="Gray" TextChanged="Gain_TextChanged" />
-                <TextBox x:Name="MotorGainZ" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" Foreground="Black" Background="Gray" TextChanged="Gain_TextChanged" />
-
-                <TextBlock Grid.Row="0" Grid.Column="2" Text="Dir" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <CheckBox Grid.Row="1" Grid.Column="2" x:Name="directionX" Content="" VerticalAlignment="Center" Margin="5,0,0,0" Foreground="White" Checked="direction_Checked" Unchecked="direction_Checked"/>
-                <CheckBox Grid.Row="2" Grid.Column="2" x:Name="directionY" Content="" VerticalAlignment="Center" Margin="5,0,0,0" Foreground="White" Checked="direction_Checked" Unchecked="direction_Checked"/>
-                <CheckBox Grid.Row="3" Grid.Column="2" x:Name="directionZ" Content="" VerticalAlignment="Center" Margin="5,0,0,0" Foreground="White" Checked="direction_Checked" Unchecked="direction_Checked"/>
-
-                <TextBlock Grid.Row="0" Grid.Column="3" Text="Lower Pos. Limit" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <TextBox Grid.Row="1" Grid.Column="3" x:Name="LowerX" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" Foreground="Black" Background="Gray" TextChanged="Limits_TextChanged" />
-                <TextBox Grid.Row="2" Grid.Column="3" x:Name="LowerY" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" Foreground="Black" Background="Gray" TextChanged="Limits_TextChanged" />
-                <TextBox Grid.Row="3" Grid.Column="3" x:Name="LowerZ" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" Foreground="Black" Background="Gray" TextChanged="Limits_TextChanged" />
-
-                <TextBlock Grid.Row="0" Grid.Column="4" Text="Upper Pos. Limit" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <TextBox Grid.Row="1" Grid.Column="4" x:Name="UpperX" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" Foreground="Black" Background="Gray" TextChanged="Limits_TextChanged" />
-                <TextBox Grid.Row="2" Grid.Column="4" x:Name="UpperY" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" Foreground="Black" Background="Gray" TextChanged="Limits_TextChanged" />
-                <TextBox Grid.Row="3" Grid.Column="4" x:Name="UpperZ" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" Foreground="Black" Background="Gray" TextChanged="Limits_TextChanged" />
             </Grid>
-
-            <TextBlock Text="Miscellaneous" HorizontalAlignment="Stretch" Margin="0,20,0,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center"/>
-            <TextBlock Text="Update Interval [ms]" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
-            <TextBox x:Name="UpdateInterval" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" BorderThickness="0" Foreground="Black" Background="Gray" Width="100" TextChanged="Interval_TextChanged" />
-            <TextBlock Text="Light Blink Period [ms]" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
-            <TextBox x:Name="LightInterval" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" BorderThickness="0" Foreground="Black" Background="Gray" Width="100" TextChanged="Interval_TextChanged" />
             <!--
             <TextBlock Text="Joystick Slider Gain" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
             <TextBox x:Name="SliderGain" HorizontalAlignment="Stretch" Margin="10,0,0,0" VerticalAlignment="Top" BorderThickness="0" Foreground="Black" Background="Gray" TextChanged="Gain_TextChanged" />

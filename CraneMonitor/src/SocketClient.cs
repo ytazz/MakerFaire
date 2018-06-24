@@ -8,7 +8,7 @@ namespace CraneMonitor
 {
     public delegate void MessageEventHandler(object sender, string message);
 
-    class SocketClient
+    public class SocketClient
     {
         public MessageEventHandler LogHandler;
         public MessageEventHandler ErrorLogHandler;
@@ -140,7 +140,7 @@ namespace CraneMonitor
         }
     }
 
-    class SerialClient
+    public class SerialClient
     {
         public MessageEventHandler LogHandler;
         public MessageEventHandler ErrorLogHandler;
@@ -315,7 +315,7 @@ namespace CraneMonitor
         }
     }
 
-    class UdpClient
+    public class UdpClient
     {
         public MessageEventHandler LogHandler;
         public MessageEventHandler ErrorLogHandler;

@@ -177,4 +177,42 @@ namespace MeterDisplay
         public virtual float GetMin() { return 0; }
         public abstract float GetValue();
     }
+
+    public delegate float GetRealValue();
+
+    public class MeasurePercent : MeasureObj
+    {
+        GetRealValue method;
+        public MeasurePercent(GetRealValue x) { method = x; }
+        public override void InitializeMeterFormat(BoeingMeter meter)
+        {
+            meter.ValueFormat = "{0:0}%";
+        }
+        public override float GetMax()
+        {
+            return 100;
+        }
+        public override float GetValue()
+        {
+            return 100.0f * Math.Abs(method());
+        }
+    };
+    public class MeasurePos : MeasureObj
+    {
+        GetRealValue method;
+        public MeasurePos(GetRealValue x) { method = x; }
+        public override void InitializeMeterFormat(BoeingMeter meter)
+        {
+            meter.ValueFormat = "{0:0}";
+        }
+        public override float GetMax()
+        {
+            return 100;
+        }
+        public override float GetValue()
+        {
+            return 100.0f * Math.Abs(method());
+        }
+    };
+
 }
