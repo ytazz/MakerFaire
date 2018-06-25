@@ -64,7 +64,7 @@
                     <ColumnDefinition Width="10" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Enable" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <lib:EnableButton Grid.Row="1" Grid.Column="0" x:Name="BtnMotor" Content="Motor" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="MotorStart" OnDisable="MotorStop"/>
+                <lib:EnableButton Grid.Row="1" Grid.Column="0" x:Name="BtnMotor" Content="Motor" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="MotorEnable" OnDisable="MotorDisable"/>
                 <lib:EnableButton Grid.Row="2" Grid.Column="0" x:Name="BtnCamera" Content="Camera" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
                 <lib:EnableButton Grid.Row="4" Grid.Column="0" x:Name="BtnController" Content="Controller" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="ControllerStart" OnDisable="ControllerStop"/>
             </Grid>

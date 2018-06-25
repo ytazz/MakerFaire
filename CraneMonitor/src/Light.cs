@@ -8,37 +8,15 @@ namespace CraneMonitor
 {
     public class Light
     {
-        public float delta = 0;
-        public int divRatio = -1;
-        public int timeIndex = 0;
+        public double time;
+        public double amplitude;
+        public double frequency;
+        public int output;
 
-        private bool SetInterval()
+        public void Update(double dt)
         {
-            //divRatioLight = (int)Math.Round((double)param.LightUpdateInterval / 2 / param.UpdateInterval);
-            if (divRatio == 0)
-            {
-                delta = 0;
-                divRatio = -1;
-                return false;
-            }
-            else
-            {
-                delta = 2.0f / divRatio;
-                timeIndex = 0;
-                return true;
-            }
-        }
-
-        public void Update()
-        {
-            if (timeIndex == divRatio)
-            {
-                delta = -delta;
-                timeIndex = 0;
-            }
-            timeIndex++;
-
-            //outW += delta;
+            time += dt;
+            output = (int)(amplitude * Math.Sin((frequency/(2.0*Math.PI)) * dt));
         }
     }
 }

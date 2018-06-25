@@ -93,10 +93,12 @@ uint32_t cnt_ms;          //< ms after program start
 uint32_t toggle_time[3];  //< last rise time of encoder signal
 bool     wait_rise[3];
 bool     running;         //< drive motor or not
+int      mode    [3];     //< 0: command pwm_ref  1: command pos_ref
 int16_t  pos     [3];     //< encoder count
 int16_t  pos_ref [3];     //< encoder count reference signal
-bool     dir     [3];     //< rotation direction
-uint8_t  pwm     [3];     //< pwm duty rate
+bool     dir     [3];
+uint8_t  pwm     [3];     //< pwm duty rate. 0, 255
+int16_t  pwm_ref [3];
 bool     polarity[3];     //< motor polarity
 
 const uint8_t gain[] = {0, 150, 255};   //< pwm value v.s. position error
@@ -134,7 +136,12 @@ int main(void){
 	    		running = false;
 	    	}
 	    	if(strcmp(cmd, "set") == 0){
-	    		sscanf(strRecv, "%s %d %d %d", cmd, &pos_ref[0], &pos_ref[1], &pos_ref[2]);
+	    		sscanf(strRecv, "%s %d %d %d %d %d %d %d %d %d",
+	    			cmd,
+	    			&mode[0], &mode[1], &mode[2],
+	    		 	&pos_ref[0], &pos_ref[1], &pos_ref[2],
+	    		 	&pwm_ref[0], &pwm_ref[1], &pwm_ref[2]
+	    		 	);
 	    	}
 	    }
 	    
@@ -153,7 +160,17 @@ int main(void){
 		
 		// calculate motor command
 		for(int i = 0; i < 3; i++){
-			if(running){
+			if(mode[i] == 0){
+				if(pwm_ref[i] > 0){
+					pwm[i] = pwm_ref[i];
+					dir[i] = false;
+				}
+				else{
+					pwm[i] = (uint8_t)(-pwm_ref[i]);
+					dir[i] = true;
+				}
+			}
+			if(mode[i] == 1){
 				int16_t e = pos_ref[i] - pos[i];
 				int16_t eabs;
 				if(e > 0){
@@ -165,9 +182,6 @@ int main(void){
 				 	eabs   = -e;
 				}
 				pwm[i] = (eabs >= nlevel ? gain[nlevel-1] : gain[eabs]);
-			}
-			else{
-				pwm[i] = 0;
 			}
 		}
 		

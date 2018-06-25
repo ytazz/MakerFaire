@@ -13,13 +13,14 @@ namespace CraneMonitor
     public class MotorDriver
     {
         public SerialClient com;
-        public SocketClient ip;
+        //public SocketClient ip;
 
-        public string ipAddress;
-        public int port;
+        //public string ipAddress;
+        //public int port;
         public string comPort;
+        public double velMax;
 
-        public int[] vel_ref;    //< velocity reference
+        public double[] vel_ref;    //< velocity reference
         public int[] pos_ref;    //< position reference
         public int[] pos;  //< current position (encoder count)
         public int[] pwm;  //< pwm duty ratio [0,255]
@@ -29,7 +30,7 @@ namespace CraneMonitor
         {
             com = new SerialClient();
 
-            vel_ref = new int[3] { 0, 0, 0 };
+            vel_ref = new double[3] { 0.0, 0.0, 0.0 };
             pos_ref = new int[3] { 0, 0, 0 };
             pos     = new int[3] { 0, 0, 0 };
             pwm     = new int[3] { 0, 0, 0 };
@@ -94,6 +95,7 @@ namespace CraneMonitor
             System.Diagnostics.Debug.WriteLine(
                 String.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}",
                 pos[0], pos[1], pos[2], pwm[0], pwm[1], pwm[2], dir[0], dir[1], dir[2]));
+            
             //if (message.Length < 3) return;
             //string prefix = message.Substring(0, 2);
             //if (prefix == "A,")
@@ -115,6 +117,7 @@ namespace CraneMonitor
 
             string cmd = String.Format("set {0} {1} {2}", pos_ref[0], pos_ref[1], pos_ref[2]);
             com.Send(cmd);
+
             //string commands = "";
             //if (Math.Abs(outX - prevX) > 1e-10)
             //{

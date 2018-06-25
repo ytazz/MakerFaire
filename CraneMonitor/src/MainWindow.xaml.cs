@@ -33,6 +33,7 @@ namespace CraneMonitor
         public Controller    controller;
         public CameraUsb     camera;
         public MotorDriver   motor;
+        public Light         light;
         //public CourseControl course;
         
         public MainWindow()
@@ -43,6 +44,7 @@ namespace CraneMonitor
             motor      = new MotorDriver();
             joystick   = new Joystick();
             controller = new Controller();
+            light      = new Light();
 
             //course     = new CourseControl();
             //course.SetLog(log);
@@ -67,22 +69,21 @@ namespace CraneMonitor
             // 左列：出力プラス、右列：出力マイナス
             meters.UpdateDisplayLayout(
                 new MeasureObj[] {
-                    new MeasurePercent(new GetRealValue(delegate() {return (motor.vel_ref[0] < 0) ? 0 : (float)Math.Min(motor.vel_ref[0] / motor.velMax,  1.0); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (motor.vel_ref[0] > 0) ? 0 : (float)Math.Max(motor.vel_ref[0] / motor.velMax, -1.0); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (motor.vel_ref[1] < 0) ? 0 : (float)Math.Min(motor.vel_ref[1] / motor.velMax,  1.0); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (motor.vel_ref[1] > 0) ? 0 : (float)Math.Max(motor.vel_ref[1] / motor.velMax, -1.0); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (motor.vel_ref[2] < 0) ? 0 : (float)Math.Min(motor.vel_ref[2] / motor.velMax,  1.0); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (motor.vel_ref[2] > 0) ? 0 : (float)Math.Max(motor.vel_ref[2] / motor.velMax, -1.0); })) }
-                );
-            string[] titles = new string[] { "+ X", "- X", "+ Y", "- Y", "+ Z", "- Z" };
-            //new MeasurePercent(new GetRealValue(delegate () { return (MotorOutW > 0) ? (float)MotorOutW : 0; })),
-
-            for (int i = 0; i < 6; i++)
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[0] / motor.velMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[1] / motor.velMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[2] / motor.velMax); }))
+                });
+            
+            for (int i = 0; i < meters.meter_controls.Length; i++)
             {
-                meters.meter_controls[i].ThresholdScaleLen = 0.0f;  // スケールは表示しない
-                SetMeterLimits(i, false, 0, true, 95f);
+                if(meters.meter_controls[i] != null)
+                {
+                    meters.meter_controls[i].ThresholdScaleLen = 0.0f;  // スケールは表示しない
+                    SetMeterLimits(i, false, 0, true, 95f);
+                }
             }
 
+            string[] titles = new string[] { "+ X", "- X", "+ Y", "- Y", "+ Z", "- Z" };
             for (int i = 0; i < 6; i++)
                 meters.labels[i].Content = titles[i];
 
@@ -168,8 +169,8 @@ namespace CraneMonitor
 
         private bool DummyEnableHandler(){ return true; }
 
-        private bool MotorStart() { return motor.Start(); }
-        private bool MotorStop() { return motor.Stop(); }
+        private bool MotorEnable () { return motor.Enable (); }
+        private bool MotorDisable() { return motor.Disable(); }
 
         //private bool CameraStart() { return camera.Start(); }
         //private bool CameraStop() { return camera.Stop(); }
