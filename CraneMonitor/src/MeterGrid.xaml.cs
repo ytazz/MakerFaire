@@ -20,16 +20,23 @@ namespace MeterDisplay
     /// </summary>
     public partial class MeterGrid : UserControl
     {
-        public const int MAX_METER_NUM = 8;
-        private int num_rows = 5;
+        //public const int MAX_METER_NUM = 16;
+        //public int num_rows = 5;
         public BoeingMeter[] meters = new BoeingMeter[MAX_METER_NUM];
         public MeterControl[] meter_controls = new MeterControl[MAX_METER_NUM];
         public Label[] labels = new Label[MAX_METER_NUM];
-        private RowDefinition[] rows = new RowDefinition[MAX_METER_NUM];
+        public RowDefinition[] rows = new RowDefinition[MAX_METER_NUM];
 
         public MeterGrid()
         {
             InitializeComponent();
+
+            int nrow = MainPanel.RowDefinitions.Count();
+            int ncol = MainPanel.ColumnDefinitions.Count();
+            meters         = new BoeingMeter[nrow*ncol];
+            meter_controls = new MeterControl[nrow*ncol];
+            labels         = new Label[nrow*ncol];
+            rows           = new RowDefinition[nrow];
 
             meters[0] = Meter0;
             meters[1] = Meter1;
@@ -97,7 +104,7 @@ namespace MeterDisplay
                 };
             }
 
-            SetNumRows(n / 2);
+            SetNumRows(n);
         }
 
         public int timer_count_max = 1;

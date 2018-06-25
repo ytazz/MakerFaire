@@ -89,16 +89,15 @@ USB_ClassInfo_CDC_Device_t VirtualSerial_CDC_Interface = {
 
 static FILE USBSerialStream;
 
-uint32_t cnt_ms;        //< ms after program start
-uint32_t cnt1;
+uint32_t cnt_ms;          //< ms after program start
 uint32_t toggle_time[3];  //< last rise time of encoder signal
 bool     wait_rise[3];
-uint32_t print_time;
-int16_t  pos     [3];    //< encoder count
-int16_t  pos_ref [3];    //< encoder count reference signal
-bool     dir     [3];    //< rotation direction
-uint8_t  pwm     [3];    //< pwm duty rate
-bool     polarity[3];    //< motor polarity
+bool     running;         //< drive motor or not
+int16_t  pos     [3];     //< encoder count
+int16_t  pos_ref [3];     //< encoder count reference signal
+bool     dir     [3];     //< rotation direction
+uint8_t  pwm     [3];     //< pwm duty rate
+bool     polarity[3];     //< motor polarity
 
 const uint8_t gain[] = {0, 150, 255};   //< pwm value v.s. position error
 const int     nlevel = 2;              //< number of gain levels
@@ -110,48 +109,68 @@ int main(void){
 
 	GlobalInterruptEnable();
 
-	char str[256];
+	char strRecv[256];
+	char strSend[256];
+	char cmd[256];
 	for(;;){
-		char c = CDC_Device_ReceiveByte(&VirtualSerial_CDC_Interface);
-		if(isalpha(c)){
-			fputc(c   , &USBSerialStream);
-			fputc('\n', &USBSerialStream);
-		}
-		
+		// receive command string
+	    uint16_t num = CDC_Device_BytesReceived(&VirtualSerial_CDC_Interface);
+	    if(num > 0){
+	    	for(int i = 0; i < num; i++)
+	    		strRecv[i] = CDC_Device_ReceiveByte(&VirtualSerial_CDC_Interface);
+	    	strRecv[num] = '\0';
+	    	
+	    	// echo
+	    	fputs(strRecv, &USBSerialStream);
+	    	
+	    	// start
+	    	// stop
+	    	// set ref0 ref1 ref2
+	    	sscanf(strRecv, "%s", cmd);
+	    	if(strcmp(cmd, "start") == 0){
+	    		running = true;
+	    	}
+	    	if(strcmp(cmd, "stop") == 0){
+	    		running = false;
+	    	}
+	    	if(strcmp(cmd, "set") == 0){
+	    		sscanf(strRecv, "%s %d %d %d", cmd, &pos_ref[0], &pos_ref[1], &pos_ref[2]);
+	    	}
+	    }
+	    
 		if(cnt_ms % 50 == 0){
-			sprintf(str, "%ld %ld: %d %d %d %d\r\n", cnt_ms, cnt1, pos_ref[0], pos[0], pwm[0], (int)dir[0]);
-			fputs(str, &USBSerialStream);
+			sprintf(strSend, "%d %d %d %d %d %d\r\n", pos[0], pos[1], pos[2], pwm[0], pwm[1], pwm[2]);
+			fputs(strSend, &USBSerialStream);
 		}
+		/*
+		// sinusoidal reference (for testing)
 		if(cnt_ms % 10 == 0){
-			//static bool up = true;
- 			//     if( up && ++pos_ref[0] ==  3) up = false;
-			//else if(!up && --pos_ref[0] == -3) up = true ;
 			pos_ref[0] = (int)(10.0f*sinf((float)cnt_ms/1000.0f));
 			pos_ref[1] = (int)(10.0f*sinf((float)cnt_ms/1000.0f));
 			pos_ref[2] = (int)(10.0f*sinf((float)cnt_ms/1000.0f));
 		}
+		*/
 		
 		// calculate motor command
 		for(int i = 0; i < 3; i++){
-			int16_t e = pos_ref[i] - pos[i];
-			int16_t eabs;
-			if(e > 0){
-			    dir[i] = !polarity[i];
-			    eabs   = e;
+			if(running){
+				int16_t e = pos_ref[i] - pos[i];
+				int16_t eabs;
+				if(e > 0){
+				    dir[i] = !polarity[i];
+				    eabs   = e;
+				}
+				else{
+				 	dir[i] =  polarity[i];
+				 	eabs   = -e;
+				}
+				pwm[i] = (eabs >= nlevel ? gain[nlevel-1] : gain[eabs]);
 			}
 			else{
-			 	dir[i] =  polarity[i];
-			 	eabs   = -e;
+				pwm[i] = 0;
 			}
-			pwm[i] = (eabs >= nlevel ? gain[nlevel-1] : gain[eabs]);
 		}
 		
-		//dir[0] = 1;
-		//dir[1] = 1;
-		//dir[2] = 1;
-		//pwm[0] = 127;
-		//pwm[1] = 127;
-		//pwm[2] = 127;
 		OCR1AL = pwm[0];
 		OCR1BL = pwm[1];
 		OCR1CL = pwm[2];
@@ -204,8 +223,6 @@ void SetupHardware(void){
 	TIMSK1 = 0x01;  //< overflow interrupt enable (just for checking pwm frequency)
 	
 	cnt_ms = 0;
-	cnt1   = 0;
-	print_time = 0;
 	
 	for(int i = 0; i < 3; i++){
 		toggle_time[i] = 0;
@@ -220,6 +237,9 @@ void SetupHardware(void){
 	
 	// if input pin is high, wait for falling edge, other wise wait for rising edge
 	wait_rise[0] = !(PIND & _BV(0));
+	
+	// initially not running
+	running = false;
 
 }
 
@@ -295,7 +315,6 @@ ISR(TIMER0_OVF_vect){
 
 // timer1 overflow interrupt handler
 ISR(TIMER1_OVF_vect){
-	cnt1++;
 	TCNT1L = 5;
 }
 

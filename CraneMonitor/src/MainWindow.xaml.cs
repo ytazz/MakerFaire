@@ -61,13 +61,9 @@ namespace CraneMonitor
             bi.EndInit();
             image.Source = bi;
 
-            // --------------------------------------------------
-#if false
-            //meters.Background = System.Windows.Media.Brushes.Transparent;
-#else
             meters.Background = System.Windows.Media.Brushes.Black.Clone();
             meters.Background.Opacity = 0.5;
-#endif
+
             // 左列：出力プラス、右列：出力マイナス
             meters.UpdateDisplayLayout(
                 new MeasureObj[] {
@@ -258,6 +254,5 @@ namespace CraneMonitor
 
             ctrl.RedrawScales();
         }
-
     }
 }
