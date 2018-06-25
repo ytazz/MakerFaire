@@ -67,12 +67,12 @@ namespace CraneMonitor
             // 左列：出力プラス、右列：出力マイナス
             meters.UpdateDisplayLayout(
                 new MeasureObj[] {
-                    new MeasurePercent(new GetRealValue(delegate() {return (motor.outX < 0) ? 0 : (float)Math.Min(motor.outX / param.MotorGainX,  1.0); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (motor.outX > 0) ? 0 : (float)Math.Max(motor.outX / param.MotorGainX, -1.0); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (motor.outY < 0) ? 0 : (float)Math.Min(motor.outY / param.MotorGainY,  1.0); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (motor.outY > 0) ? 0 : (float)Math.Max(motor.outY / param.MotorGainY, -1.0); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (motor.outZ < 0) ? 0 : (float)Math.Min(motor.outZ / param.MotorGainZ,  1.0); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (motor.outZ > 0) ? 0 : (float)Math.Max(motor.outZ / param.MotorGainZ, -1.0); })) }
+                    new MeasurePercent(new GetRealValue(delegate() {return (motor.vel_ref[0] < 0) ? 0 : (float)Math.Min(motor.vel_ref[0] / motor.velMax,  1.0); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (motor.vel_ref[0] > 0) ? 0 : (float)Math.Max(motor.vel_ref[0] / motor.velMax, -1.0); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (motor.vel_ref[1] < 0) ? 0 : (float)Math.Min(motor.vel_ref[1] / motor.velMax,  1.0); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (motor.vel_ref[1] > 0) ? 0 : (float)Math.Max(motor.vel_ref[1] / motor.velMax, -1.0); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (motor.vel_ref[2] < 0) ? 0 : (float)Math.Min(motor.vel_ref[2] / motor.velMax,  1.0); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (motor.vel_ref[2] > 0) ? 0 : (float)Math.Max(motor.vel_ref[2] / motor.velMax, -1.0); })) }
                 );
             string[] titles = new string[] { "+ X", "- X", "+ Y", "- Y", "+ Z", "- Z" };
             //new MeasurePercent(new GetRealValue(delegate () { return (MotorOutW > 0) ? (float)MotorOutW : 0; })),
@@ -128,32 +128,17 @@ namespace CraneMonitor
 
         void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            controller.Update();
+            double dt = 0.001 * param.UpdateInterval;
+            light.Update(dt);
             
-            if (BtnLight.Enabled)
-            {
-                motor.UpdateLight();
-            }
-
             //course.Update();
 
             joystick.Update();
 
-            // ------------------------------------------------------------
-            // 疑似操作卓の状態の取得
-
-            if (BtnHalt.Enabled)
-            {
-                motor.Halt();
-            }
-            else
-            {
-                motor.outX = param.MotorGainX * joystick.outX;
-                motor.outY = param.MotorGainY * joystick.outY;
-                motor.outZ = param.MotorGainZ * joystick.outZ;
-
-                motor.Update();
-            }
+            motor.vel_ref[0] = param.MotorGainX * joystick.outX;
+            motor.vel_ref[1] = param.MotorGainY * joystick.outY;
+            motor.vel_ref[2] = param.MotorGainZ * joystick.outZ;
+            motor.Update(dt);
             
             meters.Update(false);
         }

@@ -82,6 +82,7 @@
       <DependentUpon>Graph2D1D.xaml</DependentUpon>
     </Compile>
     <Compile Include="Joystick.cs" />
+    <Compile Include="Light.cs" />
     <Compile Include="MeterControl.cs" />
     <Compile Include="MeterGrid.xaml.cs">
       <DependentUpon>MeterGrid.xaml</DependentUpon>

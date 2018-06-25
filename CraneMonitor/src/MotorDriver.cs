@@ -19,178 +19,140 @@ namespace CraneMonitor
         public int port;
         public string comPort;
 
-        public double outX  = 0;
-        public double outY  = 0;
-        public double outZ  = 0;
-        public double outW  = 0;   // Wは点滅ライト
-        public double prevX = 10;
-        public double prevY = 10;
-        public double prevZ = 10;
-        public double prevW = 10;
-        public bool   polarityX = false;
-        public bool   polarityY = false;
-        public bool   polarityZ = false;
-        public bool   polarityW = false;
-        public bool updated = true;
-        public bool stop = false;
+        public int[] vel_ref;    //< velocity reference
+        public int[] pos_ref;    //< position reference
+        public int[] pos;  //< current position (encoder count)
+        public int[] pwm;  //< pwm duty ratio [0,255]
+        public int[] dir;  //< direction 0,1
 
-        public double posX = 0.5; // Todo : replace to zero
-        public double posY = 0.6;
-        public double posZ = 0.7;
+        public MotorDriver()
+        {
+            com = new SerialClient();
 
-        public float lightDelta = 0;
-        public int   divRatioLight = -1;
-        public int   timeIndexLight = 0;
-
-        //public const int DivRatioAdc = -1; // 現在ADCは使ってない
-        //public int TimeIndexAdc = 0;
+            vel_ref = new int[3] { 0, 0, 0 };
+            pos_ref = new int[3] { 0, 0, 0 };
+            pos     = new int[3] { 0, 0, 0 };
+            pwm     = new int[3] { 0, 0, 0 };
+            dir     = new int[3] { 0, 0, 0 };
+        }
 
         public bool Init()
         {
+            com.ReceiveHandler = ReceiveHandler;
+            com.Init(comPort);
+
+            return com.Connected();
             //ip.LogHandler = log.WriteLogWarning;
             //ip.ErrorLogHandler = log.WriteLogError;
-            ip.ReceiveHandler = ReceiveHandler;
-            return true;
+            //ip.ReceiveHandler = ReceiveHandler;
         }
 
         public void Close()
         {
-            if (com != null)
-            {
-                com.Close();
-            }
-            if (ip != null)
-            {
-                ip.Send("SHUTDOWN\n");
-                ip.Close();
-            }
+            com.Close();
+            //ip.Send("SHUTDOWN\n");
+            //ip.Close();
         }
 
-        public bool Start()
+        public bool Enable()
         {
-            if (ip != null)
-            {
-                ip.Init(ipAddress, port);
-                return ip.Connected();
-            }
-            return false;
+            if (!com.Connected())
+                return false;
+
+            com.Send("enable");
+
+            return true;
+            //ip.Init(ipAddress, port);
+            //return ip.Connected();
         }
 
-        public bool Stop()
+        public bool Disable()
         {
-            if (ip != null)
-            {
-                ip.Close();
-                return !ip.Connected();
-            }
-            return false;
+            if (!com.Connected())
+                return false;
+
+            com.Send("disable");
+
+            return true;
+            //ip.Close();
+            //return !ip.Connected();
         }
 
         public void ReceiveHandler(object sender, string message)
         {
-            if (message.Length < 3) return;
-            string prefix = message.Substring(0, 2);
-            if (prefix == "A,")
-            {
-                string[] tokens = message.Split(',');
-                posX = double.Parse(tokens[1]);
-                posY = double.Parse(tokens[2]);
-                posZ = double.Parse(tokens[3]);
-            }
+            string[] tokens = message.Split(' ');
+            pos[0] = int.Parse(tokens[0]);
+            pos[1] = int.Parse(tokens[1]);
+            pos[2] = int.Parse(tokens[2]);
+            pwm[0] = int.Parse(tokens[3]);
+            pwm[1] = int.Parse(tokens[4]);
+            pwm[2] = int.Parse(tokens[5]);
+            dir[0] = int.Parse(tokens[6]);
+            dir[1] = int.Parse(tokens[7]);
+            dir[2] = int.Parse(tokens[8]);
+
+            System.Diagnostics.Debug.WriteLine(
+                String.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}",
+                pos[0], pos[1], pos[2], pwm[0], pwm[1], pwm[2], dir[0], dir[1], dir[2]));
+            //if (message.Length < 3) return;
+            //string prefix = message.Substring(0, 2);
+            //if (prefix == "A,")
+            //{
+            //    string[] tokens = message.Split(',');
+            //    posX = double.Parse(tokens[1]);
+            //    posY = double.Parse(tokens[2]);
+            //    posZ = double.Parse(tokens[3]);
+            //}
         }
 
-        private bool SetLightInterval()
+        public void Update(double dt)
         {
-            //divRatioLight = (int)Math.Round((double)param.LightUpdateInterval / 2 / param.UpdateInterval);
-            if (divRatioLight == 0)
+            // update position reference
+            for(int i = 0; i < 3; i++)
             {
-                lightDelta    = 0;
-                divRatioLight = -1;
-                return false;
-            }
-            else
-            {
-                lightDelta = 2.0f / divRatioLight;
-                timeIndexLight = 0;
-                return true;
-            }
-        }
-
-        public void UpdateLight()
-        {
-            if (timeIndexLight == divRatioLight)
-            {
-                lightDelta = -lightDelta;
-                timeIndexLight = 0;
-            }
-            timeIndexLight++;
-
-            outW += lightDelta;
-            updated = true;
-        }
-
-        public void Halt()
-        {
-            outX = 0;
-            outY = 0;
-            outZ = 0;
-            outW = 0;
-        }
-
-        public void Update()
-        {
-            // clip values
-            if (outX < -1) outX = -1;
-            if (outY < -1) outY = -1;
-            if (outZ < -1) outZ = -1;
-            if (outW <  0) outW =  0;   // Wはライトなので極性の反転なし
-            if (outX >  1) outX =  1;
-            if (outY >  1) outY =  1;
-            if (outZ >  1) outZ =  1;
-            if (outW >  1) outW =  1;
-
-            if (polarityX) outX = -outX;
-            if (polarityY) outY = -outY;
-            if (polarityZ) outZ = -outZ;
-
-            string commands = "";
-            if (Math.Abs(outX - prevX) > 1e-10)
-            {
-                // ジョイスティックを離してセンターポジションに戻ってきたときに初期位置から数パーセントずれていることがある（ずれているとアイドルでモーターが動いてしまうのを防ぐため）
-                if (Math.Abs(outX) < 0.05)
-                    outX = 0;
-
-                commands += String.Format("S1,{0:f3}\n", outX);
-                prevX = outX;
-            }
-            if (Math.Abs(outY - prevY) > 1e-10)
-            {
-                if (Math.Abs(outY) < 0.05)
-                    outY = 0;
-
-                commands += String.Format("S2,{0:f3}\n", outY);
-                prevY = outY;
-            }
-            if (Math.Abs(outZ - prevZ) > 1e-10)
-            {
-                if (Math.Abs(outZ) < 0.05)
-                    outZ = 0;
-
-                commands += String.Format("S3,{0:f3}\n", outZ);
-                prevZ = outZ;
+                pos_ref[i] += (int)(vel_ref[i] * dt);
             }
 
-            // Wはライトなので不感帯を設けない
-            if (Math.Abs(outW - prevW) > 0)
-            {
-                commands += String.Format("S4,{0:f3}\n", outW);
-                prevW = outW;
-            }
-
-            if (ip != null && commands.Length != 0)
-            {
-                ip.Send(commands);
-            }
+            string cmd = String.Format("set {0} {1} {2}", pos_ref[0], pos_ref[1], pos_ref[2]);
+            com.Send(cmd);
+            //string commands = "";
+            //if (Math.Abs(outX - prevX) > 1e-10)
+            //{
+            //    // ジョイスティックを離してセンターポジションに戻ってきたときに初期位置から数パーセントずれていることがある（ずれているとアイドルでモーターが動いてしまうのを防ぐため）
+            //    if (Math.Abs(outX) < 0.05)
+            //        outX = 0;
+            //
+            //    commands += String.Format("S1,{0:f3}\n", outX);
+            //    prevX = outX;
+            //}
+            //if (Math.Abs(outY - prevY) > 1e-10)
+            //{
+            //    if (Math.Abs(outY) < 0.05)
+            //        outY = 0;
+            //
+            //    commands += String.Format("S2,{0:f3}\n", outY);
+            //    prevY = outY;
+            //}
+            //if (Math.Abs(outZ - prevZ) > 1e-10)
+            //{
+            //    if (Math.Abs(outZ) < 0.05)
+            //        outZ = 0;
+            //
+            //    commands += String.Format("S3,{0:f3}\n", outZ);
+            //    prevZ = outZ;
+            //}
+            //
+            //// Wはライトなので不感帯を設けない
+            //if (Math.Abs(outW - prevW) > 0)
+            //{
+            //    commands += String.Format("S4,{0:f3}\n", outW);
+            //    prevW = outW;
+            //}
+            //
+            //if (ip != null && commands.Length != 0)
+            //{
+            //    ip.Send(commands);
+            //}
         }
     }
 }
