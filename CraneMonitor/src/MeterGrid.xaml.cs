@@ -36,23 +36,39 @@ namespace MeterDisplay
             labels         = new Label[nrow*ncol];
             rows           = new RowDefinition[nrow];
 
-            meters[0] = Meter0;
-            meters[1] = Meter1;
-            meters[2] = Meter2;
-            meters[3] = Meter3;
-            meters[4] = Meter4;
-            meters[5] = Meter5;
-            meters[6] = Meter6;
-            meters[7] = Meter7;
+            meters[ 0] = Meter0;
+            meters[ 1] = Meter1;
+            meters[ 2] = Meter2;
+            meters[ 3] = Meter3;
+            meters[ 4] = Meter4;
+            meters[ 5] = Meter5;
+            meters[ 6] = Meter6;
+            meters[ 7] = Meter7;
+            meters[ 8] = Meter0;
+            meters[ 9] = Meter1;
+            meters[10] = Meter2;
+            meters[11] = Meter3;
+            meters[12] = Meter4;
+            meters[13] = Meter5;
+            meters[14] = Meter6;
+            meters[15] = Meter7;
 
-            labels[0] = label0;
-            labels[1] = label1;
-            labels[2] = label2;
-            labels[3] = label3;
-            labels[4] = label4;
-            labels[5] = label5;
-            labels[6] = label6;
-            labels[7] = label7;
+            labels[ 0] = label0;
+            labels[ 1] = label1;
+            labels[ 2] = label2;
+            labels[ 3] = label3;
+            labels[ 4] = label4;
+            labels[ 5] = label5;
+            labels[ 6] = label6;
+            labels[ 7] = label7;
+            labels[ 8] = label8;
+            labels[ 9] = label9;
+            labels[10] = label10;
+            labels[11] = label11;
+            labels[12] = label12;
+            labels[13] = label13;
+            labels[14] = label14;
+            labels[15] = label15;
 
             for (int i = 0; i < MainPanel.RowDefinitions.Count(); i++)
             {

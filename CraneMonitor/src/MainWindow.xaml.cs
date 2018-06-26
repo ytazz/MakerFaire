@@ -70,8 +70,21 @@ namespace CraneMonitor
             meters.UpdateDisplayLayout(
                 new MeasureObj[] {
                     new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[0] / motor.velMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[0] / motor.velMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[0] / motor.velMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[0] / motor.velMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[0] / motor.velMax); })),
                     new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[1] / motor.velMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[2] / motor.velMax); }))
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[2] / motor.velMax); })),
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
                 });
             
             for (int i = 0; i < meters.meter_controls.Length; i++)
@@ -84,7 +97,7 @@ namespace CraneMonitor
             }
 
             string[] titles = new string[] { "+ X", "- X", "+ Y", "- Y", "+ Z", "- Z" };
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < titles.Length; i++)
                 meters.labels[i].Content = titles[i];
 
             param = Param.Load();
