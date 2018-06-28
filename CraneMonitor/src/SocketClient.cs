@@ -36,14 +36,20 @@ namespace CraneMonitor
             }
             catch(Exception e)
             {
-                ErrorLogHandler(this, e.ToString());
+                if(ErrorLogHandler != null)
+                {
+                    ErrorLogHandler(this, e.ToString());
+                }
                 return;
             }
-            LogHandler(this, String.Format("Connected to the server {0}:{1}. The client is {2}:{3}.",
-                ((System.Net.IPEndPoint)tcp.Client.RemoteEndPoint).Address,
-                ((System.Net.IPEndPoint)tcp.Client.RemoteEndPoint).Port,
-                ((System.Net.IPEndPoint)tcp.Client.LocalEndPoint).Address,
-                ((System.Net.IPEndPoint)tcp.Client.LocalEndPoint).Port));
+            if(LogHandler != null)
+            {
+                LogHandler(this, String.Format("Connected to the server {0}:{1}. The client is {2}:{3}.",
+                    ((System.Net.IPEndPoint)tcp.Client.RemoteEndPoint).Address,
+                    ((System.Net.IPEndPoint)tcp.Client.RemoteEndPoint).Port,
+                    ((System.Net.IPEndPoint)tcp.Client.LocalEndPoint).Address,
+                    ((System.Net.IPEndPoint)tcp.Client.LocalEndPoint).Port));
+            }
 
             this.ns = tcp.GetStream();
 
@@ -78,7 +84,10 @@ namespace CraneMonitor
                     }
                     catch (Exception e)
                     {
-                        LogHandler(this, e.ToString());
+                        if(LogHandler != null)
+                        {
+                            LogHandler(this, e.ToString());
+                        }
                         threadActive = false;
                         break;
                     }
@@ -111,7 +120,10 @@ namespace CraneMonitor
             }
             catch(Exception e)
             {
-                ErrorLogHandler(this, e.ToString());
+                if(ErrorLogHandler != null)
+                {
+                    ErrorLogHandler(this, e.ToString());
+                }
                 Close();
             }
         }
@@ -181,10 +193,16 @@ namespace CraneMonitor
             }
             catch (Exception e)
             {
-                ErrorLogHandler(this, e.ToString());
+                if(ErrorLogHandler != null)
+                {
+                    ErrorLogHandler(this, e.ToString());
+                }
                 return;
             }
-            LogHandler(this, String.Format("Connected to the {0}. ", PortName));
+            if(LogHandler != null)
+            {
+                LogHandler(this, String.Format("Connected to the {0}. ", PortName));
+            }
 
             if (ReceiveHandler == null) return;
             this.threadActive = true;
@@ -213,7 +231,10 @@ namespace CraneMonitor
                 }
                 catch (Exception e)
                 {
-                    LogHandler(this, e.ToString());
+                    if(LogHandler != null)
+                    {
+                        LogHandler(this, e.ToString());
+                    }
                     threadActive = false;
                     break;
                 }
@@ -291,7 +312,10 @@ namespace CraneMonitor
             }
             catch (Exception e)
             {
-                ErrorLogHandler(this, e.ToString());
+                if(ErrorLogHandler != null)
+                {
+                    ErrorLogHandler(this, e.ToString());
+                }
                 Close();
             }
         }
@@ -346,10 +370,16 @@ namespace CraneMonitor
             }
             catch (Exception e)
             {
-                ErrorLogHandler(this, e.ToString());
+                if(ErrorLogHandler != null)
+                {
+                    ErrorLogHandler(this, e.ToString());
+                }
                 return;
             }
-            LogHandler(this, String.Format("Connected to the {0}:{1}. ", ipOrHost, port));
+            if(LogHandler != null)
+            {
+                LogHandler(this, String.Format("Connected to the {0}:{1}. ", ipOrHost, port));
+            }
 
             if (ReceiveHandler == null) return;
             this.threadActive = true;
@@ -375,7 +405,10 @@ namespace CraneMonitor
                     }
                     catch (Exception e)
                     {
-                        LogHandler(this, e.ToString());
+                        if(LogHandler != null)
+                        {
+                            LogHandler(this, e.ToString());
+                        }
                         threadActive = false;
                         break;
                     }
@@ -409,7 +442,10 @@ namespace CraneMonitor
             }
             catch (Exception e)
             {
-                ErrorLogHandler(this, e.ToString());
+                if(ErrorLogHandler != null)
+                {
+                    ErrorLogHandler(this, e.ToString());
+                }
                 Close();
             }
         }

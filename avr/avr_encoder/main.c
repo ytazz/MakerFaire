@@ -92,7 +92,7 @@ static FILE USBSerialStream;
 uint32_t cnt_ms;          //< ms after program start
 uint32_t toggle_time[3];  //< last rise time of encoder signal
 bool     wait_rise[3];
-bool     running;         //< drive motor or not
+bool     enabled;         //< drive motor or not
 int      mode    [3];     //< 0: command pwm_ref  1: command pos_ref
 int16_t  pos     [3];     //< encoder count
 int16_t  pos_ref [3];     //< encoder count reference signal
@@ -123,17 +123,17 @@ int main(void){
 	    	strRecv[num] = '\0';
 	    	
 	    	// echo
-	    	fputs(strRecv, &USBSerialStream);
+	    	//fputs(strRecv, &USBSerialStream);
 	    	
 	    	// start
 	    	// stop
 	    	// set ref0 ref1 ref2
 	    	sscanf(strRecv, "%s", cmd);
-	    	if(strcmp(cmd, "start") == 0){
-	    		running = true;
+	    	if(strcmp(cmd, "enable") == 0){
+	    		enabled = true;
 	    	}
-	    	if(strcmp(cmd, "stop") == 0){
-	    		running = false;
+	    	if(strcmp(cmd, "disable") == 0){
+	    		enabled = false;
 	    	}
 	    	if(strcmp(cmd, "set") == 0){
 	    		sscanf(strRecv, "%s %d %d %d %d %d %d %d %d %d",
@@ -146,7 +146,7 @@ int main(void){
 	    }
 	    
 		if(cnt_ms % 50 == 0){
-			sprintf(strSend, "%d %d %d %d %d %d\r\n", pos[0], pos[1], pos[2], pwm[0], pwm[1], pwm[2]);
+			sprintf(strSend, "%d %d %d %d %d %d %d %d %d\r\n", pos[0], pos[1], pos[2], pwm[0], pwm[1], pwm[2], dir[0], dir[1], dir[2]);
 			fputs(strSend, &USBSerialStream);
 		}
 		/*
@@ -252,8 +252,8 @@ void SetupHardware(void){
 	// if input pin is high, wait for falling edge, other wise wait for rising edge
 	wait_rise[0] = !(PIND & _BV(0));
 	
-	// initially not running
-	running = false;
+	// initially not enabled
+	enabled = false;
 
 }
 

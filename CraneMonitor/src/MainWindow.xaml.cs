@@ -66,24 +66,23 @@ namespace CraneMonitor
             meters.Background = System.Windows.Media.Brushes.Black.Clone();
             meters.Background.Opacity = 0.5;
 
-            // 左列：出力プラス、右列：出力マイナス
             meters.UpdateDisplayLayout(
                 new MeasureObj[] {
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[0] / motor.velMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[0] / motor.velMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[0] / motor.velMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[0] / motor.velMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[0] / motor.velMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[1] / motor.velMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[2] / motor.velMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.pwm_ref[0]) / (float)(motor.pwmMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.pwm_ref[1]) / (float)(motor.pwmMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.pwm_ref[2]) / (float)(motor.pwmMax); })),
                     null,
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[0]) / (float)(motor.velMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[1]) / (float)(motor.velMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[2]) / (float)(motor.velMax); })),
                     null,
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.pwm[0]) / (float)(motor.pwmMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.pwm[1]) / (float)(motor.pwmMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.pwm[2]) / (float)(motor.pwmMax); })),
                     null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)joystick.axis[0]; })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)joystick.axis[1]; })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)joystick.axis[2]; })),
                     null
                 });
             
@@ -131,6 +130,7 @@ namespace CraneMonitor
 
             joystick.Init();
             controller.Init();
+            motor.Init();
 
             DispatcherTimer dispatcherTimer = new DispatcherTimer(DispatcherPriority.Normal);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, param.UpdateInterval);  // in milliseconds
@@ -149,9 +149,10 @@ namespace CraneMonitor
 
             joystick.Update();
 
-            motor.vel_ref[0] = param.MotorGainX * joystick.outX;
-            motor.vel_ref[1] = param.MotorGainY * joystick.outY;
-            motor.vel_ref[2] = param.MotorGainZ * joystick.outZ;
+            motor.pwm_ref[0] = (int)(motor.pwmMax * joystick.axis[0]);
+            motor.pwm_ref[1] = (int)(motor.pwmMax * joystick.axis[1]);
+            motor.pwm_ref[2] = (int)(motor.pwmMax * joystick.axis[2]);
+
             motor.Update(dt);
             
             meters.Update(false);

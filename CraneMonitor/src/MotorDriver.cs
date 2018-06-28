@@ -19,8 +19,11 @@ namespace CraneMonitor
         //public int port;
         public string comPort;
         public double velMax;
+        public int pwmMax;
 
+        public int[] mode;        //< mode  0:direct pwm  1:position control
         public double[] vel_ref;    //< velocity reference
+        public int[] pwm_ref;    //< velocity reference
         public int[] pos_ref;    //< position reference
         public int[] pos;  //< current position (encoder count)
         public int[] pwm;  //< pwm duty ratio [0,255]
@@ -28,9 +31,15 @@ namespace CraneMonitor
 
         public MotorDriver()
         {
+            comPort = "COM5";
             com = new SerialClient();
 
+            velMax = 1.0;
+            pwmMax = 255;
+
+            mode    = new int[3] { 0, 0, 0 };
             vel_ref = new double[3] { 0.0, 0.0, 0.0 };
+            pwm_ref = new int[3] { 0, 0, 0 };
             pos_ref = new int[3] { 0, 0, 0 };
             pos     = new int[3] { 0, 0, 0 };
             pwm     = new int[3] { 0, 0, 0 };
@@ -115,7 +124,11 @@ namespace CraneMonitor
                 pos_ref[i] += (int)(vel_ref[i] * dt);
             }
 
-            string cmd = String.Format("set {0} {1} {2}", pos_ref[0], pos_ref[1], pos_ref[2]);
+            string cmd = String.Format("set {0} {1} {2} {3} {4} {5} {6} {7} {8}",
+                mode[0], mode[1], mode[2],
+                pos_ref[0], pos_ref[1], pos_ref[2],
+                pwm_ref[0], pwm_ref[1], pwm_ref[2]
+                );
             com.Send(cmd);
 
             //string commands = "";

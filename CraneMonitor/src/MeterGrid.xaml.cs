@@ -44,14 +44,14 @@ namespace MeterDisplay
             meters[ 5] = Meter5;
             meters[ 6] = Meter6;
             meters[ 7] = Meter7;
-            meters[ 8] = Meter0;
-            meters[ 9] = Meter1;
-            meters[10] = Meter2;
-            meters[11] = Meter3;
-            meters[12] = Meter4;
-            meters[13] = Meter5;
-            meters[14] = Meter6;
-            meters[15] = Meter7;
+            meters[ 8] = Meter8;
+            meters[ 9] = Meter9;
+            meters[10] = Meter10;
+            meters[11] = Meter11;
+            meters[12] = Meter12;
+            meters[13] = Meter13;
+            meters[14] = Meter14;
+            meters[15] = Meter15;
 
             labels[ 0] = label0;
             labels[ 1] = label1;
