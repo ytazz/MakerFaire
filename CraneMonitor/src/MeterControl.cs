@@ -194,7 +194,7 @@ namespace MeterDisplay
         }
         public override float GetValue()
         {
-            return 100.0f * Math.Abs(method());
+            return 100.0f * method();
         }
     };
     public class MeasurePos : MeasureObj
@@ -211,7 +211,7 @@ namespace MeterDisplay
         }
         public override float GetValue()
         {
-            return 100.0f * Math.Abs(method());
+            return 100.0f * method();
         }
     };
 

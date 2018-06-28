@@ -69,7 +69,7 @@ namespace CraneMonitor
             if (!com.Connected())
                 return false;
 
-            com.Send("enable");
+            com.Send("enable\n");
 
             return true;
             //ip.Init(ipAddress, port);
@@ -81,7 +81,7 @@ namespace CraneMonitor
             if (!com.Connected())
                 return false;
 
-            com.Send("disable");
+            com.Send("disable\n");
 
             return true;
             //ip.Close();
@@ -90,7 +90,14 @@ namespace CraneMonitor
 
         public void ReceiveHandler(object sender, string message)
         {
+            System.Diagnostics.Debug.WriteLine(message);
+
             string[] tokens = message.Split(' ');
+            if(tokens.Length != 9)
+            {
+                return;
+            }
+
             pos[0] = int.Parse(tokens[0]);
             pos[1] = int.Parse(tokens[1]);
             pos[2] = int.Parse(tokens[2]);
@@ -101,10 +108,10 @@ namespace CraneMonitor
             dir[1] = int.Parse(tokens[7]);
             dir[2] = int.Parse(tokens[8]);
 
-            System.Diagnostics.Debug.WriteLine(
-                String.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}",
-                pos[0], pos[1], pos[2], pwm[0], pwm[1], pwm[2], dir[0], dir[1], dir[2]));
-            
+            //System.Diagnostics.Debug.WriteLine(
+            //    String.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}",
+            //    pos[0], pos[1], pos[2], pwm[0], pwm[1], pwm[2], dir[0], dir[1], dir[2]));
+
             //if (message.Length < 3) return;
             //string prefix = message.Substring(0, 2);
             //if (prefix == "A,")
@@ -124,12 +131,13 @@ namespace CraneMonitor
                 pos_ref[i] += (int)(vel_ref[i] * dt);
             }
 
-            string cmd = String.Format("set {0} {1} {2} {3} {4} {5} {6} {7} {8}",
+            string cmd = String.Format("set {0} {1} {2} {3} {4} {5} {6} {7} {8}\n",
                 mode[0], mode[1], mode[2],
                 pos_ref[0], pos_ref[1], pos_ref[2],
                 pwm_ref[0], pwm_ref[1], pwm_ref[2]
                 );
             com.Send(cmd);
+            //System.Diagnostics.Debug.WriteLine(cmd);
 
             //string commands = "";
             //if (Math.Abs(outX - prevX) > 1e-10)

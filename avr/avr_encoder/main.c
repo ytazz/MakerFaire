@@ -114,20 +114,25 @@ int main(void){
 	char strRecv[256];
 	char strSend[256];
 	char cmd[256];
+	int  recvIndex = 0;
+	
 	for(;;){
 		// receive command string
+		//  received data is likely to be split every 16 bytes
 	    uint16_t num = CDC_Device_BytesReceived(&VirtualSerial_CDC_Interface);
-	    if(num > 0){
-	    	for(int i = 0; i < num; i++)
-	    		strRecv[i] = CDC_Device_ReceiveByte(&VirtualSerial_CDC_Interface);
-	    	strRecv[num] = '\0';
+	    for(int i = 0; i < num && recvIndex < 255; i++)
+	    	strRecv[recvIndex++] = CDC_Device_ReceiveByte(&VirtualSerial_CDC_Interface);
+	    
+	    if(recvIndex == 255){
+	    	recvIndex = 0;
+	    }
+	    if(recvIndex > 0 && strRecv[recvIndex-1] == '\n'){
+	    	strRecv[recvIndex] = '\0';
+	    	recvIndex = 0;
 	    	
 	    	// echo
 	    	//fputs(strRecv, &USBSerialStream);
 	    	
-	    	// start
-	    	// stop
-	    	// set ref0 ref1 ref2
 	    	sscanf(strRecv, "%s", cmd);
 	    	if(strcmp(cmd, "enable") == 0){
 	    		enabled = true;
@@ -136,7 +141,7 @@ int main(void){
 	    		enabled = false;
 	    	}
 	    	if(strcmp(cmd, "set") == 0){
-	    		sscanf(strRecv, "%s %d %d %d %d %d %d %d %d %d",
+		    	int ret = sscanf(strRecv, "%s %d %d %d %d %d %d %d %d %d",
 	    			cmd,
 	    			&mode[0], &mode[1], &mode[2],
 	    		 	&pos_ref[0], &pos_ref[1], &pos_ref[2],
@@ -161,12 +166,12 @@ int main(void){
 		// calculate motor command
 		for(int i = 0; i < 3; i++){
 			if(mode[i] == 0){
-				if(pwm_ref[i] > 0){
+				if(pwm_ref[i] >= 0){
 					pwm[i] = pwm_ref[i];
 					dir[i] = false;
 				}
 				else{
-					pwm[i] = (uint8_t)(-pwm_ref[i]);
+					pwm[i] = (uint8_t)(-pwm_ref[i]);					
 					dir[i] = true;
 				}
 			}
@@ -329,7 +334,7 @@ ISR(TIMER0_OVF_vect){
 
 // timer1 overflow interrupt handler
 ISR(TIMER1_OVF_vect){
-	TCNT1L = 5;
+	//TCNT1L = 0;
 }
 
 void EVENT_USB_Device_Connect               (void){}

@@ -156,6 +156,9 @@ namespace CraneMonitor
             motor.Update(dt);
             
             meters.Update(false);
+            TextPos0.Text = motor.pos[0].ToString();
+            TextPos1.Text = motor.pos[1].ToString();
+            TextPos2.Text = motor.pos[2].ToString();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
