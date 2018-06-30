@@ -10,10 +10,10 @@ F_USB        = $(F_CPU)
 OPTIMIZATION = s
 TARGET       = main
 SRC          = $(TARGET).c Descriptors.c $(LUFA_SRC_USB) $(LUFA_SRC_USBCLASS) irSend.cpp IRremote.cpp irRecv.cpp irTrans.cpp led7seg.c RotEncoder.c Motor.c
-LUFA_PATH    = C:\Users\yousn\Desktop\Make2018\avr\avr\lufa-LUFA-170418\LUFA
+LUFA_PATH    = C:\avr\lufa-LUFA-170418\LUFA
 CC_FLAGS     = -DUSE_LUFA_CONFIG_HEADER -IConfig/
 LD_FLAGS     =
-DFU_PATH     = C:\Users\yousn\Desktop\Make2018\avr\avr\dfu-programmer-win-0.7.0
+DFU_PATH     = C:\avr\dfu-programmer-win-0.7.0
 
 # Default target
 all:
