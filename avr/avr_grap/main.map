@@ -66,26 +66,12 @@ c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/..
                               obj/HIDClassDevice.o (memset)
 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
                               obj/main.o (fputc)
-c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
-                              obj/main.o (sprintf)
-c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
-                              c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o) (vfprintf)
 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(eerd_byte_atmega32u4.o)
                               obj/EndpointStream_AVR8.o (__eerd_byte_m32u4)
 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(eeupd_byte_atmega32u4.o)
                               obj/EndpointStream_AVR8.o (__eeupd_byte_m32u4)
 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(cty_isfalse.o)
                               c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(isalpha.o) (__ctype_isfalse)
-c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
-                              c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o) (strnlen_P)
-c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(strnlen.o)
-                              c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o) (strnlen)
-c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
-                              c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o) (__ultoa_invert)
-c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_prologue.o)
-                              c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o) (__prologue_saves__)
-c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_epilogue.o)
-                              c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o) (__epilogue_restores__)
 
 Allocating common symbols
 Common symbol       size              file
@@ -328,6 +314,12 @@ Discarded input sections
  .bss           0x00000000        0x0 obj/StillImageClassHost.o
  .text          0x00000000        0x0 obj/irSend.o
  .bss           0x00000000        0x0 obj/irSend.o
+ .text._Z16TIMER_CONFIG_KHZi
+                0x00000000       0x4a obj/irSend.o
+ .text._ZN6IRsend11enableIROutEi
+                0x00000000        0xa obj/irSend.o
+ .text._ZN6IRsend4sendEmi
+                0x00000000       0xd6 obj/irSend.o
  .text          0x00000000        0x0 obj/IRremote.o
  .text._Z5MATCHii
                 0x00000000       0x88 obj/IRremote.o
@@ -340,14 +332,17 @@ Discarded input sections
  .text          0x00000000        0x0 obj/irTrans.o
  .text.IrSendSetup
                 0x00000000       0x12 obj/irTrans.o
+ .text.IrRawSend
+                0x00000000        0xe obj/irTrans.o
+ .text.IrSend   0x00000000       0x12 obj/irTrans.o
  .text          0x00000000        0x0 obj/led7seg.o
  .text.Led7Seg_Init
                 0x00000000       0x20 obj/led7seg.o
- .text.Led7Seg_flip
-                0x00000000       0x40 obj/led7seg.o
  .text          0x00000000        0x0 obj/RotEncoder.o
  .text.InitRotEncoder
                 0x00000000       0x1e obj/RotEncoder.o
+ .text.RotEncoderGetVal
+                0x00000000        0xc obj/RotEncoder.o
  .text          0x00000000        0x0 obj/Motor.o
  .bss           0x00000000        0x0 obj/Motor.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(addsf3.o)
@@ -416,6 +411,8 @@ Discarded input sections
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_udivmodsi4.o)
  .text.libgcc.mul
                 0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_udivmodsi4.o)
+ .text.libgcc.div
+                0x00000000       0x44 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_udivmodsi4.o)
  .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_udivmodsi4.o)
  .text.libgcc.prologue
                 0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_udivmodsi4.o)
@@ -511,10 +508,6 @@ Discarded input sections
                 0x00000000        0xe c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(memset.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
- .text          0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
- .text          0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(eerd_byte_atmega32u4.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(eerd_byte_atmega32u4.o)
  .text.avr-libc
@@ -525,34 +518,6 @@ Discarded input sections
                 0x00000000       0x24 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(eeupd_byte_atmega32u4.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(cty_isfalse.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(cty_isfalse.o)
- .text          0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
- .text          0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(strnlen.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(strnlen.o)
- .text          0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
- .text          0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_prologue.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_prologue.o)
- .text.libgcc.mul
-                0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_prologue.o)
- .text.libgcc.div
-                0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_prologue.o)
- .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_prologue.o)
- .text.libgcc.builtins
-                0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_prologue.o)
- .text.libgcc.fmul
-                0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_prologue.o)
- .text          0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_epilogue.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_epilogue.o)
- .text.libgcc.mul
-                0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_epilogue.o)
- .text.libgcc.div
-                0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_epilogue.o)
- .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_epilogue.o)
- .text.libgcc.builtins
-                0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_epilogue.o)
- .text.libgcc.fmul
-                0x00000000        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_epilogue.o)
 
 Memory Configuration
 
@@ -704,7 +669,7 @@ LOAD c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x2180
+.text           0x00000000     0x1a7a
  *(.vectors)
  .vectors       0x00000000       0xac c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5/crtm32u4.o
                 0x00000000                __vector_default
@@ -831,266 +796,228 @@ LOAD c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7
                 0x000001e6       0x46 obj/main.o
                 0x000001e6                SetupHardware
  .text.startup.main
-                0x0000022c       0xac obj/main.o
+                0x0000022c       0x62 obj/main.o
                 0x0000022c                main
  .text.CALLBACK_USB_GetDescriptor
-                0x000002d8       0x7a obj/Descriptors.o
-                0x000002d8                CALLBACK_USB_GetDescriptor
+                0x0000028e       0x7a obj/Descriptors.o
+                0x0000028e                CALLBACK_USB_GetDescriptor
  .text.Endpoint_Write_Control_Stream_LE
-                0x00000352       0xc6 obj/EndpointStream_AVR8.o
-                0x00000352                Endpoint_Write_Control_Stream_LE
+                0x00000308       0xc6 obj/EndpointStream_AVR8.o
+                0x00000308                Endpoint_Write_Control_Stream_LE
  .text.Endpoint_Write_Control_PStream_LE
-                0x00000418       0xc8 obj/EndpointStream_AVR8.o
-                0x00000418                Endpoint_Write_Control_PStream_LE
+                0x000003ce       0xc8 obj/EndpointStream_AVR8.o
+                0x000003ce                Endpoint_Write_Control_PStream_LE
  .text.Endpoint_ConfigureEndpoint_Prv
-                0x000004e0       0x6e obj/Endpoint_AVR8.o
-                0x000004e0                Endpoint_ConfigureEndpoint_Prv
+                0x00000496       0x6e obj/Endpoint_AVR8.o
+                0x00000496                Endpoint_ConfigureEndpoint_Prv
  .text.Endpoint_ConfigureEndpointTable
-                0x0000054e       0x7e obj/Endpoint_AVR8.o
-                0x0000054e                Endpoint_ConfigureEndpointTable
+                0x00000504       0x7e obj/Endpoint_AVR8.o
+                0x00000504                Endpoint_ConfigureEndpointTable
  .text.Endpoint_ClearStatusStage
-                0x000005cc       0x42 obj/Endpoint_AVR8.o
-                0x000005cc                Endpoint_ClearStatusStage
+                0x00000582       0x42 obj/Endpoint_AVR8.o
+                0x00000582                Endpoint_ClearStatusStage
  .text.Endpoint_WaitUntilReady
-                0x0000060e       0x64 obj/Endpoint_AVR8.o
-                0x0000060e                Endpoint_WaitUntilReady
+                0x000005c4       0x64 obj/Endpoint_AVR8.o
+                0x000005c4                Endpoint_WaitUntilReady
  .text.USB_ResetInterface
-                0x00000672       0x80 obj/USBController_AVR8.o
-                0x00000672                USB_ResetInterface
+                0x00000628       0x80 obj/USBController_AVR8.o
+                0x00000628                USB_ResetInterface
  .text.USB_Init
-                0x000006f2       0x20 obj/USBController_AVR8.o
-                0x000006f2                USB_Init
+                0x000006a8       0x20 obj/USBController_AVR8.o
+                0x000006a8                USB_Init
  .text.USB_INT_DisableAllInterrupts
-                0x00000712       0x10 obj/USBInterrupt_AVR8.o
-                0x00000712                USB_INT_DisableAllInterrupts
+                0x000006c8       0x10 obj/USBInterrupt_AVR8.o
+                0x000006c8                USB_INT_DisableAllInterrupts
  .text.USB_INT_ClearAllInterrupts
-                0x00000722        0xa obj/USBInterrupt_AVR8.o
-                0x00000722                USB_INT_ClearAllInterrupts
+                0x000006d8        0xa obj/USBInterrupt_AVR8.o
+                0x000006d8                USB_INT_ClearAllInterrupts
  .text.__vector_10
-                0x0000072c      0x196 obj/USBInterrupt_AVR8.o
-                0x0000072c                __vector_10
+                0x000006e2      0x196 obj/USBInterrupt_AVR8.o
+                0x000006e2                __vector_10
  .text.__vector_11
-                0x000008c2       0x86 obj/USBInterrupt_AVR8.o
-                0x000008c2                __vector_11
+                0x00000878       0x86 obj/USBInterrupt_AVR8.o
+                0x00000878                __vector_11
  .text.USB_Device_ProcessControlRequest
-                0x00000948      0x2d2 obj/DeviceStandardReq.o
-                0x00000948                USB_Device_ProcessControlRequest
+                0x000008fe      0x2d2 obj/DeviceStandardReq.o
+                0x000008fe                USB_Device_ProcessControlRequest
  .text.USB_Event_Stub
-                0x00000c1a        0x2 obj/Events.o
-                0x00000c1a                USB_Event_Stub
-                0x00000c1a                EVENT_USB_Device_Suspend
-                0x00000c1a                EVENT_USB_Device_StartOfFrame
-                0x00000c1a                EVENT_USB_Device_Reset
-                0x00000c1a                EVENT_USB_Device_WakeUp
+                0x00000bd0        0x2 obj/Events.o
+                0x00000bd0                USB_Event_Stub
+                0x00000bd0                EVENT_USB_Device_Suspend
+                0x00000bd0                EVENT_USB_Device_StartOfFrame
+                0x00000bd0                EVENT_USB_Device_Reset
+                0x00000bd0                EVENT_USB_Device_WakeUp
  .text.USB_USBTask
-                0x00000c1c       0x38 obj/USBTask.o
-                0x00000c1c                USB_USBTask
+                0x00000bd2       0x38 obj/USBTask.o
+                0x00000bd2                USB_USBTask
  .text.CDC_Device_ConfigureEndpoints
-                0x00000c54       0x4a obj/CDCClassDevice.o
-                0x00000c54                CDC_Device_ConfigureEndpoints
+                0x00000c0a       0x4a obj/CDCClassDevice.o
+                0x00000c0a                CDC_Device_ConfigureEndpoints
  .text.CDC_Device_SendByte
-                0x00000c9e       0x4e obj/CDCClassDevice.o
-                0x00000c9e                CDC_Device_SendByte
+                0x00000c54       0x4e obj/CDCClassDevice.o
+                0x00000c54                CDC_Device_SendByte
  .text.CDC_Device_putchar
-                0x00000cec       0x1c obj/CDCClassDevice.o
+                0x00000ca2       0x1c obj/CDCClassDevice.o
  .text.CDC_Device_Flush
-                0x00000d08       0x60 obj/CDCClassDevice.o
-                0x00000d08                CDC_Device_Flush
+                0x00000cbe       0x60 obj/CDCClassDevice.o
+                0x00000cbe                CDC_Device_Flush
  .text.CDC_Device_USBTask
-                0x00000d68       0x2c obj/CDCClassDevice.o
-                0x00000d68                CDC_Device_USBTask
+                0x00000d1e       0x2c obj/CDCClassDevice.o
+                0x00000d1e                CDC_Device_USBTask
  .text.CDC_Device_ReceiveByte
-                0x00000d94       0x6e obj/CDCClassDevice.o
-                0x00000d94                CDC_Device_ReceiveByte
+                0x00000d4a       0x6e obj/CDCClassDevice.o
+                0x00000d4a                CDC_Device_ReceiveByte
  .text.CDC_Device_getchar
-                0x00000e02       0x16 obj/CDCClassDevice.o
+                0x00000db8       0x16 obj/CDCClassDevice.o
  .text.CDC_Device_CreateStream
-                0x00000e18       0x26 obj/CDCClassDevice.o
-                0x00000e18                CDC_Device_CreateStream
+                0x00000dce       0x26 obj/CDCClassDevice.o
+                0x00000dce                CDC_Device_CreateStream
  .text.CDC_Device_Event_Stub
-                0x00000e3e        0x2 obj/CDCClassDevice.o
-                0x00000e3e                EVENT_CDC_Device_BreakSent
-                0x00000e3e                CDC_Device_Event_Stub
-                0x00000e3e                EVENT_CDC_Device_LineEncodingChanged
+                0x00000df4        0x2 obj/CDCClassDevice.o
+                0x00000df4                EVENT_CDC_Device_BreakSent
+                0x00000df4                CDC_Device_Event_Stub
+                0x00000df4                EVENT_CDC_Device_LineEncodingChanged
  .text.CDC_Device_ProcessControlRequest
-                0x00000e40      0x162 obj/CDCClassDevice.o
-                0x00000e40                CDC_Device_ProcessControlRequest
- .text._Z16TIMER_CONFIG_KHZi
-                0x00000fa2       0x46 obj/irSend.o
-                0x00000fa2                _Z16TIMER_CONFIG_KHZi
- .text._ZN6IRsend11enableIROutEi
-                0x00000fe8        0x8 obj/irSend.o
-                0x00000fe8                _ZN6IRsend11enableIROutEi
- .text._ZN6IRsend4sendEmi
-                0x00000ff0       0xde obj/irSend.o
-                0x00000ff0                _ZN6IRsend4sendEmi
+                0x00000df6      0x162 obj/CDCClassDevice.o
+                0x00000df6                CDC_Device_ProcessControlRequest
  .text._Z10MATCH_MARKii
-                0x000010ce       0x7c obj/IRremote.o
-                0x000010ce                _Z10MATCH_MARKii
+                0x00000f58       0x7c obj/IRremote.o
+                0x00000f58                _Z10MATCH_MARKii
  .text._Z11MATCH_SPACEii
-                0x0000114a       0x7c obj/IRremote.o
-                0x0000114a                _Z11MATCH_SPACEii
+                0x00000fd4       0x7c obj/IRremote.o
+                0x00000fd4                _Z11MATCH_SPACEii
  .text.__vector_41
-                0x000011c6      0x13a obj/IRremote.o
-                0x000011c6                __vector_41
+                0x00001050      0x13a obj/IRremote.o
+                0x00001050                __vector_41
  .text._Z19TIMER_CONFIG_NORMALv
-                0x00001300       0x30 obj/irRecv.o
-                0x00001300                _Z19TIMER_CONFIG_NORMALv
+                0x0000118a       0x30 obj/irRecv.o
+                0x0000118a                _Z19TIMER_CONFIG_NORMALv
  .text._ZN6IRrecv10decodeMainEP14decode_results
-                0x00001330       0xfc obj/irRecv.o
-                0x00001330                _ZN6IRrecv10decodeMainEP14decode_results
+                0x000011ba       0xfc obj/irRecv.o
+                0x000011ba                _ZN6IRrecv10decodeMainEP14decode_results
  .text._ZN6IRrecvC2Ev
-                0x0000142c        0x2 obj/irRecv.o
-                0x0000142c                _ZN6IRrecvC2Ev
-                0x0000142c                _ZN6IRrecvC1Ev
+                0x000012b6        0x2 obj/irRecv.o
+                0x000012b6                _ZN6IRrecvC2Ev
+                0x000012b6                _ZN6IRrecvC1Ev
  .text._ZN6IRrecv10enableIRInEv
-                0x0000142e       0x18 obj/irRecv.o
-                0x0000142e                _ZN6IRrecv10enableIRInEv
+                0x000012b8       0x18 obj/irRecv.o
+                0x000012b8                _ZN6IRrecv10enableIRInEv
  .text._ZN6IRrecv6resumeEv
-                0x00001446        0xc obj/irRecv.o
-                0x00001446                _ZN6IRrecv6resumeEv
+                0x000012d0        0xc obj/irRecv.o
+                0x000012d0                _ZN6IRrecv6resumeEv
  .text._ZN6IRrecv6decodeEP14decode_results
-                0x00001452       0x40 obj/irRecv.o
-                0x00001452                _ZN6IRrecv6decodeEP14decode_results
- .text.IrRawSend
-                0x00001492        0xc obj/irTrans.o
-                0x00001492                IrRawSend
+                0x000012dc       0x40 obj/irRecv.o
+                0x000012dc                _ZN6IRrecv6decodeEP14decode_results
  .text.IrReceiveSetup
-                0x0000149e        0x8 obj/irTrans.o
-                0x0000149e                IrReceiveSetup
+                0x0000131c        0x8 obj/irTrans.o
+                0x0000131c                IrReceiveSetup
  .text.IrRawRecive
-                0x000014a6       0x64 obj/irTrans.o
-                0x000014a6                IrRawRecive
- .text.IrSend   0x0000150a       0x10 obj/irTrans.o
-                0x0000150a                IrSend
+                0x00001324       0x6c obj/irTrans.o
+                0x00001324                IrRawRecive
  .text.IrReceive
-                0x0000151a       0x58 obj/irTrans.o
-                0x0000151a                IrReceive
+                0x00001390       0x58 obj/irTrans.o
+                0x00001390                IrReceive
  .text.startup._GLOBAL__sub_I_IrSendSetup
-                0x00001572        0x6 obj/irTrans.o
+                0x000013e8        0x6 obj/irTrans.o
  .text.SendShiftReg
-                0x00001578        0xc obj/led7seg.o
-                0x00001578                SendShiftReg
+                0x000013ee        0xc obj/led7seg.o
+                0x000013ee                SendShiftReg
  .text.Led7Seg_SetDisplayNumber
-                0x00001584       0x62 obj/led7seg.o
-                0x00001584                Led7Seg_SetDisplayNumber
+                0x000013fa       0x62 obj/led7seg.o
+                0x000013fa                Led7Seg_SetDisplayNumber
  .text.__vector_23
-                0x000015e6       0x7e obj/led7seg.o
-                0x000015e6                __vector_23
+                0x0000145c       0x7e obj/led7seg.o
+                0x0000145c                __vector_23
  .text.__vector_3
-                0x00001664       0xa2 obj/RotEncoder.o
-                0x00001664                __vector_3
+                0x000014da       0x98 obj/RotEncoder.o
+                0x000014da                __vector_3
  .text.MotorPwm
-                0x00001706       0x40 obj/Motor.o
-                0x00001706                MotorPwm
+                0x00001572       0x40 obj/Motor.o
+                0x00001572                MotorPwm
  .text.InitMotor
-                0x00001746       0x1c obj/Motor.o
-                0x00001746                InitMotor
+                0x000015b2       0x1c obj/Motor.o
+                0x000015b2                InitMotor
  .text.avr-libc.fplib
-                0x00001762        0xa c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(addsf3.o)
-                0x00001762                __subsf3
-                0x00001764                __addsf3
+                0x000015ce        0xa c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(addsf3.o)
+                0x000015ce                __subsf3
+                0x000015d0                __addsf3
  .text.avr-libc.fplib
-                0x0000176c       0xc0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(addsf3x.o)
-                0x00001786                __addsf3x
+                0x000015d8       0xc0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(addsf3x.o)
+                0x000015f2                __addsf3x
  .text.avr-libc.fplib
-                0x0000182c        0x4 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(divsf3.o)
-                0x0000182c                __divsf3
+                0x00001698        0x4 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(divsf3.o)
+                0x00001698                __divsf3
  .text.avr-libc.fplib
-                0x00001830       0xcc c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(divsf3x.o)
-                0x00001846                __divsf3x
-                0x0000184a                __divsf3_pse
+                0x0000169c       0xcc c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(divsf3x.o)
+                0x000016b2                __divsf3x
+                0x000016b6                __divsf3_pse
  .text.avr-libc.fplib
-                0x000018fc        0xa c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fixsfsi.o)
-                0x000018fc                __fixsfsi
+                0x00001768        0xa c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fixsfsi.o)
+                0x00001768                __fixsfsi
  .text.avr-libc.fplib
-                0x00001906       0x58 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fixunssfsi.o)
-                0x00001906                __fixunssfsi
+                0x00001772       0x58 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fixunssfsi.o)
+                0x00001772                __fixunssfsi
  .text.avr-libc.fplib
-                0x0000195e       0x7a c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(floatsisf.o)
-                0x0000195e                __floatunsisf
-                0x00001962                __floatsisf
+                0x000017ca       0x7a c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(floatsisf.o)
+                0x000017ca                __floatunsisf
+                0x000017ce                __floatsisf
  .text.avr-libc.fplib
-                0x000019d8        0xc c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fp_inf.o)
-                0x000019d8                __fp_inf
+                0x00001844        0xc c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fp_inf.o)
+                0x00001844                __fp_inf
  .text.avr-libc.fplib
-                0x000019e4        0x6 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fp_nan.o)
-                0x000019e4                __fp_nan
+                0x00001850        0x6 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fp_nan.o)
+                0x00001850                __fp_nan
  .text.avr-libc.fplib
-                0x000019ea        0xe c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fp_pscA.o)
-                0x000019ea                __fp_pscA
+                0x00001856        0xe c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fp_pscA.o)
+                0x00001856                __fp_pscA
  .text.avr-libc.fplib
-                0x000019f8        0xe c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fp_pscB.o)
-                0x000019f8                __fp_pscB
+                0x00001864        0xe c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fp_pscB.o)
+                0x00001864                __fp_pscB
  .text.avr-libc.fplib
-                0x00001a06       0x22 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fp_round.o)
-                0x00001a06                __fp_round
+                0x00001872       0x22 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fp_round.o)
+                0x00001872                __fp_round
  .text.avr-libc.fplib
-                0x00001a28       0x44 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fp_split3.o)
-                0x00001a28                __fp_split3
-                0x00001a38                __fp_splitA
+                0x00001894       0x44 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fp_split3.o)
+                0x00001894                __fp_split3
+                0x000018a4                __fp_splitA
  .text.avr-libc.fplib
-                0x00001a6c        0xe c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fp_zero.o)
-                0x00001a6c                __fp_zero
-                0x00001a6e                __fp_szero
+                0x000018d8        0xe c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fp_zero.o)
+                0x000018d8                __fp_zero
+                0x000018da                __fp_szero
  .text.avr-libc.fplib
-                0x00001a7a        0x4 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(mulsf3.o)
-                0x00001a7a                __mulsf3
+                0x000018e6        0x4 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(mulsf3.o)
+                0x000018e6                __mulsf3
  .text.avr-libc.fplib
-                0x00001a7e       0xc2 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(mulsf3x.o)
-                0x00001a92                __mulsf3x
-                0x00001a96                __mulsf3_pse
+                0x000018ea       0xc2 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(mulsf3x.o)
+                0x000018fe                __mulsf3x
+                0x00001902                __mulsf3_pse
  .text.libgcc.div
-                0x00001b40       0x28 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_udivmodhi4.o)
-                0x00001b40                __udivmodhi4
+                0x000019ac       0x28 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_udivmodhi4.o)
+                0x000019ac                __udivmodhi4
  .text.libgcc.div
-                0x00001b68       0x26 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_divmodhi4.o)
-                0x00001b68                _div
-                0x00001b68                __divmodhi4
- .text.libgcc.div
-                0x00001b8e       0x44 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_udivmodsi4.o)
-                0x00001b8e                __udivmodsi4
- .text.libgcc   0x00001bd2        0xc c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_tablejump.o)
-                0x00001bd2                __tablejump2__
-                0x00001bd6                __tablejump__
+                0x000019d4       0x26 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_divmodhi4.o)
+                0x000019d4                _div
+                0x000019d4                __divmodhi4
+ .text.libgcc   0x000019fa        0xc c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_tablejump.o)
+                0x000019fa                __tablejump2__
+                0x000019fe                __tablejump__
  .text.avr-libc
-                0x00001bde       0x12 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(isalpha.o)
-                0x00001bde                isupper
-                0x00001be2                isalpha
-                0x00001be4                islower
+                0x00001a06       0x12 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(isalpha.o)
+                0x00001a06                isupper
+                0x00001a0a                isalpha
+                0x00001a0c                islower
  .text.avr-libc
-                0x00001bf0       0x58 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
-                0x00001bf0                fputc
+                0x00001a18       0x58 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
+                0x00001a18                fputc
  .text.avr-libc
-                0x00001c48       0x3e c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
-                0x00001c48                sprintf
- .text.avr-libc
-                0x00001c86      0x39a c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
-                0x00001c86                vfprintf
- .text.avr-libc
-                0x00002020        0x6 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(cty_isfalse.o)
-                0x00002020                __ctype_isfalse
-                0x00002024                __ctype_istrue
- .text.avr-libc
-                0x00002026       0x16 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
-                0x00002026                strnlen_P
- .text.avr-libc
-                0x0000203c       0x16 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(strnlen.o)
-                0x0000203c                strnlen
- .text.avr-libc
-                0x00002052       0xbc c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
-                0x00002052                __ultoa_invert
- .text.libgcc.prologue
-                0x0000210e       0x38 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_prologue.o)
-                0x0000210e                __prologue_saves__
- .text.libgcc.prologue
-                0x00002146       0x36 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_epilogue.o)
-                0x00002146                __epilogue_restores__
-                0x0000217c                . = ALIGN (0x2)
+                0x00001a70        0x6 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(cty_isfalse.o)
+                0x00001a70                __ctype_isfalse
+                0x00001a74                __ctype_istrue
+                0x00001a76                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000217c        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_exit.o)
-                0x0000217c                _exit
-                0x0000217c                exit
+ .fini9         0x00001a76        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_exit.o)
+                0x00001a76                _exit
+                0x00001a76                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -1109,11 +1036,11 @@ LOAD c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000217c        0x4 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_exit.o)
+ .fini0         0x00001a76        0x4 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00002180                _etext = .
+                0x00001a7a                _etext = .
 
-.data           0x00800100       0x2c load address 0x00002180
+.data           0x00800100       0x26 load address 0x00001a7a
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5/crtm32u4.o
@@ -1190,61 +1117,52 @@ LOAD c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7
  .data          0x0080011b        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(memcpy.o)
  .data          0x0080011b        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(memset.o)
  .data          0x0080011b        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
- .data          0x0080011b        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
- .data          0x0080011b        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
  .data          0x0080011b        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(eerd_byte_atmega32u4.o)
  .data          0x0080011b        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(eeupd_byte_atmega32u4.o)
  .data          0x0080011b        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(cty_isfalse.o)
- .data          0x0080011b        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
- .data          0x0080011b        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(strnlen.o)
- .data          0x0080011b        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
- .data          0x0080011b        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_prologue.o)
- .data          0x0080011b        0x0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_epilogue.o)
  *(.data*)
  *(.rodata)
  .rodata        0x0080011b        0xa obj/led7seg.o
  *(.rodata*)
- .rodata.str1.1
-                0x00800125        0x6 obj/main.o
  *(.gnu.linkonce.d*)
-                0x0080012c                . = ALIGN (0x2)
- *fill*         0x0080012b        0x1 
-                0x0080012c                _edata = .
-                0x0080012c                PROVIDE (__data_end, .)
+                0x00800126                . = ALIGN (0x2)
+ *fill*         0x00800125        0x1 
+                0x00800126                _edata = .
+                0x00800126                PROVIDE (__data_end, .)
 
-.bss            0x0080012c       0xf4
-                0x0080012c                PROVIDE (__bss_start, .)
+.bss            0x00800126       0xf4
+                0x00800126                PROVIDE (__bss_start, .)
  *(.bss)
- .bss           0x0080012c       0xcf obj/IRremote.o
-                0x0080012c                irparams
- .bss           0x008001fb        0x2 obj/irTrans.o
- .bss           0x008001fd        0x1 obj/led7seg.o
-                0x008001fd                g_CurrentDigit
- .bss           0x008001fe        0x3 obj/RotEncoder.o
+ .bss           0x00800126       0xcf obj/IRremote.o
+                0x00800126                irparams
+ .bss           0x008001f5        0x2 obj/irTrans.o
+ .bss           0x008001f7        0x1 obj/led7seg.o
+                0x008001f7                g_CurrentDigit
+ .bss           0x008001f8        0x3 obj/RotEncoder.o
  *(.bss*)
  *(COMMON)
- COMMON         0x00800201        0xe obj/main.o
-                0x00800201                USBSerialStream
- COMMON         0x0080020f        0x3 obj/DeviceStandardReq.o
-                0x0080020f                USB_Device_ConfigurationNumber
-                0x00800210                USB_Device_CurrentlySelfPowered
-                0x00800211                USB_Device_RemoteWakeupEnabled
- COMMON         0x00800212        0xa obj/USBTask.o
-                0x00800212                USB_IsInitialized
-                0x00800213                USB_DeviceState
-                0x00800214                USB_ControlRequest
- COMMON         0x0080021c        0x4 obj/led7seg.o
-                0x0080021c                g_DisplayPatterns
-                0x00800220                PROVIDE (__bss_end, .)
-                0x00002180                __data_load_start = LOADADDR (.data)
-                0x000021ac                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x008001fb        0xe obj/main.o
+                0x008001fb                USBSerialStream
+ COMMON         0x00800209        0x3 obj/DeviceStandardReq.o
+                0x00800209                USB_Device_ConfigurationNumber
+                0x0080020a                USB_Device_CurrentlySelfPowered
+                0x0080020b                USB_Device_RemoteWakeupEnabled
+ COMMON         0x0080020c        0xa obj/USBTask.o
+                0x0080020c                USB_IsInitialized
+                0x0080020d                USB_DeviceState
+                0x0080020e                USB_ControlRequest
+ COMMON         0x00800216        0x4 obj/led7seg.o
+                0x00800216                g_DisplayPatterns
+                0x0080021a                PROVIDE (__bss_end, .)
+                0x00001a7a                __data_load_start = LOADADDR (.data)
+                0x00001aa0                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800220        0x0
-                0x00800220                PROVIDE (__noinit_start, .)
+.noinit         0x0080021a        0x0
+                0x0080021a                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00800220                PROVIDE (__noinit_end, .)
-                0x00800220                _end = .
-                0x00800220                PROVIDE (__heap_start, .)
+                0x0080021a                PROVIDE (__noinit_end, .)
+                0x0080021a                _end = .
+                0x0080021a                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -1265,7 +1183,7 @@ LOAD c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7
 .user_signatures
  *(.user_signatures*)
 
-.stab           0x00000000     0x2eec
+.stab           0x00000000     0x2934
  *(.stab)
  .stab          0x00000000      0x6cc c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5/crtm32u4.o
  .stab          0x000006cc       0x78 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(addsf3.o)
@@ -1322,16 +1240,10 @@ LOAD c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7
                                 0x120 (size before relaxing)
  .stab          0x000028d4       0x60 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(cty_isfalse.o)
                                  0x6c (size before relaxing)
- .stab          0x00002934       0x9c c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
-                                 0xa8 (size before relaxing)
- .stab          0x000029d0       0x9c c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(strnlen.o)
-                                 0xa8 (size before relaxing)
- .stab          0x00002a6c      0x480 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
-                                0x48c (size before relaxing)
 
-.stabstr        0x00000000      0xdff
+.stabstr        0x00000000      0xc98
  *(.stabstr)
- .stabstr       0x00000000      0xdff c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5/crtm32u4.o
+ .stabstr       0x00000000      0xc98 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5/crtm32u4.o
 
 .stab.excl
  *(.stab.excl)
@@ -1388,8 +1300,6 @@ LOAD c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7
  .comment       0x00000000       0x30 obj/RotEncoder.o
  .comment       0x00000000       0x30 obj/Motor.o
  .comment       0x00000000       0x30 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
- .comment       0x00000000       0x30 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
- .comment       0x00000000       0x30 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
 
 .debug
  *(.debug)
@@ -1403,7 +1313,7 @@ LOAD c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x878
+.debug_aranges  0x00000000      0x838
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x68 obj/main.o
@@ -1478,305 +1388,287 @@ LOAD c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7
  .debug_aranges
                 0x00000738       0x50 obj/irTrans.o
  .debug_aranges
-                0x00000788       0x40 obj/led7seg.o
+                0x00000788       0x38 obj/led7seg.o
  .debug_aranges
-                0x000007c8       0x28 obj/RotEncoder.o
+                0x000007c0       0x30 obj/RotEncoder.o
  .debug_aranges
                 0x000007f0       0x28 obj/Motor.o
  .debug_aranges
                 0x00000818       0x20 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
- .debug_aranges
-                0x00000838       0x20 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
- .debug_aranges
-                0x00000858       0x20 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0xc6bf
+.debug_info     0x00000000     0xbeec
  *(.debug_info)
- .debug_info    0x00000000      0x94b obj/main.o
- .debug_info    0x0000094b      0x793 obj/Descriptors.o
- .debug_info    0x000010de      0x736 obj/HIDParser.o
- .debug_info    0x00001814       0xce obj/Device_AVR8.o
- .debug_info    0x000018e2     0x17b7 obj/EndpointStream_AVR8.o
- .debug_info    0x00003099      0x617 obj/Endpoint_AVR8.o
- .debug_info    0x000036b0       0x52 obj/Host_AVR8.o
- .debug_info    0x00003702       0x52 obj/PipeStream_AVR8.o
- .debug_info    0x00003754       0x52 obj/Pipe_AVR8.o
- .debug_info    0x000037a6      0x4c7 obj/USBController_AVR8.o
- .debug_info    0x00003c6d      0x7c6 obj/USBInterrupt_AVR8.o
- .debug_info    0x00004433      0x3c9 obj/ConfigDescriptors.o
- .debug_info    0x000047fc      0xa71 obj/DeviceStandardReq.o
- .debug_info    0x0000526d       0x74 obj/Events.o
- .debug_info    0x000052e1       0x52 obj/HostStandardReq.o
- .debug_info    0x00005333      0x269 obj/USBTask.o
- .debug_info    0x0000559c      0x8ec obj/AudioClassDevice.o
- .debug_info    0x00005e88     0x1028 obj/CDCClassDevice.o
- .debug_info    0x00006eb0      0x9fa obj/HIDClassDevice.o
- .debug_info    0x000078aa      0x953 obj/MassStorageClassDevice.o
- .debug_info    0x000081fd      0x62d obj/MIDIClassDevice.o
- .debug_info    0x0000882a      0xce1 obj/PrinterClassDevice.o
- .debug_info    0x0000950b     0x116d obj/RNDISClassDevice.o
- .debug_info    0x0000a678       0x52 obj/AndroidAccessoryClassHost.o
- .debug_info    0x0000a6ca       0x52 obj/AudioClassHost.o
- .debug_info    0x0000a71c       0x52 obj/CDCClassHost.o
- .debug_info    0x0000a76e       0x52 obj/HIDClassHost.o
- .debug_info    0x0000a7c0       0x52 obj/MassStorageClassHost.o
- .debug_info    0x0000a812       0x52 obj/MIDIClassHost.o
- .debug_info    0x0000a864       0x52 obj/PrinterClassHost.o
- .debug_info    0x0000a8b6       0x52 obj/RNDISClassHost.o
- .debug_info    0x0000a908       0x52 obj/StillImageClassHost.o
- .debug_info    0x0000a95a      0x3eb obj/irSend.o
- .debug_info    0x0000ad45      0x24b obj/IRremote.o
- .debug_info    0x0000af90      0x517 obj/irRecv.o
- .debug_info    0x0000b4a7      0x524 obj/irTrans.o
- .debug_info    0x0000b9cb      0x20d obj/led7seg.o
- .debug_info    0x0000bbd8      0x12b obj/RotEncoder.o
- .debug_info    0x0000bd03       0xfb obj/Motor.o
- .debug_info    0x0000bdfe      0x174 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
- .debug_info    0x0000bf72      0x204 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
- .debug_info    0x0000c176      0x549 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+ .debug_info    0x00000000      0x911 obj/main.o
+ .debug_info    0x00000911      0x793 obj/Descriptors.o
+ .debug_info    0x000010a4      0x736 obj/HIDParser.o
+ .debug_info    0x000017da       0xce obj/Device_AVR8.o
+ .debug_info    0x000018a8     0x17b7 obj/EndpointStream_AVR8.o
+ .debug_info    0x0000305f      0x617 obj/Endpoint_AVR8.o
+ .debug_info    0x00003676       0x52 obj/Host_AVR8.o
+ .debug_info    0x000036c8       0x52 obj/PipeStream_AVR8.o
+ .debug_info    0x0000371a       0x52 obj/Pipe_AVR8.o
+ .debug_info    0x0000376c      0x4c7 obj/USBController_AVR8.o
+ .debug_info    0x00003c33      0x7c6 obj/USBInterrupt_AVR8.o
+ .debug_info    0x000043f9      0x3c9 obj/ConfigDescriptors.o
+ .debug_info    0x000047c2      0xa71 obj/DeviceStandardReq.o
+ .debug_info    0x00005233       0x74 obj/Events.o
+ .debug_info    0x000052a7       0x52 obj/HostStandardReq.o
+ .debug_info    0x000052f9      0x269 obj/USBTask.o
+ .debug_info    0x00005562      0x8ec obj/AudioClassDevice.o
+ .debug_info    0x00005e4e     0x1028 obj/CDCClassDevice.o
+ .debug_info    0x00006e76      0x9fa obj/HIDClassDevice.o
+ .debug_info    0x00007870      0x953 obj/MassStorageClassDevice.o
+ .debug_info    0x000081c3      0x62d obj/MIDIClassDevice.o
+ .debug_info    0x000087f0      0xce1 obj/PrinterClassDevice.o
+ .debug_info    0x000094d1     0x116d obj/RNDISClassDevice.o
+ .debug_info    0x0000a63e       0x52 obj/AndroidAccessoryClassHost.o
+ .debug_info    0x0000a690       0x52 obj/AudioClassHost.o
+ .debug_info    0x0000a6e2       0x52 obj/CDCClassHost.o
+ .debug_info    0x0000a734       0x52 obj/HIDClassHost.o
+ .debug_info    0x0000a786       0x52 obj/MassStorageClassHost.o
+ .debug_info    0x0000a7d8       0x52 obj/MIDIClassHost.o
+ .debug_info    0x0000a82a       0x52 obj/PrinterClassHost.o
+ .debug_info    0x0000a87c       0x52 obj/RNDISClassHost.o
+ .debug_info    0x0000a8ce       0x52 obj/StillImageClassHost.o
+ .debug_info    0x0000a920      0x3cf obj/irSend.o
+ .debug_info    0x0000acef      0x24b obj/IRremote.o
+ .debug_info    0x0000af3a      0x517 obj/irRecv.o
+ .debug_info    0x0000b451      0x524 obj/irTrans.o
+ .debug_info    0x0000b975      0x1e1 obj/led7seg.o
+ .debug_info    0x0000bb56      0x127 obj/RotEncoder.o
+ .debug_info    0x0000bc7d       0xfb obj/Motor.o
+ .debug_info    0x0000bd78      0x174 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000     0x39f2
+.debug_abbrev   0x00000000     0x36d4
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x3c5 obj/main.o
- .debug_abbrev  0x000003c5      0x14e obj/Descriptors.o
- .debug_abbrev  0x00000513      0x229 obj/HIDParser.o
- .debug_abbrev  0x0000073c       0x7e obj/Device_AVR8.o
- .debug_abbrev  0x000007ba      0x218 obj/EndpointStream_AVR8.o
- .debug_abbrev  0x000009d2      0x220 obj/Endpoint_AVR8.o
- .debug_abbrev  0x00000bf2       0x24 obj/Host_AVR8.o
- .debug_abbrev  0x00000c16       0x24 obj/PipeStream_AVR8.o
- .debug_abbrev  0x00000c3a       0x24 obj/Pipe_AVR8.o
- .debug_abbrev  0x00000c5e      0x194 obj/USBController_AVR8.o
- .debug_abbrev  0x00000df2      0x22d obj/USBInterrupt_AVR8.o
- .debug_abbrev  0x0000101f      0x181 obj/ConfigDescriptors.o
- .debug_abbrev  0x000011a0      0x2c5 obj/DeviceStandardReq.o
- .debug_abbrev  0x00001465       0x42 obj/Events.o
- .debug_abbrev  0x000014a7       0x24 obj/HostStandardReq.o
- .debug_abbrev  0x000014cb      0x168 obj/USBTask.o
- .debug_abbrev  0x00001633      0x208 obj/AudioClassDevice.o
- .debug_abbrev  0x0000183b      0x444 obj/CDCClassDevice.o
- .debug_abbrev  0x00001c7f      0x27d obj/HIDClassDevice.o
- .debug_abbrev  0x00001efc      0x2ad obj/MassStorageClassDevice.o
- .debug_abbrev  0x000021a9      0x243 obj/MIDIClassDevice.o
- .debug_abbrev  0x000023ec      0x341 obj/PrinterClassDevice.o
- .debug_abbrev  0x0000272d      0x374 obj/RNDISClassDevice.o
- .debug_abbrev  0x00002aa1       0x24 obj/AndroidAccessoryClassHost.o
- .debug_abbrev  0x00002ac5       0x24 obj/AudioClassHost.o
- .debug_abbrev  0x00002ae9       0x24 obj/CDCClassHost.o
- .debug_abbrev  0x00002b0d       0x24 obj/HIDClassHost.o
- .debug_abbrev  0x00002b31       0x24 obj/MassStorageClassHost.o
- .debug_abbrev  0x00002b55       0x24 obj/MIDIClassHost.o
- .debug_abbrev  0x00002b79       0x24 obj/PrinterClassHost.o
- .debug_abbrev  0x00002b9d       0x24 obj/RNDISClassHost.o
- .debug_abbrev  0x00002bc1       0x24 obj/StillImageClassHost.o
- .debug_abbrev  0x00002be5      0x1f2 obj/irSend.o
- .debug_abbrev  0x00002dd7       0xed obj/IRremote.o
- .debug_abbrev  0x00002ec4      0x24e obj/irRecv.o
- .debug_abbrev  0x00003112      0x221 obj/irTrans.o
- .debug_abbrev  0x00003333      0x149 obj/led7seg.o
- .debug_abbrev  0x0000347c       0xc5 obj/RotEncoder.o
- .debug_abbrev  0x00003541       0xc0 obj/Motor.o
- .debug_abbrev  0x00003601       0xf1 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
- .debug_abbrev  0x000036f2      0x12a c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
- .debug_abbrev  0x0000381c      0x1d6 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+ .debug_abbrev  0x00000000      0x3b6 obj/main.o
+ .debug_abbrev  0x000003b6      0x14e obj/Descriptors.o
+ .debug_abbrev  0x00000504      0x229 obj/HIDParser.o
+ .debug_abbrev  0x0000072d       0x7e obj/Device_AVR8.o
+ .debug_abbrev  0x000007ab      0x218 obj/EndpointStream_AVR8.o
+ .debug_abbrev  0x000009c3      0x220 obj/Endpoint_AVR8.o
+ .debug_abbrev  0x00000be3       0x24 obj/Host_AVR8.o
+ .debug_abbrev  0x00000c07       0x24 obj/PipeStream_AVR8.o
+ .debug_abbrev  0x00000c2b       0x24 obj/Pipe_AVR8.o
+ .debug_abbrev  0x00000c4f      0x194 obj/USBController_AVR8.o
+ .debug_abbrev  0x00000de3      0x22d obj/USBInterrupt_AVR8.o
+ .debug_abbrev  0x00001010      0x181 obj/ConfigDescriptors.o
+ .debug_abbrev  0x00001191      0x2c5 obj/DeviceStandardReq.o
+ .debug_abbrev  0x00001456       0x42 obj/Events.o
+ .debug_abbrev  0x00001498       0x24 obj/HostStandardReq.o
+ .debug_abbrev  0x000014bc      0x168 obj/USBTask.o
+ .debug_abbrev  0x00001624      0x208 obj/AudioClassDevice.o
+ .debug_abbrev  0x0000182c      0x444 obj/CDCClassDevice.o
+ .debug_abbrev  0x00001c70      0x27d obj/HIDClassDevice.o
+ .debug_abbrev  0x00001eed      0x2ad obj/MassStorageClassDevice.o
+ .debug_abbrev  0x0000219a      0x243 obj/MIDIClassDevice.o
+ .debug_abbrev  0x000023dd      0x341 obj/PrinterClassDevice.o
+ .debug_abbrev  0x0000271e      0x374 obj/RNDISClassDevice.o
+ .debug_abbrev  0x00002a92       0x24 obj/AndroidAccessoryClassHost.o
+ .debug_abbrev  0x00002ab6       0x24 obj/AudioClassHost.o
+ .debug_abbrev  0x00002ada       0x24 obj/CDCClassHost.o
+ .debug_abbrev  0x00002afe       0x24 obj/HIDClassHost.o
+ .debug_abbrev  0x00002b22       0x24 obj/MassStorageClassHost.o
+ .debug_abbrev  0x00002b46       0x24 obj/MIDIClassHost.o
+ .debug_abbrev  0x00002b6a       0x24 obj/PrinterClassHost.o
+ .debug_abbrev  0x00002b8e       0x24 obj/RNDISClassHost.o
+ .debug_abbrev  0x00002bb2       0x24 obj/StillImageClassHost.o
+ .debug_abbrev  0x00002bd6      0x1f6 obj/irSend.o
+ .debug_abbrev  0x00002dcc       0xed obj/IRremote.o
+ .debug_abbrev  0x00002eb9      0x24e obj/irRecv.o
+ .debug_abbrev  0x00003107      0x221 obj/irTrans.o
+ .debug_abbrev  0x00003328      0x131 obj/led7seg.o
+ .debug_abbrev  0x00003459       0xca obj/RotEncoder.o
+ .debug_abbrev  0x00003523       0xc0 obj/Motor.o
+ .debug_abbrev  0x000035e3       0xf1 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
 
-.debug_line     0x00000000     0x7efa
+.debug_line     0x00000000     0x79c9
  *(.debug_line)
- .debug_line    0x00000000      0x5da obj/main.o
- .debug_line    0x000005da      0x296 obj/Descriptors.o
- .debug_line    0x00000870      0x5fb obj/HIDParser.o
- .debug_line    0x00000e6b      0x179 obj/Device_AVR8.o
- .debug_line    0x00000fe4     0x1654 obj/EndpointStream_AVR8.o
- .debug_line    0x00002638      0x52c obj/Endpoint_AVR8.o
- .debug_line    0x00002b64       0x1a obj/Host_AVR8.o
- .debug_line    0x00002b7e       0x1a obj/PipeStream_AVR8.o
- .debug_line    0x00002b98       0x1a obj/Pipe_AVR8.o
- .debug_line    0x00002bb2      0x376 obj/USBController_AVR8.o
- .debug_line    0x00002f28      0x5ca obj/USBInterrupt_AVR8.o
- .debug_line    0x000034f2      0x261 obj/ConfigDescriptors.o
- .debug_line    0x00003753      0x4fb obj/DeviceStandardReq.o
- .debug_line    0x00003c4e       0x64 obj/Events.o
- .debug_line    0x00003cb2       0x1a obj/HostStandardReq.o
- .debug_line    0x00003ccc      0x1db obj/USBTask.o
- .debug_line    0x00003ea7      0x485 obj/AudioClassDevice.o
- .debug_line    0x0000432c      0xa05 obj/CDCClassDevice.o
- .debug_line    0x00004d31      0x5c2 obj/HIDClassDevice.o
- .debug_line    0x000052f3      0x55b obj/MassStorageClassDevice.o
- .debug_line    0x0000584e      0x413 obj/MIDIClassDevice.o
- .debug_line    0x00005c61      0x763 obj/PrinterClassDevice.o
- .debug_line    0x000063c4      0x79d obj/RNDISClassDevice.o
- .debug_line    0x00006b61       0x1a obj/AndroidAccessoryClassHost.o
- .debug_line    0x00006b7b       0x1a obj/AudioClassHost.o
- .debug_line    0x00006b95       0x1a obj/CDCClassHost.o
- .debug_line    0x00006baf       0x1a obj/HIDClassHost.o
- .debug_line    0x00006bc9       0x1a obj/MassStorageClassHost.o
- .debug_line    0x00006be3       0x1a obj/MIDIClassHost.o
- .debug_line    0x00006bfd       0x1a obj/PrinterClassHost.o
- .debug_line    0x00006c17       0x1a obj/RNDISClassHost.o
- .debug_line    0x00006c31       0x1a obj/StillImageClassHost.o
- .debug_line    0x00006c4b      0x220 obj/irSend.o
- .debug_line    0x00006e6b      0x204 obj/IRremote.o
- .debug_line    0x0000706f      0x284 obj/irRecv.o
- .debug_line    0x000072f3      0x1a0 obj/irTrans.o
- .debug_line    0x00007493      0x1f5 obj/led7seg.o
- .debug_line    0x00007688      0x148 obj/RotEncoder.o
- .debug_line    0x000077d0      0x139 obj/Motor.o
- .debug_line    0x00007909      0x104 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
- .debug_line    0x00007a0d      0x194 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
- .debug_line    0x00007ba1      0x359 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+ .debug_line    0x00000000      0x5c4 obj/main.o
+ .debug_line    0x000005c4      0x296 obj/Descriptors.o
+ .debug_line    0x0000085a      0x5fb obj/HIDParser.o
+ .debug_line    0x00000e55      0x179 obj/Device_AVR8.o
+ .debug_line    0x00000fce     0x1654 obj/EndpointStream_AVR8.o
+ .debug_line    0x00002622      0x52c obj/Endpoint_AVR8.o
+ .debug_line    0x00002b4e       0x1a obj/Host_AVR8.o
+ .debug_line    0x00002b68       0x1a obj/PipeStream_AVR8.o
+ .debug_line    0x00002b82       0x1a obj/Pipe_AVR8.o
+ .debug_line    0x00002b9c      0x376 obj/USBController_AVR8.o
+ .debug_line    0x00002f12      0x5ca obj/USBInterrupt_AVR8.o
+ .debug_line    0x000034dc      0x261 obj/ConfigDescriptors.o
+ .debug_line    0x0000373d      0x4fb obj/DeviceStandardReq.o
+ .debug_line    0x00003c38       0x64 obj/Events.o
+ .debug_line    0x00003c9c       0x1a obj/HostStandardReq.o
+ .debug_line    0x00003cb6      0x1db obj/USBTask.o
+ .debug_line    0x00003e91      0x485 obj/AudioClassDevice.o
+ .debug_line    0x00004316      0xa05 obj/CDCClassDevice.o
+ .debug_line    0x00004d1b      0x5c2 obj/HIDClassDevice.o
+ .debug_line    0x000052dd      0x55b obj/MassStorageClassDevice.o
+ .debug_line    0x00005838      0x413 obj/MIDIClassDevice.o
+ .debug_line    0x00005c4b      0x763 obj/PrinterClassDevice.o
+ .debug_line    0x000063ae      0x79d obj/RNDISClassDevice.o
+ .debug_line    0x00006b4b       0x1a obj/AndroidAccessoryClassHost.o
+ .debug_line    0x00006b65       0x1a obj/AudioClassHost.o
+ .debug_line    0x00006b7f       0x1a obj/CDCClassHost.o
+ .debug_line    0x00006b99       0x1a obj/HIDClassHost.o
+ .debug_line    0x00006bb3       0x1a obj/MassStorageClassHost.o
+ .debug_line    0x00006bcd       0x1a obj/MIDIClassHost.o
+ .debug_line    0x00006be7       0x1a obj/PrinterClassHost.o
+ .debug_line    0x00006c01       0x1a obj/RNDISClassHost.o
+ .debug_line    0x00006c1b       0x1a obj/StillImageClassHost.o
+ .debug_line    0x00006c35      0x22a obj/irSend.o
+ .debug_line    0x00006e5f      0x204 obj/IRremote.o
+ .debug_line    0x00007063      0x284 obj/irRecv.o
+ .debug_line    0x000072e7      0x1a0 obj/irTrans.o
+ .debug_line    0x00007487      0x1b4 obj/led7seg.o
+ .debug_line    0x0000763b      0x151 obj/RotEncoder.o
+ .debug_line    0x0000778c      0x139 obj/Motor.o
+ .debug_line    0x000078c5      0x104 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
 
-.debug_frame    0x00000000     0x1530
+.debug_frame    0x00000000     0x148c
  *(.debug_frame)
- .debug_frame   0x00000000       0xd0 obj/main.o
- .debug_frame   0x000000d0       0x24 obj/Descriptors.o
- .debug_frame   0x000000f4      0x10c obj/HIDParser.o
- .debug_frame   0x00000200       0x24 obj/Device_AVR8.o
- .debug_frame   0x00000224      0x42c obj/EndpointStream_AVR8.o
- .debug_frame   0x00000650       0x78 obj/Endpoint_AVR8.o
- .debug_frame   0x000006c8       0x58 obj/USBController_AVR8.o
- .debug_frame   0x00000720       0xe8 obj/USBInterrupt_AVR8.o
- .debug_frame   0x00000808      0x108 obj/ConfigDescriptors.o
- .debug_frame   0x00000910       0x3c obj/DeviceStandardReq.o
- .debug_frame   0x0000094c       0x24 obj/Events.o
- .debug_frame   0x00000970       0x2c obj/USBTask.o
- .debug_frame   0x0000099c       0xb0 obj/AudioClassDevice.o
- .debug_frame   0x00000a4c      0x1a0 obj/CDCClassDevice.o
- .debug_frame   0x00000bec       0xe8 obj/HIDClassDevice.o
- .debug_frame   0x00000cd4       0x80 obj/MassStorageClassDevice.o
- .debug_frame   0x00000d54       0x70 obj/MIDIClassDevice.o
- .debug_frame   0x00000dc4      0x144 obj/PrinterClassDevice.o
- .debug_frame   0x00000f08      0x11c obj/RNDISClassDevice.o
- .debug_frame   0x00001024       0x64 obj/irSend.o
- .debug_frame   0x00001088       0xd8 obj/IRremote.o
- .debug_frame   0x00001160      0x104 obj/irRecv.o
- .debug_frame   0x00001264       0xb0 obj/irTrans.o
- .debug_frame   0x00001314       0xb8 obj/led7seg.o
- .debug_frame   0x000013cc       0x7c obj/RotEncoder.o
- .debug_frame   0x00001448       0x34 obj/Motor.o
- .debug_frame   0x0000147c       0x38 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
- .debug_frame   0x000014b4       0x30 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
- .debug_frame   0x000014e4       0x4c c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+ .debug_frame   0x00000000       0xbc obj/main.o
+ .debug_frame   0x000000bc       0x24 obj/Descriptors.o
+ .debug_frame   0x000000e0      0x10c obj/HIDParser.o
+ .debug_frame   0x000001ec       0x24 obj/Device_AVR8.o
+ .debug_frame   0x00000210      0x42c obj/EndpointStream_AVR8.o
+ .debug_frame   0x0000063c       0x78 obj/Endpoint_AVR8.o
+ .debug_frame   0x000006b4       0x58 obj/USBController_AVR8.o
+ .debug_frame   0x0000070c       0xe8 obj/USBInterrupt_AVR8.o
+ .debug_frame   0x000007f4      0x108 obj/ConfigDescriptors.o
+ .debug_frame   0x000008fc       0x3c obj/DeviceStandardReq.o
+ .debug_frame   0x00000938       0x24 obj/Events.o
+ .debug_frame   0x0000095c       0x2c obj/USBTask.o
+ .debug_frame   0x00000988       0xb0 obj/AudioClassDevice.o
+ .debug_frame   0x00000a38      0x1a0 obj/CDCClassDevice.o
+ .debug_frame   0x00000bd8       0xe8 obj/HIDClassDevice.o
+ .debug_frame   0x00000cc0       0x80 obj/MassStorageClassDevice.o
+ .debug_frame   0x00000d40       0x70 obj/MIDIClassDevice.o
+ .debug_frame   0x00000db0      0x144 obj/PrinterClassDevice.o
+ .debug_frame   0x00000ef4      0x11c obj/RNDISClassDevice.o
+ .debug_frame   0x00001010       0x50 obj/irSend.o
+ .debug_frame   0x00001060       0xd8 obj/IRremote.o
+ .debug_frame   0x00001138      0x104 obj/irRecv.o
+ .debug_frame   0x0000123c       0xb0 obj/irTrans.o
+ .debug_frame   0x000012ec       0xa8 obj/led7seg.o
+ .debug_frame   0x00001394       0x8c obj/RotEncoder.o
+ .debug_frame   0x00001420       0x34 obj/Motor.o
+ .debug_frame   0x00001454       0x38 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
 
-.debug_str      0x00000000     0x4607
+.debug_str      0x00000000     0x44b5
  *(.debug_str)
- .debug_str     0x00000000      0x4f5 obj/main.o
-                                0x575 (size before relaxing)
- .debug_str     0x000004f5      0x90a obj/Descriptors.o
+ .debug_str     0x00000000      0x4ed obj/main.o
+                                0x56d (size before relaxing)
+ .debug_str     0x000004ed      0x90a obj/Descriptors.o
                                 0xaac (size before relaxing)
- .debug_str     0x00000dff      0x4a7 obj/HIDParser.o
+ .debug_str     0x00000df7      0x4a7 obj/HIDParser.o
                                 0x5d7 (size before relaxing)
- .debug_str     0x000012a6       0x89 obj/Device_AVR8.o
+ .debug_str     0x0000129e       0x89 obj/Device_AVR8.o
                                 0x113 (size before relaxing)
- .debug_str     0x0000132f      0x690 obj/EndpointStream_AVR8.o
+ .debug_str     0x00001327      0x690 obj/EndpointStream_AVR8.o
                                 0x776 (size before relaxing)
- .debug_str     0x000019bf      0x2e8 obj/Endpoint_AVR8.o
+ .debug_str     0x000019b7      0x2e8 obj/Endpoint_AVR8.o
                                 0x535 (size before relaxing)
- .debug_str     0x00001ca7       0x3f obj/Host_AVR8.o
+ .debug_str     0x00001c9f       0x3f obj/Host_AVR8.o
                                  0xb2 (size before relaxing)
- .debug_str     0x00001ce6       0x45 obj/PipeStream_AVR8.o
+ .debug_str     0x00001cde       0x45 obj/PipeStream_AVR8.o
                                  0xb8 (size before relaxing)
- .debug_str     0x00001d2b       0x3f obj/Pipe_AVR8.o
+ .debug_str     0x00001d23       0x3f obj/Pipe_AVR8.o
                                  0xb2 (size before relaxing)
- .debug_str     0x00001d6a      0x28e obj/USBController_AVR8.o
+ .debug_str     0x00001d62      0x28e obj/USBController_AVR8.o
                                 0x474 (size before relaxing)
- .debug_str     0x00001ff8      0x187 obj/USBInterrupt_AVR8.o
+ .debug_str     0x00001ff0      0x187 obj/USBInterrupt_AVR8.o
                                 0x4f3 (size before relaxing)
- .debug_str     0x0000217f      0x239 obj/ConfigDescriptors.o
+ .debug_str     0x00002177      0x239 obj/ConfigDescriptors.o
                                 0x2fb (size before relaxing)
- .debug_str     0x000023b8      0x413 obj/DeviceStandardReq.o
+ .debug_str     0x000023b0      0x413 obj/DeviceStandardReq.o
                                 0x8e7 (size before relaxing)
- .debug_str     0x000027cb       0x46 obj/Events.o
+ .debug_str     0x000027c3       0x46 obj/Events.o
                                  0xb9 (size before relaxing)
- .debug_str     0x00002811       0x40 obj/HostStandardReq.o
+ .debug_str     0x00002809       0x40 obj/HostStandardReq.o
                                  0xb3 (size before relaxing)
- .debug_str     0x00002851       0x54 obj/USBTask.o
+ .debug_str     0x00002849       0x54 obj/USBTask.o
                                 0x29a (size before relaxing)
- .debug_str     0x000028a5      0x295 obj/AudioClassDevice.o
+ .debug_str     0x0000289d      0x295 obj/AudioClassDevice.o
                                 0x5cf (size before relaxing)
- .debug_str     0x00002b3a      0x2ba obj/CDCClassDevice.o
+ .debug_str     0x00002b32      0x2ba obj/CDCClassDevice.o
                                 0x987 (size before relaxing)
- .debug_str     0x00002df4      0x25d obj/HIDClassDevice.o
+ .debug_str     0x00002dec      0x25d obj/HIDClassDevice.o
                                 0x621 (size before relaxing)
- .debug_str     0x00003051      0x276 obj/MassStorageClassDevice.o
+ .debug_str     0x00003049      0x276 obj/MassStorageClassDevice.o
                                 0x71b (size before relaxing)
- .debug_str     0x000032c7      0x12a obj/MIDIClassDevice.o
+ .debug_str     0x000032bf      0x12a obj/MIDIClassDevice.o
                                 0x590 (size before relaxing)
- .debug_str     0x000033f1      0x27e obj/PrinterClassDevice.o
+ .debug_str     0x000033e9      0x27e obj/PrinterClassDevice.o
                                 0x859 (size before relaxing)
- .debug_str     0x0000366f      0x712 obj/RNDISClassDevice.o
+ .debug_str     0x00003667      0x712 obj/RNDISClassDevice.o
                                 0xc91 (size before relaxing)
- .debug_str     0x00003d81       0x50 obj/AndroidAccessoryClassHost.o
+ .debug_str     0x00003d79       0x50 obj/AndroidAccessoryClassHost.o
                                  0xc3 (size before relaxing)
- .debug_str     0x00003dd1       0x45 obj/AudioClassHost.o
+ .debug_str     0x00003dc9       0x45 obj/AudioClassHost.o
                                  0xb8 (size before relaxing)
- .debug_str     0x00003e16       0x43 obj/CDCClassHost.o
+ .debug_str     0x00003e0e       0x43 obj/CDCClassHost.o
                                  0xb6 (size before relaxing)
- .debug_str     0x00003e59       0x43 obj/HIDClassHost.o
+ .debug_str     0x00003e51       0x43 obj/HIDClassHost.o
                                  0xb6 (size before relaxing)
- .debug_str     0x00003e9c       0x4b obj/MassStorageClassHost.o
+ .debug_str     0x00003e94       0x4b obj/MassStorageClassHost.o
                                  0xbe (size before relaxing)
- .debug_str     0x00003ee7       0x44 obj/MIDIClassHost.o
+ .debug_str     0x00003edf       0x44 obj/MIDIClassHost.o
                                  0xb7 (size before relaxing)
- .debug_str     0x00003f2b       0x47 obj/PrinterClassHost.o
+ .debug_str     0x00003f23       0x47 obj/PrinterClassHost.o
                                  0xba (size before relaxing)
- .debug_str     0x00003f72       0x45 obj/RNDISClassHost.o
+ .debug_str     0x00003f6a       0x45 obj/RNDISClassHost.o
                                  0xb8 (size before relaxing)
- .debug_str     0x00003fb7       0x4a obj/StillImageClassHost.o
+ .debug_str     0x00003faf       0x4a obj/StillImageClassHost.o
                                  0xbd (size before relaxing)
- .debug_str     0x00004001       0xa6 obj/irSend.o
+ .debug_str     0x00003ff9       0xa6 obj/irSend.o
                                 0x1cc (size before relaxing)
- .debug_str     0x000040a7       0xd9 obj/IRremote.o
+ .debug_str     0x0000409f       0xd9 obj/IRremote.o
                                 0x1ca (size before relaxing)
- .debug_str     0x00004180      0x148 obj/irRecv.o
+ .debug_str     0x00004178      0x148 obj/irRecv.o
                                 0x2cc (size before relaxing)
- .debug_str     0x000042c8       0x88 obj/irTrans.o
+ .debug_str     0x000042c0       0x88 obj/irTrans.o
                                 0x304 (size before relaxing)
- .debug_str     0x00004350       0xc0 obj/led7seg.o
-                                0x1a7 (size before relaxing)
- .debug_str     0x00004410       0x38 obj/RotEncoder.o
-                                0x136 (size before relaxing)
- .debug_str     0x00004448        0x8 obj/Motor.o
+ .debug_str     0x00004348       0xb3 obj/led7seg.o
+                                0x19a (size before relaxing)
+ .debug_str     0x000043fb       0x49 obj/RotEncoder.o
+                                0x140 (size before relaxing)
+ .debug_str     0x00004444        0x8 obj/Motor.o
                                  0xfb (size before relaxing)
- .debug_str     0x00004450       0x69 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
+ .debug_str     0x0000444c       0x69 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
                                 0x10d (size before relaxing)
- .debug_str     0x000044b9       0x8e c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
-                                0x13c (size before relaxing)
- .debug_str     0x00004547       0xc0 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
-                                0x1ad (size before relaxing)
 
-.debug_loc      0x00000000     0x7f2f
+.debug_loc      0x00000000     0x78f4
  *(.debug_loc)
- .debug_loc     0x00000000      0x1a1 obj/main.o
- .debug_loc     0x000001a1      0x1f0 obj/Descriptors.o
- .debug_loc     0x00000391      0x90e obj/HIDParser.o
- .debug_loc     0x00000c9f     0x1f1b obj/EndpointStream_AVR8.o
- .debug_loc     0x00002bba      0x3f7 obj/Endpoint_AVR8.o
- .debug_loc     0x00002fb1       0x49 obj/USBController_AVR8.o
- .debug_loc     0x00002ffa      0x346 obj/USBInterrupt_AVR8.o
- .debug_loc     0x00003340      0x5bd obj/ConfigDescriptors.o
- .debug_loc     0x000038fd      0x297 obj/DeviceStandardReq.o
- .debug_loc     0x00003b94       0x49 obj/USBTask.o
- .debug_loc     0x00003bdd      0x3c6 obj/AudioClassDevice.o
- .debug_loc     0x00003fa3      0xb09 obj/CDCClassDevice.o
- .debug_loc     0x00004aac      0x4a4 obj/HIDClassDevice.o
- .debug_loc     0x00004f50      0x29f obj/MassStorageClassDevice.o
- .debug_loc     0x000051ef      0x2c4 obj/MIDIClassDevice.o
- .debug_loc     0x000054b3      0x88a obj/PrinterClassDevice.o
- .debug_loc     0x00005d3d      0xdec obj/RNDISClassDevice.o
- .debug_loc     0x00006b29      0x288 obj/irSend.o
- .debug_loc     0x00006db1      0x2fd obj/IRremote.o
- .debug_loc     0x000070ae      0x3fe obj/irRecv.o
- .debug_loc     0x000074ac      0x1a5 obj/irTrans.o
- .debug_loc     0x00007651      0x1aa obj/led7seg.o
- .debug_loc     0x000077fb       0xcb obj/RotEncoder.o
- .debug_loc     0x000078c6       0x38 obj/Motor.o
- .debug_loc     0x000078fe       0xf3 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
- .debug_loc     0x000079f1       0x21 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
- .debug_loc     0x00007a12      0x51d c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+ .debug_loc     0x00000000      0x12a obj/main.o
+ .debug_loc     0x0000012a      0x1f0 obj/Descriptors.o
+ .debug_loc     0x0000031a      0x90e obj/HIDParser.o
+ .debug_loc     0x00000c28     0x1f1b obj/EndpointStream_AVR8.o
+ .debug_loc     0x00002b43      0x3f7 obj/Endpoint_AVR8.o
+ .debug_loc     0x00002f3a       0x49 obj/USBController_AVR8.o
+ .debug_loc     0x00002f83      0x346 obj/USBInterrupt_AVR8.o
+ .debug_loc     0x000032c9      0x5bd obj/ConfigDescriptors.o
+ .debug_loc     0x00003886      0x297 obj/DeviceStandardReq.o
+ .debug_loc     0x00003b1d       0x49 obj/USBTask.o
+ .debug_loc     0x00003b66      0x3c6 obj/AudioClassDevice.o
+ .debug_loc     0x00003f2c      0xb09 obj/CDCClassDevice.o
+ .debug_loc     0x00004a35      0x4a4 obj/HIDClassDevice.o
+ .debug_loc     0x00004ed9      0x29f obj/MassStorageClassDevice.o
+ .debug_loc     0x00005178      0x2c4 obj/MIDIClassDevice.o
+ .debug_loc     0x0000543c      0x88a obj/PrinterClassDevice.o
+ .debug_loc     0x00005cc6      0xdec obj/RNDISClassDevice.o
+ .debug_loc     0x00006ab2      0x202 obj/irSend.o
+ .debug_loc     0x00006cb4      0x2fd obj/IRremote.o
+ .debug_loc     0x00006fb1      0x3fe obj/irRecv.o
+ .debug_loc     0x000073af      0x1a5 obj/irTrans.o
+ .debug_loc     0x00007554      0x1aa obj/led7seg.o
+ .debug_loc     0x000076fe       0xcb obj/RotEncoder.o
+ .debug_loc     0x000077c9       0x38 obj/Motor.o
+ .debug_loc     0x00007801       0xf3 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1784,7 +1676,7 @@ LOAD c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x888
+.debug_ranges   0x00000000      0x868
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x58 obj/main.o
  .debug_ranges  0x00000058       0x10 obj/Descriptors.o
@@ -1809,12 +1701,10 @@ LOAD c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7
  .debug_ranges  0x00000748       0x28 obj/IRremote.o
  .debug_ranges  0x00000770       0x48 obj/irRecv.o
  .debug_ranges  0x000007b8       0x40 obj/irTrans.o
- .debug_ranges  0x000007f8       0x30 obj/led7seg.o
- .debug_ranges  0x00000828       0x18 obj/RotEncoder.o
+ .debug_ranges  0x000007f8       0x28 obj/led7seg.o
+ .debug_ranges  0x00000820       0x20 obj/RotEncoder.o
  .debug_ranges  0x00000840       0x18 obj/Motor.o
  .debug_ranges  0x00000858       0x10 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
- .debug_ranges  0x00000868       0x10 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
- .debug_ranges  0x00000878       0x10 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
 
 .debug_macro
  *(.debug_macro)
@@ -1976,13 +1866,11 @@ IrReceiveSetup                                    obj/irTrans.o
                                                   obj/main.o
 IrReceived                                        obj/main.o
 IrSend                                            obj/irTrans.o
-                                                  obj/RotEncoder.o
 IrSendSetup                                       obj/irTrans.o
 LanguageString                                    obj/Descriptors.o
 Led7Seg_Init                                      obj/led7seg.o
 Led7Seg_SetDisplayNumber                          obj/led7seg.o
                                                   obj/RotEncoder.o
-Led7Seg_flip                                      obj/led7seg.o
 MATCH(int, int)                                   obj/IRremote.o
 MATCH_MARK(int, int)                              obj/IRremote.o
                                                   obj/irRecv.o
@@ -2018,6 +1906,7 @@ RNDIS_Device_ProcessControlRequest                obj/RNDISClassDevice.o
 RNDIS_Device_ReadPacket                           obj/RNDISClassDevice.o
 RNDIS_Device_SendPacket                           obj/RNDISClassDevice.o
 RNDIS_Device_USBTask                              obj/RNDISClassDevice.o
+RotEncoderGetVal                                  obj/RotEncoder.o
 SelectADChannel                                   obj/main.o
 SendShiftReg                                      obj/led7seg.o
 SetupHardware                                     obj/main.o
@@ -2124,9 +2013,6 @@ __eerd_byte_m32u4                                 c:/program files (x86)/atmel/a
 __eeupd_byte_m32u4                                c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(eeupd_byte_atmega32u4.o)
                                                   obj/EndpointStream_AVR8.o
 __eeupd_r18_m32u4                                 c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(eeupd_byte_atmega32u4.o)
-__epilogue_restores__                             c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_epilogue.o)
-                                                  c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
-                                                  c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
 __eqsf2                                           c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(cmpsf2.o)
 __fixsfsi                                         c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(fixsfsi.o)
                                                   obj/IRremote.o
@@ -2183,9 +2069,6 @@ __mulsf3_pse                                      c:/program files (x86)/atmel/a
 __mulsf3x                                         c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(mulsf3x.o)
                                                   c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(mulsf3.o)
 __nesf2                                           c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libm.a(cmpsf2.o)
-__prologue_saves__                                c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_prologue.o)
-                                                  c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
-                                                  c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
 __stack                                           c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5/crtm32u4.o
 __strlen_P                                        c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(strlen_P.o)
                                                   obj/CDCClassDevice.o
@@ -2198,8 +2081,6 @@ __udivmodhi4                                      c:/program files (x86)/atmel/a
                                                   obj/irSend.o
 __udivmodsi4                                      c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_udivmodsi4.o)
                                                   obj/irSend.o
-__ultoa_invert                                    c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
-                                                  c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
 __vector_1                                        c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5/crtm32u4.o
 __vector_10                                       obj/USBInterrupt_AVR8.o
                                                   c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5/crtm32u4.o
@@ -2254,7 +2135,6 @@ _exit                                             c:/program files (x86)/atmel/a
 exit                                              c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_exit.o)
                                                   c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5/crtm32u4.o
 fputc                                             c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(fputc.o)
-                                                  c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
                                                   obj/main.o
 g_CurrentDigit                                    obj/led7seg.o
 g_DisplayPatterns                                 obj/led7seg.o
@@ -2275,11 +2155,3 @@ memcpy_P                                          c:/program files (x86)/atmel/a
                                                   obj/RNDISClassDevice.o
 memset                                            c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(memset.o)
                                                   obj/HIDClassDevice.o
-sprintf                                           c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
-                                                  obj/main.o
-strnlen                                           c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(strnlen.o)
-                                                  c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
-strnlen_P                                         c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
-                                                  c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
-vfprintf                                          c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
-                                                  c:/program files (x86)/atmel/avr tools/avr toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5\libc.a(sprintf.o)

@@ -175,8 +175,7 @@ int main(void)
 			fputc('\n', &USBSerialStream);
 		}
 
-		sprintf(str, "%d \r\n", cnt);
-		
+		//sprintf(str, "%d \r\n", cnt);
 		//fputs(str, &USBSerialStream);
 			
 #if IR_RECEIVER
@@ -193,7 +192,26 @@ int main(void)
 		if(cnt % 2 == 1) LEDG_ON;
 #endif
 #else
+	// TRANSMITTER
+	{
+		static int prev_data = 0;
+		int data = RotEncoderGetVal();
+		if(prev_data != data && -256 < data && data < 256){
+			IrSend(data);
+			prev_data = data;
+		}
+	}
 #if TEST_BOARD
+	{
+		static int prev_relay = 0;
+		int relay = (SW_RELAY == 0) ? 0 : 1;
+		if(prev_relay != relay){
+			IrSend((relay == 0) ? IR_CODE_RELAY_OFF : IR_CODE_RELAY_ON);
+			(relay == 0) ? LEDG_OFF : LEDG_ON;
+			prev_relay = relay;
+		}
+	}
+#if 0
 		LEDM_OFF;
 		LEDR_OFF;
 		LEDG_OFF;
@@ -206,11 +224,12 @@ int main(void)
 		if(cnt % 4 == 3) LEDW_ON;
 #endif
 #endif
+#endif
 
 		CDC_Device_USBTask(&VirtualSerial_CDC_Interface);
 		USB_USBTask();
 		
-		_delay_ms(300);
+		_delay_ms(100);
 	}
 }
 
@@ -250,6 +269,7 @@ void SetupHardware(void)
 	sbi(DDRF, 5);	// LED1
 	sbi(DDRF, 6);	// LED2
 	sbi(DDRF, 7);	// LED3
+	cbi(DDRB, 4);	// SW RELAY
 #endif
 #endif
 

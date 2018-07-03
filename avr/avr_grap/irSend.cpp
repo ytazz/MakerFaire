@@ -1,60 +1,22 @@
+#include <LUFA/Platform/Platform.h>
+
 #include "IRremote.h"
 #include "IRremoteInt.h"
 #include "GrapCommon.h"
 
 void TIMER_CONFIG_KHZ(int val)
 {
-  const uint16_t pwmval = SYSCLOCK / 2000 / (val);	/* The period is halved since Phase and Frequency Correct PWM mode */
-  TCCR4A                = (1<<PWM4A);	/* PWM mode based on comparator OCR4A */
-  TCCR4B                = _BV(CS40);	/* Prescaler 1/1 */
-  TCCR4C                = 0;			    /* OC4D is disabled (Normal GPIO) */
-  TCCR4D                = (1<<WGM40);	/* Phase and Frequency Correct PWM */
-  TCCR4E                = 0;
-  TC4H                  = pwmval >> 8;	/* TOP (High byte temporary buffer) */
-  OCR4C                 = pwmval;	      /* TOP */
-  TC4H                  = (pwmval / 3) >> 8;	/* duty ratio 1/3 (High byte temporary buffer) */
-  OCR4A                 = (pwmval / 3) & 255;	/* duty ratio 1/3 */
+	const uint16_t pwmval = SYSCLOCK / 2000 / (val);	/* The period is halved since Phase and Frequency Correct PWM mode */
+	TCCR4A                = (1<<PWM4A);	/* PWM mode based on comparator OCR4A */
+	TCCR4B                = _BV(CS40);	/* Prescaler 1/1 */
+	TCCR4C                = 0;			/* OC4D is disabled (Normal GPIO) */
+	TCCR4D                = (1<<WGM40);	/* Phase and Frequency Correct PWM */
+	TCCR4E                = 0;
+	TC4H                  = pwmval >> 8;	/* TOP (High byte temporary buffer) */
+	OCR4C                 = pwmval;		/* TOP */
+	TC4H                  = (pwmval / 3) >> 8;	/* duty ratio 1/3 (High byte temporary buffer) */
+	OCR4A                 = (pwmval / 3) & 255;	/* duty ratio 1/3 */
 }
-
-#if 0
-//+=============================================================================
-void  IRsend::sendRaw (const unsigned int buf[],  unsigned int len,  unsigned int hz)
-{
-	// Set IR carrier frequency
-	enableIROut(hz);
-
-	for (unsigned int i = 0;  i < len;  i++) {
-		if (i & 1)  space(buf[i]) ;
-		else        mark (buf[i]) ;
-	}
-
-	space(0);  // Always end with the LED off
-}
-
-//+=============================================================================
-// Sends an IR mark for the specified number of microseconds.
-// The mark output is modulated at the PWM frequency.
-//
-void  IRsend::mark (unsigned int time)
-{
-	TIMER_ENABLE_PWM; // Enable pin 3 PWM output
-	if (time > 0) custom_delay_usec(time);
-}
-
-//+=============================================================================
-// Leave pin off for time (given in microseconds)
-// Sends an IR space for the specified number of microseconds.
-// A space is no output, so the PWM output is disabled.
-//
-void  IRsend::space (unsigned int time)
-{
-	TIMER_DISABLE_PWM; // Disable pin 3 PWM output
-	if (time > 0) IRsend::custom_delay_usec(time);
-}
-#endif
-
-
-
 
 //+=============================================================================
 // Enables IR output.  The khz value controls the modulation frequency in kilohertz.
@@ -89,50 +51,9 @@ void  IRsend::enableIROut (int khz)
 #endif
 }
 
-#if 0
-//+=============================================================================
-// Custom delay function that circumvents Arduino's delayMicroseconds limit
-
-#define clockCyclesPerMicrosecond() ( F_CPU / 1000000L )
-
-unsigned long micros() {
-    unsigned long m;
-    uint8_t oldSREG = SREG, t;
-     
-    cli();
-    m = timer0_overflow_count;
-    t = TCNT0;
-    t = TCNT0L;
- 
-    if ((TIFR0 & _BV(TOV0)) && (t < 255))
-        m++;
- 
-    SREG = oldSREG;
-     
-    return ((m << 8) + t) * (64 / clockCyclesPerMicrosecond());
-}
-
-void IRsend::custom_delay_usec(unsigned long uSecs) {
-  if (uSecs > 4) {
-    unsigned long start = micros();
-    unsigned long endMicros = start + uSecs - 4;
-    if (endMicros < start) { // Check if overflow
-      while ( micros() > start ) {} // wait until overflow
-    }
-    while ( micros() < endMicros ) {} // normal wait
-  } 
-  //else {
-  //  __asm__("nop\n\t"); // must have or compiler optimizes out
-  //}
-}
-#endif
-
 //+=============================================================================
 void  IRsend::send (unsigned long data,  int nbits)
 {
-	// Set IR carrier frequency
-	enableIROut(38);
-
 	// Header
 	mark(IR_HDR_MARK);
 	space(IR_HDR_SPACE);
@@ -145,9 +66,11 @@ void  IRsend::send (unsigned long data,  int nbits)
 		} else {
 			mark(IR_ZERO_MARK);
 			space(IR_HDR_SPACE);
-    	}
-  	}
+		}
+	}
 
 	// We will have ended with LED off
 	mark(IR_ZERO_MARK);
+
+	TIMER_DISABLE_PWM;
 }

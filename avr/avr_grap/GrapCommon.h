@@ -40,6 +40,8 @@
 #define MOTOR_INV_1 sbi(PORTB, 2)
 #define MOTOR_INV_0 cbi(PORTB, 2)
 
+#define SW_RELAY  (PINB & _BV(4))
+
 #define IR_SEND_BITS              10
 #define IR_HDR_MARK             2400
 #define IR_HDR_SPACE             600

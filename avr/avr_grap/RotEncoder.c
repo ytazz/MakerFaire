@@ -17,13 +17,18 @@ void InitRotEncoder()
     cbi(PCIFR, PCIE0);
     //sbi(PCMSK0, PCINT2);
     sbi(EIMSK, INT2);
-	cbi(DDRD, 2);	// ENCODER A in
-	cbi(DDRD, 3);	// ENCODER B in
+    cbi(DDRD, 2);	// ENCODER A in
+    cbi(DDRD, 3);	// ENCODER B in
 #if !TEST_BOARD
-	sbi(PORTD, 2);	// ENCODER A pull-up
-	sbi(PORTD, 3);	// ENCODER B pull-up
+    sbi(PORTD, 2);	// ENCODER A pull-up
+    sbi(PORTD, 3);	// ENCODER B pull-up
 #endif
     Led7Seg_SetDisplayNumber(g_Value);
+}
+
+int RotEncoderGetVal()
+{
+    return g_Value;
 }
 
 //+=============================================================================
@@ -38,13 +43,11 @@ ISR(INT2_vect)
             if(g_OldRot == 'L'){
                 g_Value--;
                 Led7Seg_SetDisplayNumber(g_Value);
-                IrSend(g_Value);
             }
         }else{
             if(g_OldRot == 'R'){
                 g_Value++;
                 Led7Seg_SetDisplayNumber(g_Value);
-                IrSend(g_Value);
             }
         }
         g_OldRot = 0;
