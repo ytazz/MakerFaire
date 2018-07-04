@@ -18,8 +18,8 @@ void Led7Seg_Init()
 {
     /* Init SPI */
     SPCR = 0b01010000;
-    //SPSR = 0b00000001;
-    SPSR = 0b00000000;
+    //SPSR = 0b00000001; 
+    SPSR = 0b00000000;    // SPI2X should be disabled due to transmission error
 
     sbi(DDRB, 0);	// RCK
     sbi(DDRB, 1);   // SCLK

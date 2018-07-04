@@ -14,8 +14,10 @@
 
 //------------------------------------------------------------------------------
 
-#define IR_RECEIVER 1
-#define TEST_BOARD 1
+#define IR_RECEIVER 0
+#define TEST_BOARD 0
+
+// The transmitter side ------------------------------
 
 #define LEDM_ON  sbi(PORTC, 7)
 #define LEDM_OFF cbi(PORTC, 7)
@@ -27,10 +29,10 @@
 #define LEDB_OFF cbi(PORTF, 6)
 #define LEDW_ON  sbi(PORTF, 7)
 #define LEDW_OFF cbi(PORTF, 7)
-//#define LED7SEG_SI_1 sbi(PORTD, 4)
-//#define LED7SEG_SI_0 cbi(PORTD, 4)
-//#define LED7SEG_SCK_1 sbi(PORTD, 5)
-//#define LED7SEG_SCK_0 cbi(PORTD, 5)
+#define SW_RELAY  (PINB & _BV(4))
+
+// The receiver side ------------------------------
+
 #define LED7SEG_RCK_1 sbi(PORTB, 0)
 #define LED7SEG_RCK_0 cbi(PORTB, 0)
 #define RELAY_ON  sbi(PORTB, 1)
@@ -40,9 +42,11 @@
 #define MOTOR_INV_1 sbi(PORTB, 2)
 #define MOTOR_INV_0 cbi(PORTB, 2)
 
-#define SW_RELAY  (PINB & _BV(4))
+// IR Transmissions ------------------------------
 
 #define IR_SEND_BITS              10
+#define IR_PARITY_BITS             2
+
 #define IR_HDR_MARK             2400
 #define IR_HDR_SPACE             600
 #define IR_ONE_MARK             1200

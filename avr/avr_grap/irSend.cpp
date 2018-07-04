@@ -1,5 +1,3 @@
-#include <LUFA/Platform/Platform.h>
-
 #include "IRremote.h"
 #include "IRremoteInt.h"
 #include "GrapCommon.h"

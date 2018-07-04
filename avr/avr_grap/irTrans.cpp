@@ -30,7 +30,7 @@ extern "C" int IrRawRecive(unsigned long *data)
     decode_results results;
     bool ret = recv.decode(&results);
     if(ret){
-        *data = results.value >> 1;
+        *data = results.value >> 1; // somehow required >> 1
         recv.resume();
     }
     return ret ? 1 : 0;
@@ -38,15 +38,31 @@ extern "C" int IrRawRecive(unsigned long *data)
 
 // ------------------------------------------------------------
 
+unsigned char CalcCheckSum(unsigned long data)
+{
+    unsigned char mask = ((unsigned char)1 << IR_PARITY_BITS) - 1;
+    unsigned char sum = 0;
+    unsigned char i;
+    for(; data != 0; data >>= IR_PARITY_BITS) sum += data & mask;
+    return sum & mask;
+}
+
 extern "C" void IrSend(int data)
 {
-    IrRawSend(data, IR_SEND_BITS);
+    data &= (_BV(IR_SEND_BITS) - 1);
+    unsigned long sum = CalcCheckSum(data);
+    data += (sum << IR_SEND_BITS);
+    IrRawSend(data, IR_SEND_BITS + IR_PARITY_BITS);
 }
 
 extern "C" int IrReceive()
 {
     unsigned long data;
     if(IrRawRecive(&data)){
+        unsigned long p = (data >> IR_SEND_BITS) & (_BV(IR_PARITY_BITS) - 1);
+        data &= (_BV(IR_SEND_BITS) - 1);
+        unsigned long sum = CalcCheckSum(data);
+        if(p != sum) return IR_CODE_INVALID;
 #if 0
         char str[32];
         int i;

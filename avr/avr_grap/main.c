@@ -135,9 +135,13 @@ uint16_t GetAD(int ch){
 			PORTC &= ~_BV(7);
 #endif
 
-void IrReceived(int data)
+void IrReceiveProc()
 {
+	int data = IrReceive();
+
 	switch(data){
+	case IR_CODE_INVALID:
+		break;
 	case IR_CODE_RELAY_ON:
 		RELAY_ON;
 		LEDG_ON;
@@ -149,13 +153,57 @@ void IrReceived(int data)
 	case IR_CODE_MOTOR_OFF:
 		MotorPwm(0);
 		break;
-	case IR_CODE_INVALID:
-		break;
 	default:
 		if(-256 < data && data < 256) MotorPwm(data);
 		break;
 	}
 	//fprintf(&USBSerialStream, "received : %d\r\n", sdata);
+}
+
+void IrTransmissionProc()
+{
+	{
+		static int prev_data = 0;
+		int data = 3 * RotEncoderGetVal();	// 3 is due to usability
+		if(prev_data != data && -256 < data && data < 256){
+			IrSend(data);
+			prev_data = data;
+		}
+	}
+#if TEST_BOARD
+	{
+		static int prev_relay = 0;
+		int relay = (SW_RELAY == 0) ? 0 : 1;
+		if(prev_relay != relay){
+			IrSend((relay == 0) ? IR_CODE_RELAY_OFF : IR_CODE_RELAY_ON);
+			(relay == 0) ? LEDG_OFF : LEDG_ON;
+			prev_relay = relay;
+		}
+	}
+#endif
+}
+
+void DebugLed(int cnt)
+{
+#if IR_RECEIVER
+	RELAY_OFF;
+	if(cnt % 4 == 0) RELAY_ON;
+	LEDR_OFF;
+	LEDG_OFF;
+	if(cnt % 2 == 0) LEDR_ON;
+	if(cnt % 2 == 1) LEDG_ON;
+#else
+	LEDM_OFF;
+	LEDR_OFF;
+	LEDG_OFF;
+	LEDB_OFF;
+	LEDW_OFF;
+	if(cnt % 2 == 0) LEDM_ON;
+	if(cnt % 4 == 0) LEDR_ON;
+	if(cnt % 4 == 1) LEDG_ON;
+	if(cnt % 4 == 2) LEDB_ON;
+	if(cnt % 4 == 3) LEDW_ON;
+#endif
 }
 
 int main(void)
@@ -179,57 +227,19 @@ int main(void)
 		//fputs(str, &USBSerialStream);
 			
 #if IR_RECEIVER
-		{
-			int data = IrReceive();
-			if(data != IR_CODE_INVALID) IrReceived(data);
-		}
-#if 0
-		RELAY_OFF;
-		if(cnt % 4 == 0) RELAY_ON;
-		LEDR_OFF;
-		LEDG_OFF;
-		if(cnt % 2 == 0) LEDR_ON;
-		if(cnt % 2 == 1) LEDG_ON;
-#endif
+		IrReceiveProc();
 #else
-	// TRANSMITTER
-	{
-		static int prev_data = 0;
-		int data = RotEncoderGetVal();
-		if(prev_data != data && -256 < data && data < 256){
-			IrSend(data);
-			prev_data = data;
-		}
-	}
-#if TEST_BOARD
-	{
-		static int prev_relay = 0;
-		int relay = (SW_RELAY == 0) ? 0 : 1;
-		if(prev_relay != relay){
-			IrSend((relay == 0) ? IR_CODE_RELAY_OFF : IR_CODE_RELAY_ON);
-			(relay == 0) ? LEDG_OFF : LEDG_ON;
-			prev_relay = relay;
-		}
-	}
-#if 0
-		LEDM_OFF;
-		LEDR_OFF;
-		LEDG_OFF;
-		LEDB_OFF;
-		LEDW_OFF;
-		if(cnt % 2 == 0) LEDM_ON;
-		if(cnt % 4 == 0) LEDR_ON;
-		if(cnt % 4 == 1) LEDG_ON;
-		if(cnt % 4 == 2) LEDB_ON;
-		if(cnt % 4 == 3) LEDW_ON;
-#endif
-#endif
+		IrTransmissionProc();
 #endif
 
 		CDC_Device_USBTask(&VirtualSerial_CDC_Interface);
 		USB_USBTask();
 		
+#if IR_RECEIVER
 		_delay_ms(100);
+#else
+		_delay_us(1500);
+#endif
 	}
 }
 

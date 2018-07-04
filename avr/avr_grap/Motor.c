@@ -1,3 +1,5 @@
+// control of DC motor driver MC33926 for reaction wheel
+
 #include <avr/io.h>
 #include <avr/sfr_defs.h>
 #include <avr/interrupt.h>
@@ -32,12 +34,12 @@ void MotorPwm(int16_t x)
 	const uint8_t pwmval = (x >= 0) ? x : -x;
 	OCR1A = pwmval;
 
-    if(pwmval == 0){
-        MOTOR_DISABLE;
+	if(pwmval == 0){
+		MOTOR_DISABLE;
 		LEDR_OFF;
 		LEDB_OFF;
 	}else{
-        MOTOR_ENABLE;
+		MOTOR_ENABLE;
 		if(x >= 0){
 			LEDR_ON;
 			LEDB_OFF;
