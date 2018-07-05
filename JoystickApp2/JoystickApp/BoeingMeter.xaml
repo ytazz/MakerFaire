@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="MeterDisplay.BoeingMeter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:lib="clr-namespace:MeterDisplay"
+             mc:Ignorable="d">
+    <Canvas Name="main_canvas" Width="355" Height="265">
+        <Canvas.Resources>
+            <lib:CircularConverter x:Key="circularConverter"/>
+            <Point x:Key="CenterPos" X="0" Y="0"/>
+            <Point x:Key="ZeroPos" X="0" Y="155"/>
+            <Point x:Key="MaxPos" X="1" Y="155"/>
+            <Size x:Key="CircleSize" Width="155" Height="155"/>
+        </Canvas.Resources>
+        <Canvas.RenderTransform>
+            <MatrixTransform x:Name="canvas_transform">
+                <MatrixTransform.Matrix >
+                    <Matrix OffsetX="0" OffsetY="0" M11="1" M22="1"/>
+                </MatrixTransform.Matrix>
+            </MatrixTransform>
+            <!-- <ScaleTransform CenterX="0" CenterY="0" ScaleX="1.0" ScaleY="1.0"></ScaleTransform> -->
+        </Canvas.RenderTransform>
+        <Path Stroke="{x:Null}" Fill="#44FFFFFF" Name="arc_path_fill" Margin="5,5,5,5">
+            <Path.Data>
+                <PathGeometry>
+                    <PathGeometry.Figures>
+                        <PathFigureCollection>
+                            <PathFigure StartPoint="{Binding Converter={StaticResource circularConverter}, Source={StaticResource CenterPos}}">
+                                <PathFigure.Segments>
+                                    <PathSegmentCollection>
+                                        <LineSegment Point="{Binding Converter={StaticResource circularConverter}, Source={StaticResource ZeroPos}}" />
+                                        <ArcSegment Size="{Binding Source={StaticResource CircleSize}}" RotationAngle="0" IsLargeArc="True" SweepDirection="Clockwise" Point="{Binding Converter={StaticResource circularConverter}, Source={StaticResource MaxPos}}" />
+                                        <LineSegment Point="{Binding Converter={StaticResource circularConverter}, Source={StaticResource CenterPos}}" />
+                                    </PathSegmentCollection>
+                                </PathFigure.Segments>
+                            </PathFigure>
+                        </PathFigureCollection>
+                    </PathGeometry.Figures>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <Path Stroke="White" StrokeThickness="4" Fill="{x:Null}" Name="arc_path_scale" Margin="5,5,5,5">
+            <Path.Data>
+                <PathGeometry>
+                    <PathGeometry.Figures>
+                        <PathFigureCollection>
+                            <PathFigure StartPoint="{Binding Converter={StaticResource circularConverter}, Source={StaticResource CenterPos}}">
+                                <PathFigure.Segments>
+                                    <PathSegmentCollection>
+                                        <LineSegment Point="{Binding Converter={StaticResource circularConverter}, Source={StaticResource ZeroPos}}" />
+                                        <ArcSegment Size="{Binding Source={StaticResource CircleSize}}" RotationAngle="0" IsLargeArc="True" SweepDirection="Clockwise" Point="{Binding Converter={StaticResource circularConverter}, Source={StaticResource MaxPos}}" />
+                                        <LineSegment Point="{Binding Converter={StaticResource circularConverter}, Source={StaticResource CenterPos}}" />
+                                    </PathSegmentCollection>
+                                </PathFigure.Segments>
+                            </PathFigure>
+                        </PathFigureCollection>
+                    </PathGeometry.Figures>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <Path Stroke="White" StrokeThickness="7" Fill="{x:Null}" Name="arc_path_index" Margin="5,5,5,5">
+            <Path.Data>
+                <PathGeometry>
+                    <PathGeometry.Figures>
+                        <PathFigureCollection>
+                            <PathFigure StartPoint="{Binding Converter={StaticResource circularConverter}, Source={StaticResource CenterPos}}">
+                                <PathFigure.Segments>
+                                    <PathSegmentCollection>
+                                        <LineSegment Point="{Binding Converter={StaticResource circularConverter}, Source={StaticResource ZeroPos}}" />
+                                    </PathSegmentCollection>
+                                </PathFigure.Segments>
+                            </PathFigure>
+                        </PathFigureCollection>
+                    </PathGeometry.Figures>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <Rectangle Height="85" HorizontalAlignment="Left" Margin="160,5,5,0" Name="rectangle1" Stroke="White" VerticalAlignment="Top" Width="190" StrokeThickness="4" />
+        <Label Content="Label" Height="85" HorizontalAlignment="Left" Margin="160,5,5,0" Name="meter_label" VerticalAlignment="Top" BorderBrush="{x:Null}" Foreground="White" FontSize="70" FontWeight="Normal" Width="190" FontStyle="Normal" HorizontalContentAlignment="Center" FontFamily="Arial" />
+    </Canvas>
+</UserControl>
