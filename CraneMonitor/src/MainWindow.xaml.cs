@@ -167,6 +167,15 @@ namespace CraneMonitor
             TextPos0.Text = motor.pos[0].ToString();
             TextPos1.Text = motor.pos[1].ToString();
             TextPos2.Text = motor.pos[2].ToString();
+
+            TextButton0.Text = controller.button[0] ? "*" : "-";
+            TextButton1.Text = controller.button[1] ? "*" : "-";
+            TextButton2.Text = controller.button[2] ? "*" : "-";
+            TextButton3.Text = controller.button[3] ? "*" : "-";
+            TextButton4.Text = controller.button[4] ? "*" : "-";
+            TextButton5.Text = controller.button[5] ? "*" : "-";
+            TextButton6.Text = controller.button[6] ? "*" : "-";
+            TextButton7.Text = controller.button[7] ? "*" : "-";
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

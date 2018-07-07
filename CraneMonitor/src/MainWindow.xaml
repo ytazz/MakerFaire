@@ -76,14 +76,33 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="120" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Encoder Count" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <TextBlock x:Name="TextPos0" Grid.Row="1" Grid.Column="0" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <TextBlock x:Name="TextPos1" Grid.Row="2" Grid.Column="0" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <TextBlock x:Name="TextPos2" Grid.Row="3" Grid.Column="0" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="Controller Buttons" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton0" Grid.Row="1" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton1" Grid.Row="2" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton2" Grid.Row="3" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton3" Grid.Row="4" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton4" Grid.Row="5" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton5" Grid.Row="6" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton6" Grid.Row="7" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton7" Grid.Row="8" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
             </Grid>
         </StackPanel>
 
