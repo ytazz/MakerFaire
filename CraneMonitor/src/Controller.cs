@@ -12,22 +12,26 @@ namespace CraneMonitor
         public SerialClient com;
 
         public string comPort;
-        public bool           initialized = true;
-        public bool[]         swRequests = new bool[] { false, false, false, false };
-        public bool[]         ledSwRequests = new bool[] { false, false, false, false };
-        public bool[]         ledSwPrevHardRequests = new bool[] { false, false, false, false };
-        public bool[]         ledSwPrevSoftRequests = new bool[] { false, false, false, false };
-        public EnableButton[] SwButtons;
-        public EnableButton[] LedSwButtons;
-        public int zeroPosX = -1;
-        public int zeroPosY = -1;
-        public int zeroPosZ = -1;
-        public double outX = 0;
-        public double outY = 0;
-        public double outZ = 0;
+        public double[] axis;  //< axis position [-1.0, 1.0]
+        public bool[] button;   //< button state {0, 1}
+        //public bool           initialized = true;
+        //public bool[]         swRequests = new bool[] { false, false, false, false };
+        //public bool[]         ledSwRequests = new bool[] { false, false, false, false };
+        //public bool[]         ledSwPrevHardRequests = new bool[] { false, false, false, false };
+        //public bool[]         ledSwPrevSoftRequests = new bool[] { false, false, false, false };
+        //public EnableButton[] SwButtons;
+        //public EnableButton[] LedSwButtons;
+        //public int zeroPosX = -1;
+        //public int zeroPosY = -1;
+        //public int zeroPosZ = -1;
+        //public double outX = 0;
+        //public double outY = 0;
+        //public double outZ = 0;
 
         public Controller(){
             comPort = "COM1";
+            axis = new double[4];
+            button = new bool[8];
         }
 
         public bool Init()
@@ -38,9 +42,12 @@ namespace CraneMonitor
             ////SwButtons = new EnableButton[] { BtnHalt, BtnLight, BtnAdjust, null };
             //SwButtons = new EnableButton[] { null, BtnLight, BtnHalt, null };
 
-            return true;
+            com.ReceiveHandler = ReceiveHandler;
+            com.Init(comPort);
+            return com.Connected();
         }
 
+        /*
         public bool Start()
         {
             //com.LogHandler      = log.WriteLogWarning;
@@ -65,6 +72,7 @@ namespace CraneMonitor
                 InterlockLedSwitch(ledSwRequests, ledSwPrevHardRequests, ledSwPrevSoftRequests, LedSwButtons);
             }
         }
+        */
 
         public void ReceiveHandler(object sender, string message)
         {
@@ -76,42 +84,51 @@ namespace CraneMonitor
             }
             for (int i = 0; i < 12; i++) if (resMsgList[i].Length == 0) resMsgList[i] = "0";
 
-            int joy1a = int.Parse(resMsgList[0]);
-            int joy1b = int.Parse(resMsgList[1]);
-            int joy2a = int.Parse(resMsgList[2]);
-            int joy2b = int.Parse(resMsgList[3]);
+            axis[0] = (double)(int.Parse(resMsgList[0]) - 512) / 100.0;
+            axis[1] = (double)(int.Parse(resMsgList[1]) - 512) / 100.0;
+            axis[2] = (double)(int.Parse(resMsgList[2]) - 512) / 100.0;
+            axis[3] = (double)(int.Parse(resMsgList[3]) - 512) / 100.0;
 
-            int sw1 = int.Parse(resMsgList[4]);
-            int sw2 = int.Parse(resMsgList[5]);
-            int sw3 = int.Parse(resMsgList[6]);
-            int sw4 = int.Parse(resMsgList[7]);
+            button[0] = (int.Parse(resMsgList[ 4]) != 0);
+            button[1] = (int.Parse(resMsgList[ 5]) != 0);
+            button[2] = (int.Parse(resMsgList[ 6]) != 0);
+            button[3] = (int.Parse(resMsgList[ 7]) != 0);
+            button[4] = (int.Parse(resMsgList[ 8]) != 0);
+            button[5] = (int.Parse(resMsgList[ 9]) != 0);
+            button[6] = (int.Parse(resMsgList[10]) != 0);
+            button[7] = (int.Parse(resMsgList[11]) != 0);
 
-            int ledsw1 = int.Parse(resMsgList[8]);
-            int ledsw2 = int.Parse(resMsgList[9]);
-            int ledsw3 = int.Parse(resMsgList[10]);
-            int ledsw4 = int.Parse(resMsgList[11]);
-
-            if (zeroPosX < 0) zeroPosX = joy1a;
-            outX = (double)(joy1a - zeroPosX) / 400;
-
-            if (zeroPosY < 0) zeroPosY = joy1b;
-            outY = (double)(joy1b - zeroPosY) / 400;
-
-            if (zeroPosZ < 0) zeroPosZ = joy2b;
-            outZ = (double)(joy2b - zeroPosZ) / 400;
-
-            ledSwRequests[0] = ledsw1 != 0;
-            ledSwRequests[1] = ledsw2 != 0;
-            ledSwRequests[2] = ledsw3 != 0;
-            ledSwRequests[3] = ledsw4 != 0;
-
-            swRequests[0] = sw1 == 0;
-            swRequests[1] = sw2 == 0;
-            swRequests[2] = sw3 == 0;
-            swRequests[3] = sw4 == 0;
-
-            for (int i = 0; i < ledSwRequests.Length; i++)
-                ledSwPrevHardRequests[i] = ledSwRequests[i];
+            //int sw1 = int.Parse(resMsgList[4]);
+            //int sw2 = int.Parse(resMsgList[5]);
+            //int sw3 = int.Parse(resMsgList[6]);
+            //int sw4 = int.Parse(resMsgList[7]);
+            //
+            //int ledsw1 = int.Parse(resMsgList[8]);
+            //int ledsw2 = int.Parse(resMsgList[9]);
+            //int ledsw3 = int.Parse(resMsgList[10]);
+            //int ledsw4 = int.Parse(resMsgList[11]);
+            //
+            //if (zeroPosX < 0) zeroPosX = joy1a;
+            //outX = (double)(joy1a - zeroPosX) / 400;
+            //
+            //if (zeroPosY < 0) zeroPosY = joy1b;
+            //outY = (double)(joy1b - zeroPosY) / 400;
+            //
+            //if (zeroPosZ < 0) zeroPosZ = joy2b;
+            //outZ = (double)(joy2b - zeroPosZ) / 400;
+            //
+            //ledSwRequests[0] = ledsw1 != 0;
+            //ledSwRequests[1] = ledsw2 != 0;
+            //ledSwRequests[2] = ledsw3 != 0;
+            //ledSwRequests[3] = ledsw4 != 0;
+            //
+            //swRequests[0] = sw1 == 0;
+            //swRequests[1] = sw2 == 0;
+            //swRequests[2] = sw3 == 0;
+            //swRequests[3] = sw4 == 0;
+            //
+            //for (int i = 0; i < ledSwRequests.Length; i++)
+            //    ledSwPrevHardRequests[i] = ledSwRequests[i];
 
         }
 

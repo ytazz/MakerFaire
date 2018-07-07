@@ -114,28 +114,29 @@ namespace CraneMonitor
             Param param = new Param();
 
             //ユーザ毎のアプリケーションデータディレクトリに保存する
-            String appPath = String.Format(
-                "{0}\\{1}",
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "CraneMonitor\\settings.xml");
+            //String path = String.Format(
+            //    "{0}\\{1}",
+            //    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            //    "CraneMonitor\\settings.xml");
+            String path = "..\\settings.xml"; 
 
-            if (File.Exists(appPath))
+            if (File.Exists(path))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(Param));
 
-                using (FileStream stream = new FileStream(appPath, FileMode.Open))
+                using (FileStream stream = new FileStream(path, FileMode.Open))
                 {
                     param = serializer.Deserialize(stream) as Param;
                 }
             }
-            else
-            {
-                String folderPath = String.Format(
-                    "{0}\\{1}",
-                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                    "CraneMonitor");
-                System.IO.Directory.CreateDirectory(folderPath);
-            }
+            //else
+            //{
+            //    String folderPath = String.Format(
+            //        "{0}\\{1}",
+            //        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            //        "CraneMonitor");
+            //    System.IO.Directory.CreateDirectory(folderPath);
+            //}
 
             return param;
         }

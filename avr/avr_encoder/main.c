@@ -37,9 +37,6 @@
 	30 PE6 INT6
 	31 VREF
 	32 GND
-	
-	- ADCの参照電圧をAVCCにとるように設定
-	- USBを使うのははまりそうなのでUART＋FTDIケーブルを使用
 
  */
 
@@ -99,10 +96,11 @@ int16_t  pos_ref [3];     //< encoder count reference signal
 bool     dir     [3];
 uint8_t  pwm     [3];     //< pwm duty rate. 0, 255
 int16_t  pwm_ref [3];
-bool     polarity[3];     //< motor polarity
+int      mot_pol [3];     //< motor polarity
+int      enc_pol [3];     //< encoder polarity
 
-const uint8_t gain[] = {0, 150, 255};   //< pwm value v.s. position error
-const int     nlevel = 2;              //< number of gain levels
+const uint8_t gain[] = {0, 63, 127, 191, 255};   //< pwm value v.s. position error
+const int     nlevel = 4;              //< number of gain levels
 
 int main(void){
 	SetupHardware();
@@ -141,11 +139,19 @@ int main(void){
 	    		enabled = false;
 	    	}
 	    	if(strcmp(cmd, "set") == 0){
-		    	int ret = sscanf(strRecv, "%s %d %d %d %d %d %d %d %d %d",
+		    	int ret = sscanf(strRecv,
+		    	    "%s"
+		    	    " %d %d %d"
+		    	    " %d %d %d"
+		    	    " %d %d %d"
+		    	    " %d %d %d"
+		    	    " %d %d %d",
 	    			cmd,
 	    			&mode[0], &mode[1], &mode[2],
 	    		 	&pos_ref[0], &pos_ref[1], &pos_ref[2],
-	    		 	&pwm_ref[0], &pwm_ref[1], &pwm_ref[2]
+	    		 	&pwm_ref[0], &pwm_ref[1], &pwm_ref[2],
+	    		 	&mot_pol[0], &mot_pol[1], &mot_pol[2],
+	    		 	&enc_pol[0], &enc_pol[1], &enc_pol[2]
 	    		 	);
 	    	}
 	    }
@@ -168,22 +174,22 @@ int main(void){
 			if(mode[i] == 0){
 				if(pwm_ref[i] >= 0){
 					pwm[i] = pwm_ref[i];
-					dir[i] = false;
+					dir[i] = !mot_pol[i];
 				}
 				else{
 					pwm[i] = (uint8_t)(-pwm_ref[i]);					
-					dir[i] = true;
+					dir[i] = mot_pol[i];
 				}
 			}
 			if(mode[i] == 1){
 				int16_t e = pos_ref[i] - pos[i];
 				int16_t eabs;
 				if(e > 0){
-				    dir[i] = !polarity[i];
+				    dir[i] = !mot_pol[i];
 				    eabs   = e;
 				}
 				else{
-				 	dir[i] =  polarity[i];
+				 	dir[i] =  mot_pol[i];
 				 	eabs   = -e;
 				}
 				pwm[i] = (eabs >= nlevel ? gain[nlevel-1] : gain[eabs]);
@@ -246,9 +252,12 @@ void SetupHardware(void){
 	for(int i = 0; i < 3; i++){
 		toggle_time[i] = 0;
     	pos        [i] = 0;
+    	pos_ref    [i] = 0;
 		dir        [i] = false;
 		pwm        [i] = 0;
-		polarity   [i] = false;
+		pwm_ref    [i] = 0;
+		mot_pol    [i] = 0;
+		enc_pol    [i] = 0;
 	}
 
 	// wait until i/o port stabilizes
@@ -267,17 +276,31 @@ ISR(INT0_vect){
 	if(cnt_ms - toggle_time[0] > 1){
 		// on rising edge
 		if(wait_rise[0] && (PIND & _BV(0)) ){
-			if(PIND & _BV(4))
-				 pos[0]++;
-			else pos[0]--;
+			if(PIND & _BV(4)){
+				if(enc_pol[0])
+					 pos[0]++;
+				else pos[0]--;
+			}
+			else{
+				if(enc_pol[0])
+					 pos[0]--;
+				else pos[0]++;
+			}
 			wait_rise[0] = false;
 			toggle_time[0] = cnt_ms;
 		}
 		// on falling edge
 		if(!wait_rise[0] && !(PIND & _BV(0)) ){
-			if(PIND & _BV(4))
-				 pos[0]--;
-			else pos[0]++;
+			if(PIND & _BV(4)){
+				if(enc_pol[0])
+					 pos[0]--;
+				else pos[0]++;
+			}
+			else{
+				if(enc_pol[0])
+					 pos[0]++;
+				else pos[0]--;
+			}
 			wait_rise[0] = true;
 			toggle_time[0] = cnt_ms;
 		}
@@ -288,17 +311,31 @@ ISR(INT1_vect){
 	if(cnt_ms - toggle_time[1] > 1){
 		// on rising edge
 		if(wait_rise[1] && (PIND & _BV(1)) ){
-			if(PIND & _BV(5))
-				 pos[1]++;
-			else pos[1]--;
+			if(PIND & _BV(5)){
+				if(enc_pol[1])
+					 pos[1]++;
+				else pos[1]--;
+			}
+			else{
+				if(enc_pol[1])
+					 pos[1]--;
+				else pos[1]++;
+			}
 			wait_rise[1] = false;
 			toggle_time[1] = cnt_ms;
 		}
 		// on falling edge
 		if(!wait_rise[1] && !(PIND & _BV(1)) ){
-			if(PIND & _BV(5))
-				 pos[1]--;
-			else pos[1]++;
+			if(PIND & _BV(5)){
+				if(enc_pol[1])
+					 pos[1]--;
+				else pos[1]++;
+			}
+			else{
+				if(enc_pol[1])
+					 pos[1]++;
+				else pos[1]--;
+			}
 			wait_rise[1] = true;
 			toggle_time[1] = cnt_ms;
 		}
@@ -309,17 +346,31 @@ ISR(INT2_vect){
 	if(cnt_ms - toggle_time[2] > 1){
 		// on rising edge
 		if(wait_rise[2] && (PIND & _BV(2)) ){
-			if(PIND & _BV(6))
-				 pos[2]++;
-			else pos[2]--;
+			if(PIND & _BV(6)){
+				if(enc_pol[2])
+					 pos[2]++;
+				else pos[2]--;
+			}
+			else{
+				if(enc_pol[2])
+					 pos[2]--;
+				else pos[2]++;
+			}
 			wait_rise[2] = false;
 			toggle_time[2] = cnt_ms;
 		}
 		// on falling edge
 		if(!wait_rise[2] && !(PIND & _BV(2)) ){
-			if(PIND & _BV(6))
-				 pos[2]--;
-			else pos[2]++;
+			if(PIND & _BV(6)){
+				if(enc_pol[2])
+					 pos[2]--;
+				else pos[2]++;
+			}
+			else{
+				if(enc_pol[2])
+					 pos[2]++;
+				else pos[2]--;
+			}
 			wait_rise[2] = true;
 			toggle_time[2] = cnt_ms;
 		}

@@ -41,6 +41,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\MjpegProcessor.dll</HintPath>
     </Reference>
+    <Reference Include="OpenCvSharp">
+      <HintPath>..\packages\OpenCvSharp-3.4.1-x64-20180320\net46\OpenCvSharp.dll</HintPath>
+    </Reference>
     <Reference Include="SharpDX, Version=3.0.2.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpDX.3.0.2\lib\net45\SharpDX.dll</HintPath>
       <Private>True</Private>

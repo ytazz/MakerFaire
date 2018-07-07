@@ -83,7 +83,11 @@ namespace CraneMonitor
                     new MeasurePercent(new GetRealValue(delegate() {return (float)joystick.axis[0]; })),
                     new MeasurePercent(new GetRealValue(delegate() {return (float)joystick.axis[1]; })),
                     new MeasurePercent(new GetRealValue(delegate() {return (float)joystick.axis[2]; })),
-                    null
+                    null,
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)controller.axis[0]; })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)controller.axis[1]; })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)controller.axis[2]; })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)controller.axis[3]; })),
                 });
             
             for (int i = 0; i < meters.meter_controls.Length; i++)
@@ -100,6 +104,8 @@ namespace CraneMonitor
                 meters.labels[i].Content = titles[i];
 
             param = Param.Load();
+
+            controller.comPort = param.ControllerComPort;
 
             //MotorIp.Text = param.MotorIp + ":" + param.MotorPort;
             //CameraIp.Text = param.CameraIp + ":" + param.CameraPort;
@@ -149,9 +155,11 @@ namespace CraneMonitor
 
             joystick.Update();
 
-            motor.pwm_ref[0] = (int)(motor.pwmMax * joystick.axis[0]);
-            motor.pwm_ref[1] = (int)(motor.pwmMax * joystick.axis[1]);
-            motor.pwm_ref[2] = (int)(motor.pwmMax * joystick.axis[2]);
+            motor.vel_ref[0] = (int)(motor.velMax * joystick.axis[0]);
+
+            //motor.pwm_ref[0] = (int)(motor.pwmMax * joystick.axis[0]);
+            //motor.pwm_ref[1] = (int)(motor.pwmMax * joystick.axis[1]);
+            //motor.pwm_ref[2] = (int)(motor.pwmMax * joystick.axis[2]);
 
             motor.Update(dt);
             
@@ -197,8 +205,8 @@ namespace CraneMonitor
         //private bool JoystickStart() { return joystick.Start(); }
         //private bool JoystickStop () { return joystick.Stop(); }
 
-        private bool ControllerStart(){ return controller.Start(); }
-        private bool ControllerStop (){ return controller.Stop(); }
+        //private bool ControllerStart(){ return controller.Start(); }
+        //private bool ControllerStop (){ return controller.Stop(); }
 
         //private void BtnRegister_Click(object sender, RoutedEventArgs e) { Course.GameRegister(); }
         //private bool GameRegister() { return course.GameRegister(); }

@@ -24,26 +24,30 @@ namespace CraneMonitor
         public int[] mode;        //< mode  0:direct pwm  1:position control
         public double[] vel_ref;    //< velocity reference
         public int[] pwm_ref;    //< velocity reference
-        public int[] pos_ref;    //< position reference
+        public double[] pos_ref;    //< position reference
         public int[] pos;  //< current position (encoder count)
         public int[] pwm;  //< pwm duty ratio [0,255]
         public int[] dir;  //< direction 0,1
+        public int[] mot_pol;
+        public int[] enc_pol;
 
         public MotorDriver()
         {
             comPort = "COM5";
             com = new SerialClient();
 
-            velMax = 1.0;
+            velMax = 50.0;
             pwmMax = 255;
 
-            mode    = new int[3] { 0, 0, 0 };
+            mode    = new int[3] { 1, 0, 0 };
             vel_ref = new double[3] { 0.0, 0.0, 0.0 };
             pwm_ref = new int[3] { 0, 0, 0 };
-            pos_ref = new int[3] { 0, 0, 0 };
+            pos_ref = new double[3] { 0.0, 0.0, 0.0 };
             pos     = new int[3] { 0, 0, 0 };
             pwm     = new int[3] { 0, 0, 0 };
             dir     = new int[3] { 0, 0, 0 };
+            mot_pol = new int[3] { 1, 1, 0 };
+            enc_pol = new int[3] { 0, 0, 0 };
         }
 
         public bool Init()
@@ -128,13 +132,23 @@ namespace CraneMonitor
             // update position reference
             for(int i = 0; i < 3; i++)
             {
-                pos_ref[i] += (int)(vel_ref[i] * dt);
+                pos_ref[i] += vel_ref[i] * dt;
+                if(pos_ref[i] > pos[i] + 10)
+                {
+                    pos_ref[i] = pos[i] + 10;
+                }
+                if (pos_ref[i] < pos[i] - 10)
+                {
+                    pos_ref[i] = pos[i] - 10;
+                }
             }
 
-            string cmd = String.Format("set {0} {1} {2} {3} {4} {5} {6} {7} {8}\n",
+            string cmd = String.Format("set {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11}\n",
                 mode[0], mode[1], mode[2],
-                pos_ref[0], pos_ref[1], pos_ref[2],
-                pwm_ref[0], pwm_ref[1], pwm_ref[2]
+                (int)pos_ref[0], (int)pos_ref[1], (int)pos_ref[2],
+                pwm_ref[0], pwm_ref[1], pwm_ref[2],
+                mot_pol[0], mot_pol[1], mot_pol[2],
+                enc_pol[0], enc_pol[1], enc_pol[2]
                 );
             com.Send(cmd);
             //System.Diagnostics.Debug.WriteLine(cmd);
