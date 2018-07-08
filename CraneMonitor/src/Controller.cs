@@ -31,7 +31,7 @@ namespace CraneMonitor
         public Controller(){
             comPort = "COM1";
             axis = new double[4];
-            button = new bool[8];
+            button = new bool[12];
         }
 
         public bool Init()
@@ -76,27 +76,19 @@ namespace CraneMonitor
 
         public void ReceiveHandler(object sender, string message)
         {
-            string[] resMsgList = message.Split(' ');
-            if (resMsgList.Length != 12)
+            string[] tok = message.Split(' ');
+            
+            for(int i = 0; i < Math.Min(tok.Length, axis.Length + button.Length); i++)
             {
-                //log.WriteLogError(sender, "[Illegal message format] " + message); // illegal format
-                return;
+                if(i < 4)
+                {
+                    axis[i] = (double)(int.Parse(tok[i]) - 512) / 100.0;
+                }
+                else if(i < 16)
+                {
+                    button[i - 4] = (int.Parse(tok[i]) != 0);
+                }
             }
-            for (int i = 0; i < 12; i++) if (resMsgList[i].Length == 0) resMsgList[i] = "0";
-
-            axis[0] = (double)(int.Parse(resMsgList[0]) - 512) / 100.0;
-            axis[1] = (double)(int.Parse(resMsgList[1]) - 512) / 100.0;
-            axis[2] = (double)(int.Parse(resMsgList[2]) - 512) / 100.0;
-            axis[3] = (double)(int.Parse(resMsgList[3]) - 512) / 100.0;
-
-            button[0] = (int.Parse(resMsgList[ 4]) != 0);
-            button[1] = (int.Parse(resMsgList[ 5]) != 0);
-            button[2] = (int.Parse(resMsgList[ 6]) != 0);
-            button[3] = (int.Parse(resMsgList[ 7]) != 0);
-            button[4] = (int.Parse(resMsgList[ 8]) != 0);
-            button[5] = (int.Parse(resMsgList[ 9]) != 0);
-            button[6] = (int.Parse(resMsgList[10]) != 0);
-            button[7] = (int.Parse(resMsgList[11]) != 0);
 
             //int sw1 = int.Parse(resMsgList[4]);
             //int sw2 = int.Parse(resMsgList[5]);
