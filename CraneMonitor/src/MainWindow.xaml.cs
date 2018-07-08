@@ -10,6 +10,7 @@ using System.Windows.Controls;
 //using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Interop;
 //using System.Windows.Navigation;
 //using System.Windows.Shapes;
 
@@ -45,6 +46,7 @@ namespace CraneMonitor
             joystick   = new Joystick();
             controller = new Controller();
             light      = new Light();
+            camera     = new CameraUsb();
 
             //course     = new CourseControl();
             //course.SetLog(log);
@@ -137,6 +139,7 @@ namespace CraneMonitor
             joystick.Init();
             controller.Init();
             motor.Init();
+            camera.Init();
 
             DispatcherTimer dispatcherTimer = new DispatcherTimer(DispatcherPriority.Normal);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, param.UpdateInterval);  // in milliseconds
@@ -180,6 +183,13 @@ namespace CraneMonitor
             TextButton9 .Text = controller.button[ 9] ? "*" : "-";
             TextButton10.Text = controller.button[10] ? "*" : "-";
             TextButton11.Text = controller.button[11] ? "*" : "-";
+
+            camera.Update();
+            if(camera.bitmap != null)
+            {
+                image.Source = Imaging.CreateBitmapSourceFromHBitmap(camera.bitmap.GetHbitmap(),
+                    IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
