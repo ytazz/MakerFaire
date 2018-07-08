@@ -63,7 +63,8 @@ namespace CraneMonitor
             bi.BeginInit();
             bi.UriSource = new Uri(path, UriKind.Absolute);
             bi.EndInit();
-            image.Source = bi;
+            image1.Source = bi;
+            image2.Source = bi;
 
             meters.Background = System.Windows.Media.Brushes.Black.Clone();
             meters.Background.Opacity = 0.5;
@@ -187,7 +188,9 @@ namespace CraneMonitor
             camera.Update();
             if(camera.bitmap != null)
             {
-                image.Source = Imaging.CreateBitmapSourceFromHBitmap(camera.bitmap.GetHbitmap(),
+                image1.Source = Imaging.CreateBitmapSourceFromHBitmap(camera.bitmap.GetHbitmap(),
+                    IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                image2.Source = Imaging.CreateBitmapSourceFromHBitmap(camera.bitmap.GetHbitmap(),
                     IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             }
         }

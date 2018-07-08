@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="130" />
-            <ColumnDefinition Width="240" />
+            <ColumnDefinition Width="130" />
             <ColumnDefinition Width="290" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -28,9 +28,19 @@
         -->
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4" Margin="10,10,10,0">
             <TextBlock Text="Camera Image" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="Black" Background="LightGreen" FontWeight="Bold"  TextAlignment="Center"/>
-            <Image x:Name="image" Stretch="Uniform"/>
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image x:Name="image1" Grid.Row="0" Grid.Column="0" Stretch="Uniform"/>
+                <Image x:Name="image2" Grid.Row="0" Grid.Column="1" Stretch="Uniform"/>
+            </Grid>
         </StackPanel>
-        <lib:MeterGrid x:Name="meters" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="10,10,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        <lib:MeterGrid x:Name="meters" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Margin="10,10,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Margin="10,0,10,0">
             <TextBlock Text="Functions" HorizontalAlignment="Stretch" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center"/>
