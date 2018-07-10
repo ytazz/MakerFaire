@@ -164,8 +164,23 @@ void IrTransmissionProc()
 {
 	{
 		static int prev_data = 0;
-		int data = 3 * RotEncoderGetVal();	// 3 is due to usability
-		if(prev_data != data && -256 < data && data < 256){
+		int data = 0;
+		int rdata = 3 * RotEncoderGetVal();	// 3 is due to usability
+		if(rdata <= -256) rdata = -255;
+		if(rdata > 256) rdata = 255;
+		if(SW_MOTOR_ON == 0){
+			data = rdata;
+			LEDR_ON;
+		}else{
+			LEDR_OFF;
+		}
+		if(SW_MOTOR_ON_INV == 0){
+			data =-rdata;
+			LEDB_ON;
+		}else{
+			LEDB_OFF;
+		}
+		if(prev_data != data){
 			IrSend(data);
 			prev_data = data;
 		}
@@ -280,6 +295,10 @@ void SetupHardware(void)
 	sbi(DDRF, 6);	// LED2
 	sbi(DDRF, 7);	// LED3
 	cbi(DDRB, 4);	// SW RELAY
+	cbi(DDRB, 5);	// SW MOTOR ON
+	cbi(DDRB, 6);	// SW MOTOR ON INV
+	sbi(PORTB, 5);	// pull-up enable
+	sbi(PORTB, 6);	// pull-up enable
 #endif
 #endif
 
