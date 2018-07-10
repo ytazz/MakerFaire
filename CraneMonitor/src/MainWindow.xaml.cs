@@ -10,6 +10,7 @@ using System.Windows.Controls;
 //using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Interop;
 //using System.Windows.Navigation;
 //using System.Windows.Shapes;
 
@@ -45,6 +46,7 @@ namespace CraneMonitor
             joystick   = new Joystick();
             controller = new Controller();
             light      = new Light();
+            camera     = new CameraUsb();
 
             //course     = new CourseControl();
             //course.SetLog(log);
@@ -61,7 +63,8 @@ namespace CraneMonitor
             bi.BeginInit();
             bi.UriSource = new Uri(path, UriKind.Absolute);
             bi.EndInit();
-            image.Source = bi;
+            image1.Source = bi;
+            image2.Source = bi;
 
             meters.Background = System.Windows.Media.Brushes.Black.Clone();
             meters.Background.Opacity = 0.5;
@@ -83,7 +86,11 @@ namespace CraneMonitor
                     new MeasurePercent(new GetRealValue(delegate() {return (float)joystick.axis[0]; })),
                     new MeasurePercent(new GetRealValue(delegate() {return (float)joystick.axis[1]; })),
                     new MeasurePercent(new GetRealValue(delegate() {return (float)joystick.axis[2]; })),
-                    null
+                    null,
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)controller.axis[0]; })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)controller.axis[1]; })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)controller.axis[2]; })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)controller.axis[3]; })),
                 });
             
             for (int i = 0; i < meters.meter_controls.Length; i++)
@@ -100,6 +107,8 @@ namespace CraneMonitor
                 meters.labels[i].Content = titles[i];
 
             param = Param.Load();
+
+            controller.comPort = param.ControllerComPort;
 
             //MotorIp.Text = param.MotorIp + ":" + param.MotorPort;
             //CameraIp.Text = param.CameraIp + ":" + param.CameraPort;
@@ -131,6 +140,7 @@ namespace CraneMonitor
             joystick.Init();
             controller.Init();
             motor.Init();
+            camera.Init();
 
             DispatcherTimer dispatcherTimer = new DispatcherTimer(DispatcherPriority.Normal);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, param.UpdateInterval);  // in milliseconds
@@ -149,9 +159,11 @@ namespace CraneMonitor
 
             joystick.Update();
 
-            motor.pwm_ref[0] = (int)(motor.pwmMax * joystick.axis[0]);
-            motor.pwm_ref[1] = (int)(motor.pwmMax * joystick.axis[1]);
-            motor.pwm_ref[2] = (int)(motor.pwmMax * joystick.axis[2]);
+            motor.vel_ref[0] = (int)(motor.velMax * joystick.axis[0]);
+
+            //motor.pwm_ref[0] = (int)(motor.pwmMax * joystick.axis[0]);
+            //motor.pwm_ref[1] = (int)(motor.pwmMax * joystick.axis[1]);
+            //motor.pwm_ref[2] = (int)(motor.pwmMax * joystick.axis[2]);
 
             motor.Update(dt);
             
@@ -159,6 +171,28 @@ namespace CraneMonitor
             TextPos0.Text = motor.pos[0].ToString();
             TextPos1.Text = motor.pos[1].ToString();
             TextPos2.Text = motor.pos[2].ToString();
+
+            TextButton0 .Text = controller.button[ 0] ? "*" : "-";
+            TextButton1 .Text = controller.button[ 1] ? "*" : "-";
+            TextButton2 .Text = controller.button[ 2] ? "*" : "-";
+            TextButton3 .Text = controller.button[ 3] ? "*" : "-";
+            TextButton4 .Text = controller.button[ 4] ? "*" : "-";
+            TextButton5 .Text = controller.button[ 5] ? "*" : "-";
+            TextButton6 .Text = controller.button[ 6] ? "*" : "-";
+            TextButton7 .Text = controller.button[ 7] ? "*" : "-";
+            TextButton8 .Text = controller.button[ 8] ? "*" : "-";
+            TextButton9 .Text = controller.button[ 9] ? "*" : "-";
+            TextButton10.Text = controller.button[10] ? "*" : "-";
+            TextButton11.Text = controller.button[11] ? "*" : "-";
+
+            camera.Update();
+            if(camera.bitmap != null)
+            {
+                image1.Source = Imaging.CreateBitmapSourceFromHBitmap(camera.bitmap.GetHbitmap(),
+                    IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                image2.Source = Imaging.CreateBitmapSourceFromHBitmap(camera.bitmap.GetHbitmap(),
+                    IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -197,8 +231,8 @@ namespace CraneMonitor
         //private bool JoystickStart() { return joystick.Start(); }
         //private bool JoystickStop () { return joystick.Stop(); }
 
-        private bool ControllerStart(){ return controller.Start(); }
-        private bool ControllerStop (){ return controller.Stop(); }
+        //private bool ControllerStart(){ return controller.Start(); }
+        //private bool ControllerStop (){ return controller.Stop(); }
 
         //private void BtnRegister_Click(object sender, RoutedEventArgs e) { Course.GameRegister(); }
         //private bool GameRegister() { return course.GameRegister(); }

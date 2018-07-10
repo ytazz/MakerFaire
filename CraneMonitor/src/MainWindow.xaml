@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="130" />
-            <ColumnDefinition Width="240" />
+            <ColumnDefinition Width="130" />
             <ColumnDefinition Width="290" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -28,9 +28,19 @@
         -->
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4" Margin="10,10,10,0">
             <TextBlock Text="Camera Image" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="Black" Background="LightGreen" FontWeight="Bold"  TextAlignment="Center"/>
-            <Image x:Name="image" Stretch="Uniform"/>
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image x:Name="image1" Grid.Row="0" Grid.Column="0" Stretch="Uniform"/>
+                <Image x:Name="image2" Grid.Row="0" Grid.Column="1" Stretch="Uniform"/>
+            </Grid>
         </StackPanel>
-        <lib:MeterGrid x:Name="meters" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="10,10,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        <lib:MeterGrid x:Name="meters" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Margin="10,10,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Margin="10,0,10,0">
             <TextBlock Text="Functions" HorizontalAlignment="Stretch" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center"/>
@@ -66,7 +76,6 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Enable" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <lib:EnableButton Grid.Row="1" Grid.Column="0" x:Name="BtnMotor" Content="Motor" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="MotorEnable" OnDisable="MotorDisable"/>
                 <lib:EnableButton Grid.Row="2" Grid.Column="0" x:Name="BtnCamera" Content="Camera" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
-                <lib:EnableButton Grid.Row="4" Grid.Column="0" x:Name="BtnController" Content="Controller" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="ControllerStart" OnDisable="ControllerStop"/>
             </Grid>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="2">
@@ -77,14 +86,37 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="120" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Encoder Count" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <TextBlock x:Name="TextPos0" Grid.Row="1" Grid.Column="0" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <TextBlock x:Name="TextPos1" Grid.Row="2" Grid.Column="0" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <TextBlock x:Name="TextPos2" Grid.Row="3" Grid.Column="0" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="Controller Buttons" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton0" Grid.Row="1" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton1" Grid.Row="2" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton2" Grid.Row="3" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton3" Grid.Row="4" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton4" Grid.Row="5" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton5" Grid.Row="6" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton6" Grid.Row="7" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton7" Grid.Row="8" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton8" Grid.Row="9" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton9" Grid.Row="10" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton10" Grid.Row="11" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock x:Name="TextButton11" Grid.Row="12" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
             </Grid>
         </StackPanel>
 

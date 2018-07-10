@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<Param xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <UpdateInterval>50</UpdateInterval>
+  <LightUpdateInterval>1000</LightUpdateInterval>
+  <BackColor />
+  <WindowWidth>0</WindowWidth>
+  <WindowHeight>0</WindowHeight>
+  <MotorIp>192.168.11.15</MotorIp>
+  <MotorPort>8888</MotorPort>
+  <CameraIp>192.168.11.15</CameraIp>
+  <CameraPort>8080</CameraPort>
+  <DisplayIp>localhost</DisplayIp>
+  <DisplayPort>65002</DisplayPort>
+  <MotorComPort>COMX</MotorComPort>
+  <ControllerComPort>COM3</ControllerComPort>
+  <Contact1ComPort>COM4</Contact1ComPort>
+  <Contact2ComPort>COM5</Contact2ComPort>
+  <Contact3ComPort>COM6</Contact3ComPort>
+  <DirectionX>true</DirectionX>
+  <DirectionY>true</DirectionY>
+  <DirectionZ>true</DirectionZ>
+  <EnableLimitUpperX>false</EnableLimitUpperX>
+  <EnableLimitUpperY>false</EnableLimitUpperY>
+  <EnableLimitUpperZ>false</EnableLimitUpperZ>
+  <EnableLimitLowerX>false</EnableLimitLowerX>
+  <EnableLimitLowerY>false</EnableLimitLowerY>
+  <EnableLimitLowerZ>false</EnableLimitLowerZ>
+  <LimitUpperX>90</LimitUpperX>
+  <LimitUpperY>85</LimitUpperY>
+  <LimitUpperZ>80</LimitUpperZ>
+  <LimitLowerX>5</LimitLowerX>
+  <LimitLowerY>10</LimitLowerY>
+  <LimitLowerZ>15</LimitLowerZ>
+  <MotorGainX>1</MotorGainX>
+  <MotorGainY>1</MotorGainY>
+  <MotorGainZ>1</MotorGainZ>
+  <SliderGain>3</SliderGain>
+</Param>
