@@ -14,12 +14,18 @@ namespace CraneMonitor
     public class CameraUsb
     {
         public VideoCapture cap;
-        public Mat mat;
-        public Bitmap bitmap;
+        public Mat          mat;
+        public Bitmap       bitmap;
+        public int          id;
+
+        public CameraUsb()
+        {
+            id = 0;
+        }
 
         public bool Init()
         {
-            cap = new VideoCapture(0);
+            cap = new VideoCapture(id);
             //cap.Open(0);
             //if (!cap.IsOpened())
             //{

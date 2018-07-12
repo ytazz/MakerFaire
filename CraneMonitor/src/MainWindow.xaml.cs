@@ -32,7 +32,7 @@ namespace CraneMonitor
         public LogWindow     log;
         public Joystick      joystick;
         public Controller    controller;
-        public CameraUsb     camera;
+        public CameraUsb[]   camera;
         public MotorDriver   motor;
         public Light         light;
         //public CourseControl course;
@@ -46,7 +46,13 @@ namespace CraneMonitor
             joystick   = new Joystick();
             controller = new Controller();
             light      = new Light();
-            camera     = new CameraUsb();
+            camera     = new CameraUsb[2];
+            camera[0]  = new CameraUsb();
+            camera[1]  = new CameraUsb();
+
+            // set camera id
+            camera[0].id = 0;
+            camera[0].id = 1;
 
             //course     = new CourseControl();
             //course.SetLog(log);
@@ -140,7 +146,8 @@ namespace CraneMonitor
             joystick.Init();
             controller.Init();
             motor.Init();
-            camera.Init();
+            camera[0].Init();
+            camera[1].Init();
 
             DispatcherTimer dispatcherTimer = new DispatcherTimer(DispatcherPriority.Normal);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, param.UpdateInterval);  // in milliseconds
@@ -185,12 +192,16 @@ namespace CraneMonitor
             TextButton10.Text = controller.button[10] ? "*" : "-";
             TextButton11.Text = controller.button[11] ? "*" : "-";
 
-            camera.Update();
-            if(camera.bitmap != null)
+            camera[0].Update();
+            if(camera[0].bitmap != null)
             {
-                image1.Source = Imaging.CreateBitmapSourceFromHBitmap(camera.bitmap.GetHbitmap(),
+                image1.Source = Imaging.CreateBitmapSourceFromHBitmap(camera[0].bitmap.GetHbitmap(),
                     IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-                image2.Source = Imaging.CreateBitmapSourceFromHBitmap(camera.bitmap.GetHbitmap(),
+            }
+            camera[1].Update();
+            if(camera[1].bitmap != null)
+            {
+                image2.Source = Imaging.CreateBitmapSourceFromHBitmap(camera[1].bitmap.GetHbitmap(),
                     IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             }
         }
