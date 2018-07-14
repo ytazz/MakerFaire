@@ -108,9 +108,12 @@ namespace CraneMonitor
                 }
             }
 
+#if false
             string[] titles = new string[] { "+ X", "- X", "+ Y", "- Y", "+ Z", "- Z" };
             for (int i = 0; i < titles.Length; i++)
                 meters.labels[i].Content = titles[i];
+#endif
+            foreach (Label label in meters.labels) label.Visibility = Visibility.Hidden;
 
             param = Param.Load();
 

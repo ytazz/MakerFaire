@@ -6,18 +6,18 @@
         xmlns:local="clr-namespace:CraneMonitor"
         xmlns:lib="clr-namespace:MeterDisplay"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1000" Width="800" Closing="Window_Closing">
+        Title="MainWindow" Height="1000" Width="2000" Closing="Window_Closing">
     <Grid Background="#FF000000">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
             <RowDefinition Height="3*" />
-            <RowDefinition Height="270" />
+            <RowDefinition Height="310" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="130" />
-            <ColumnDefinition Width="130" />
-            <ColumnDefinition Width="290" />
+            <ColumnDefinition Width="260" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="500" />
         </Grid.ColumnDefinitions>
 
         <!--
@@ -27,7 +27,6 @@
         </StackPanel>
         -->
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4" Margin="10,10,10,0">
-            <TextBlock Text="Camera Image" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="Black" Background="LightGreen" FontWeight="Bold"  TextAlignment="Center"/>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -52,34 +51,13 @@
             <lib:EnableButton x:Name="BtnHalt" Content="HALT"            HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Red" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
             <Button x:Name="BtnGetLog" Content="Log"                     HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Width="75"  FontWeight="Bold" HorizontalContentAlignment="Left" BorderThickness="0" Click="BtnGetLog_Click"/>
             <Button x:Name="BtnShutdown" Content="Shutdown"              HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" HorizontalContentAlignment="Left" BorderThickness="0" Background="Red" Click="BtnShutdown_Click"/>
+            <TextBlock Text="Enable" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+            <lib:EnableButton x:Name="BtnMotor" Content="Motor" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="MotorEnable" OnDisable="MotorDisable"/>
+            <lib:EnableButton x:Name="BtnCamera" Content="Camera" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Grid.Column="1" Margin="10,0,10,0">
-            <TextBlock Text="Connections" HorizontalAlignment="Stretch" Margin="0,10,126,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center"/>
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="85" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="10" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Enable" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <lib:EnableButton Grid.Row="1" Grid.Column="0" x:Name="BtnMotor" Content="Motor" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="MotorEnable" OnDisable="MotorDisable"/>
-                <lib:EnableButton Grid.Row="2" Grid.Column="0" x:Name="BtnCamera" Content="Camera" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
-            </Grid>
-        </StackPanel>
-        <StackPanel Grid.Row="2" Grid.Column="2">
-            <TextBlock Text="Sensors" HorizontalAlignment="Stretch" Margin="0,10,126,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center"/>
+        <StackPanel Grid.Row="2" Grid.Column="1"  Margin="10,0,10,0">
+            <TextBlock Text="Sensors" HorizontalAlignment="Stretch" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center"/>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />

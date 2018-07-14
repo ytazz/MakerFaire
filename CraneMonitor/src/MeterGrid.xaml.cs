@@ -96,6 +96,7 @@ namespace MeterDisplay
                     MeasureObj = Measures[i],
                     MaxTimeIndex = timer_count_max
                 };
+                meters[i].Visibility = (Measures[i] == null) ? Visibility.Hidden : Visibility.Visible;
             }
         }
 
