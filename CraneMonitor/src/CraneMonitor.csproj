@@ -116,6 +116,7 @@
     </Compile>
     <Compile Include="MotorDriver.cs" />
     <Compile Include="Param.cs" />
+    <Compile Include="RankingControl.cs" />
     <Compile Include="RegisterUser.xaml.cs">
       <DependentUpon>RegisterUser.xaml</DependentUpon>
     </Compile>

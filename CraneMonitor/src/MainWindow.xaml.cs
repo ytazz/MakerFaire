@@ -29,13 +29,13 @@ namespace CraneMonitor
     {
         static public Param param = new Param();
 
-        public LogWindow     log;
-        public Joystick      joystick;
-        public Controller    controller;
-        public CameraUsb[]   camera;
-        public MotorDriver   motor;
-        public Light         light;
-        //public CourseControl course;
+        public LogWindow      log;
+        public Joystick       joystick;
+        public Controller     controller;
+        public CameraUsb[]    camera;
+        public MotorDriver    motor;
+        public Light          light;
+        public RankingControl ranking;
         
         public MainWindow()
         {
@@ -54,9 +54,8 @@ namespace CraneMonitor
             camera[0].id = 0;
             camera[0].id = 1;
 
-            //course     = new CourseControl();
-            //course.SetLog(log);
-            //course.AutoStartHandler = AutoStart;
+            ranking     = new RankingControl();
+            ranking.SetLog(log);
 
             // --------------------------------------------------
             // カメラ画像にダミーを表示
@@ -164,8 +163,9 @@ namespace CraneMonitor
         {
             double dt = 0.001 * param.UpdateInterval;
             light.Update(dt);
-            
-            //course.Update();
+
+            if (ranking.RequestUpdateRanking) TextRanking.Text = ranking.GetRankingText();
+            if (ranking.RequestUpdateStart || ranking.RequestUpdateStop) TextElapseTime.Text = ranking.GetElapseTimeText();
 
             joystick.Update();
 
@@ -248,20 +248,12 @@ namespace CraneMonitor
         //private bool ControllerStart(){ return controller.Start(); }
         //private bool ControllerStop (){ return controller.Stop(); }
 
-        //private void BtnRegister_Click(object sender, RoutedEventArgs e) { Course.GameRegister(); }
-        //private bool GameRegister() { return course.GameRegister(); }
-        //private bool DisplayStart() { return Course.DisplayStart(param.DisplayIp, param.DisplayPort); }
-        //private bool DisplayStop() { return Course.DisplayStop(); }
-        //private bool GameStart() { return Course.GameStart(); }
-        //private bool GameStop() { if (Course.GameStop()) BtnRegister.Enabled = false; return true; }
-        //private bool GameStartPause() { return Course.GameStartPause(); }
-        //private bool GameStopPause() { return Course.GameStopPause(); }
-        //public bool Contact1Start() { return Course.Contact1Start(param.Contact1Ip); }
-        //public bool Contact2Start() { return Course.Contact2Start(param.Contact2Ip); }
-        //public bool Contact3Start() { return Course.Contact3Start(param.Contact3Ip); }
-        //public bool Contact1Stop() { return Course.Contact1Stop(); }
-        //public bool Contact2Stop() { return Course.Contact2Stop(); }
-        //public bool Contact3Stop() { return Course.Contact3Stop(); }
+        private void BtnRegister_Click(object sender, RoutedEventArgs e) { ranking.GameRegister(); }
+        private bool GameRegister() { return ranking.GameRegister(); }
+        private bool GameStart() { return ranking.GameStart(); }
+        private bool GameStop() { if (ranking.GameStop()) BtnRegister.Enabled = false; return true; }
+        private bool GameStartPause() { return ranking.GameStartPause(); }
+        private bool GameStopPause() { return ranking.GameStopPause(); }
         //public void AutoStart(bool IsStartEvent) { Dispatcher.BeginInvoke((Action)(() => { if (BtnAutoStart.Enabled) BtnStart.Enabled = IsStartEvent; })); }
 
         private void SetMeterLimits(int MeterIndex, bool LowerEnable, float Lower, bool UpperEnable, float Upper)
