@@ -215,6 +215,11 @@ namespace CraneMonitor
             log.Close();
 
             //camera.Close();
+            BtnJoystick.Enabled = false;
+            BtnMotor.Enabled = false;
+            BtnCtrl.Enabled = false;
+            BtnCamera1.Enabled = false;
+            BtnCamera2.Enabled = false;
 
             // 以下コメントアウトを有効にすると、前回に設定したパラメータが次回起動時に初期設定される
             Param.Save(param);
@@ -235,20 +240,19 @@ namespace CraneMonitor
         private bool MotorEnable () { return motor.Enable (); }
         private bool MotorDisable() { return motor.Disable(); }
 
-        private bool Camera1Start() { camera[0].Init(); return true; }
-        private bool Camera1Stop() { return false; }
-        private bool Camera2Start() { camera[1].Init(); return true; }
-        private bool Camera2Stop() { return false; }
+        private bool Camera1Start() { return camera[0].Init(); }
+        private bool Camera1Stop() { return camera[0].Close(); }
+        private bool Camera2Start() { return camera[1].Init(); }
+        private bool Camera2Stop() { return camera[1].Close(); }
 
         //private bool ImuStart(){ return imu.Start(); }
         //private bool ImuStop() { return imu.Stop(); }
         private bool JoystickStart() { return joystick.Init(); }
-        private bool JoystickStop () { return false; }
+        private bool JoystickStop () { return joystick.Close(); }
 
         private bool ControllerStart(){ return controller.Init(); }
-        private bool ControllerStop (){ return false; }
+        private bool ControllerStop (){ return controller.Close(); }
 
-        //private void BtnRegister_Click(object sender, RoutedEventArgs e) { ranking.GameRegister(); }
         private bool GameRegister() { bool x = ranking.GameRegister(); if (x) { PlayerName.Text = ranking.GetPlayerNameText(); return x; } else return false; }
         private bool GameStart() { return ranking.GameStart();  }
         private bool GameStop() { PlayerName.Text = ranking.GetPlayerNameText(); if (ranking.GameStop()) BtnRegister.Enabled = false; return true; }

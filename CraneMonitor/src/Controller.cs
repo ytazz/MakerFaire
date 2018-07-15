@@ -47,6 +47,12 @@ namespace CraneMonitor
             return com.Connected();
         }
 
+        public bool Close()
+        {
+            com.Close();
+            return !com.Connected();
+        }
+
         /*
         public bool Start()
         {
@@ -56,12 +62,6 @@ namespace CraneMonitor
 
             com.Init(comPort);
             return com.Connected();
-        }
-
-        public bool Stop()
-        {
-            com.Close();
-            return !com.Connected();
         }
 
         public void Update()

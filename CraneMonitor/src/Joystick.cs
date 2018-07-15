@@ -69,6 +69,13 @@ namespace CraneMonitor
             return true;
         }
 
+        public bool Close()
+        {
+            dxJoystick.Dispose();
+            dxJoystick = null;
+            return true;
+        }
+
         public void Update()
         {
             if (dxJoystick == null)

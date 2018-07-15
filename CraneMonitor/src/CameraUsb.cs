@@ -27,10 +27,11 @@ namespace CraneMonitor
         {
             cap = new VideoCapture(id);
             //cap.Open(0);
-            //if (!cap.IsOpened())
-            //{
-            //    return false;
-            //}
+            if (!cap.IsOpened())
+            {
+                cap = null;
+                return false;
+            }
 
             //cap.FrameWidth = 640;
             //cap.FrameHeight = 480;
@@ -52,6 +53,13 @@ namespace CraneMonitor
 
             bitmap = BitmapConverter.ToBitmap(mat);
 
+            return true;
+        }
+
+        public bool Close()
+        {
+            cap.Release();
+            cap = null;
             return true;
         }
     }
