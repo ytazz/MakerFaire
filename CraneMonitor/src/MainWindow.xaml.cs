@@ -146,7 +146,7 @@ namespace CraneMonitor
             //SetLightInterval();
 
             //// 操作卓のLEDボタン機能の割り当てはここで行う
-            controller.SwButtons = new EnableButton[] { BtnRsv1, BtnPause, BtnRsv2, BtnMag, BtnRsv3, BtnRsv4, BtnHalt, BtnRegister, BtnStart, BtnGrapL, BtnGrapR };
+            controller.SwButtons = new EnableButton[] { BtnStart, BtnPause, BtnRsv2, BtnMag, BtnRsv3, BtnRsv4, BtnHalt, BtnRegister, BtnGrapL, BtnRsv1, BtnGrapR };
 
             // 初期自動接続
             BtnJoystick.Enabled = true;
