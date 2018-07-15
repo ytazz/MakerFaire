@@ -145,6 +145,10 @@ namespace CraneMonitor
             //LightInterval.Text = param.LightUpdateInterval.ToString();
             //SetLightInterval();
 
+            //// 操作卓のLEDボタン機能の割り当てはここで行う
+            controller.SwButtons = new EnableButton[] { BtnRsv1, BtnPause, BtnRsv2, BtnMag, BtnRsv3, BtnRsv4, BtnHalt, BtnRegister, BtnStart, BtnGrapL, BtnGrapR };
+
+            // 初期自動接続
             BtnJoystick.Enabled = true;
             BtnMotor.Enabled = true;
             BtnCtrl.Enabled = true;
@@ -180,6 +184,7 @@ namespace CraneMonitor
             TextPos1.Text = motor.pos[1].ToString();
             TextPos2.Text = motor.pos[2].ToString();
 
+#if false
             TextButton0 .Text = controller.button[ 0] ? "*" : "-";
             TextButton1 .Text = controller.button[ 1] ? "*" : "-";
             TextButton2 .Text = controller.button[ 2] ? "*" : "-";
@@ -192,7 +197,7 @@ namespace CraneMonitor
             TextButton9 .Text = controller.button[ 9] ? "*" : "-";
             TextButton10.Text = controller.button[10] ? "*" : "-";
             TextButton11.Text = controller.button[11] ? "*" : "-";
-
+#endif
             camera[0].Update();
             if(camera[0].bitmap != null)
             {

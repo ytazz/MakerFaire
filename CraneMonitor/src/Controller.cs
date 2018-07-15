@@ -19,7 +19,7 @@ namespace CraneMonitor
         //public bool[]         ledSwRequests = new bool[] { false, false, false, false };
         //public bool[]         ledSwPrevHardRequests = new bool[] { false, false, false, false };
         //public bool[]         ledSwPrevSoftRequests = new bool[] { false, false, false, false };
-        //public EnableButton[] SwButtons;
+        public EnableButton[] SwButtons;
         //public EnableButton[] LedSwButtons;
         //public int zeroPosX = -1;
         //public int zeroPosY = -1;
@@ -31,7 +31,7 @@ namespace CraneMonitor
         public Controller(){
             comPort = "COM1";
             axis = new double[4];
-            button = new bool[12];
+            button = new bool[11];
         }
 
         public bool Init()
@@ -40,7 +40,6 @@ namespace CraneMonitor
             //// 操作卓のLEDボタン機能の割り当てはここで行う
             //LedSwButtons = new EnableButton[] { BtnStart, BtnPause, BtnAutoStart, BtnRegister };
             ////SwButtons = new EnableButton[] { BtnHalt, BtnLight, BtnAdjust, null };
-            //SwButtons = new EnableButton[] { null, BtnLight, BtnHalt, null };
 
             com.ReceiveHandler = ReceiveHandler;
             com.Init(comPort);
@@ -77,51 +76,22 @@ namespace CraneMonitor
         public void ReceiveHandler(object sender, string message)
         {
             string[] tok = message.Split(' ');
-            
-            for(int i = 0; i < Math.Min(tok.Length, axis.Length + button.Length); i++)
+
+            if (tok.Length < axis.Length + button.Length + 1) return;
+
+            int i = 0;
+
+            for(int j = 0; j < axis.Length; j++, i++) axis[j] = (double)(int.Parse(tok[i]) - 512) / 100.0;
+            for(int j = 0; j < button.Length; j++, i++)
             {
-                if(i < 4)
-                {
-                    axis[i] = (double)(int.Parse(tok[i]) - 512) / 100.0;
-                }
-                else if(i < 16)
-                {
-                    button[i - 4] = (int.Parse(tok[i]) != 0);
-                }
+                button[j] = (int.Parse(tok[i]) != 0);
+                if (i == 11) i++;
             }
 
-            //int sw1 = int.Parse(resMsgList[4]);
-            //int sw2 = int.Parse(resMsgList[5]);
-            //int sw3 = int.Parse(resMsgList[6]);
-            //int sw4 = int.Parse(resMsgList[7]);
-            //
-            //int ledsw1 = int.Parse(resMsgList[8]);
-            //int ledsw2 = int.Parse(resMsgList[9]);
-            //int ledsw3 = int.Parse(resMsgList[10]);
-            //int ledsw4 = int.Parse(resMsgList[11]);
-            //
-            //if (zeroPosX < 0) zeroPosX = joy1a;
-            //outX = (double)(joy1a - zeroPosX) / 400;
-            //
-            //if (zeroPosY < 0) zeroPosY = joy1b;
-            //outY = (double)(joy1b - zeroPosY) / 400;
-            //
-            //if (zeroPosZ < 0) zeroPosZ = joy2b;
-            //outZ = (double)(joy2b - zeroPosZ) / 400;
-            //
-            //ledSwRequests[0] = ledsw1 != 0;
-            //ledSwRequests[1] = ledsw2 != 0;
-            //ledSwRequests[2] = ledsw3 != 0;
-            //ledSwRequests[3] = ledsw4 != 0;
-            //
-            //swRequests[0] = sw1 == 0;
-            //swRequests[1] = sw2 == 0;
-            //swRequests[2] = sw3 == 0;
-            //swRequests[3] = sw4 == 0;
-            //
+            InterlockHardSwitch(button, SwButtons);
+
             //for (int i = 0; i < ledSwRequests.Length; i++)
             //    ledSwPrevHardRequests[i] = ledSwRequests[i];
-
         }
 
         // 疑似操作卓スイッチとの同期（疑似操作卓のスイッチ状態を優先し常に強制的に同期させる/非LEDスイッチ用）
