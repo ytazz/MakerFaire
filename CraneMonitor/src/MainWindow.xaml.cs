@@ -249,8 +249,8 @@ namespace CraneMonitor
         //private bool ControllerStop (){ return controller.Stop(); }
 
         private void BtnRegister_Click(object sender, RoutedEventArgs e) { ranking.GameRegister(); }
-        private bool GameRegister() { return ranking.GameRegister(); }
-        private bool GameStart() { return ranking.GameStart(); }
+        private bool GameRegister() { bool x = ranking.GameRegister(); if (x) { PlayerName.Text = ranking.GetPlayerNameText(); return x; } else return false; }
+        private bool GameStart() { return ranking.GameStart();  }
         private bool GameStop() { if (ranking.GameStop()) BtnRegister.Enabled = false; return true; }
         private bool GameStartPause() { return ranking.GameStartPause(); }
         private bool GameStopPause() { return ranking.GameStopPause(); }

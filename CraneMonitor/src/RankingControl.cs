@@ -292,13 +292,17 @@ namespace CraneMonitor
             {
                 return String.Format("{0:00}:{1:00}.{2:00}", MeasuredTime.Minutes, MeasuredTime.Seconds, MeasuredTime.Milliseconds / 10);
             }
+        }
 
+        public String GetPlayerNameText()
+        {
+            return (CurrentRecord != null) ? CurrentRecord.Name : "";
         }
 
         // ------------------------------------------------------------
 
-        private const int NumRankingTops = 10;
-        private const int MaxNameLen = 16;
+        private const int NumRankingTops = 20;
+        private const int MaxNameLen = 14;
 
         public String GetRankingText()
         {
@@ -313,7 +317,7 @@ namespace CraneMonitor
                     Name = ranking[i].Name + new String(' ', MaxNameLen - len);
                 else
                     Name = ranking[i].Name.Substring(0, MaxNameLen);
-                text += String.Format("{0}  {1} {2}  ({3})\r\n", i + 1, Name, ranking[i].GetTimeAsText(), ranking[i].GetStartTimeAsText());
+                text += String.Format("{0}. {1} {2} ({3})\r\n", i + 1, Name, ranking[i].GetTimeAsText(), ranking[i].GetStartTimeAsText());
             }
             return text;
         }
