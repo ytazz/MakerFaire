@@ -103,7 +103,7 @@ namespace CraneMonitor
                 if(meters.meter_controls[i] != null)
                 {
                     meters.meter_controls[i].ThresholdScaleLen = 0.0f;  // スケールは表示しない
-                    SetMeterLimits(i, false, 0, true, 95f);
+                    SetMeterLimits(i, true, -85f, true, 85f);
                 }
             }
 
@@ -145,12 +145,10 @@ namespace CraneMonitor
             //LightInterval.Text = param.LightUpdateInterval.ToString();
             //SetLightInterval();
 
-            joystick.Init();
-            controller.Init();
-            motor.Init();
-            camera[0].Init();
-            camera[1].Init();
-
+            BtnJoystick.Enabled = true;
+            BtnMotor.Enabled = true;
+            BtnCtrl.Enabled = true;
+            
             DispatcherTimer dispatcherTimer = new DispatcherTimer(DispatcherPriority.Normal);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, param.UpdateInterval);  // in milliseconds
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
@@ -237,21 +235,23 @@ namespace CraneMonitor
         private bool MotorEnable () { return motor.Enable (); }
         private bool MotorDisable() { return motor.Disable(); }
 
-        //private bool CameraStart() { return camera.Start(); }
-        //private bool CameraStop() { return camera.Stop(); }
+        private bool Camera1Start() { camera[0].Init(); return true; }
+        private bool Camera1Stop() { return false; }
+        private bool Camera2Start() { camera[1].Init(); return true; }
+        private bool Camera2Stop() { return false; }
 
         //private bool ImuStart(){ return imu.Start(); }
         //private bool ImuStop() { return imu.Stop(); }
-        //private bool JoystickStart() { return joystick.Start(); }
-        //private bool JoystickStop () { return joystick.Stop(); }
+        private bool JoystickStart() { return joystick.Init(); }
+        private bool JoystickStop () { return false; }
 
-        //private bool ControllerStart(){ return controller.Start(); }
-        //private bool ControllerStop (){ return controller.Stop(); }
+        private bool ControllerStart(){ return controller.Init(); }
+        private bool ControllerStop (){ return false; }
 
-        private void BtnRegister_Click(object sender, RoutedEventArgs e) { ranking.GameRegister(); }
+        //private void BtnRegister_Click(object sender, RoutedEventArgs e) { ranking.GameRegister(); }
         private bool GameRegister() { bool x = ranking.GameRegister(); if (x) { PlayerName.Text = ranking.GetPlayerNameText(); return x; } else return false; }
         private bool GameStart() { return ranking.GameStart();  }
-        private bool GameStop() { if (ranking.GameStop()) BtnRegister.Enabled = false; return true; }
+        private bool GameStop() { PlayerName.Text = ranking.GetPlayerNameText(); if (ranking.GameStop()) BtnRegister.Enabled = false; return true; }
         private bool GameStartPause() { return ranking.GameStartPause(); }
         private bool GameStopPause() { return ranking.GameStopPause(); }
         //public void AutoStart(bool IsStartEvent) { Dispatcher.BeginInvoke((Action)(() => { if (BtnAutoStart.Enabled) BtnStart.Enabled = IsStartEvent; })); }
@@ -262,21 +262,27 @@ namespace CraneMonitor
 
             if (LowerEnable && UpperEnable)
             {
-                if(ctrl.NumThresholds != 2)
+                if(ctrl.NumThresholds != 3)
                 {
-                    ctrl.NumThresholds = 2;
+                    ctrl.NumThresholds = 3;
                     Brush sbr = new SolidColorBrush(Color.FromArgb(0xff, 0xff, 0x44, 0x44));
                     ctrl.SetThresholdScaleBrush(0, sbr);
                     ctrl.SetThresholdScaleBrush(1, sbr);
-                    Brush obr = new SolidColorBrush(Color.FromArgb(0x66, 0xff, 0x44, 0x44));
-                    ctrl.SetThresholdBrush(0, obr);
-                    ctrl.SetThresholdBrush(2, obr);
+                    ctrl.SetThresholdScaleBrush(2, sbr);
+                    Brush obr1 = new SolidColorBrush(Color.FromArgb(0x88, 0xff, 0x44, 0xff));
+                    ctrl.SetThresholdBrush(0, obr1);
+                    Brush obr2 = new SolidColorBrush(Color.FromArgb(0x88, 0xff, 0x44, 0x44));
+                    ctrl.SetThresholdBrush(3, obr2);
                     Brush normal = new SolidColorBrush(Color.FromArgb(0x44, 0xff, 0xff, 0xff));
-                    ctrl.SetThresholdBrush(1, normal);
+                    ctrl.SetThresholdBrush(2, normal);
+                    Brush minus = new SolidColorBrush(Color.FromArgb(0x99, 0x44, 0x44, 0xff));
+                    ctrl.SetThresholdBrush(1, minus);
                 }
                 ctrl.SetThreshold(0, Lower);
-                ctrl.SetThreshold(1, Upper);
-            }else if (LowerEnable || UpperEnable)
+                ctrl.SetThreshold(1, 0);
+                ctrl.SetThreshold(2, Upper);
+            }
+            else if (LowerEnable || UpperEnable)
             {
                 if (ctrl.NumThresholds != 1)
                 {

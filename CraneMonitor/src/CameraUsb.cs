@@ -13,7 +13,7 @@ namespace CraneMonitor
 {
     public class CameraUsb
     {
-        public VideoCapture cap;
+        public VideoCapture cap = null;
         public Mat          mat;
         public Bitmap       bitmap;
         public int          id;
@@ -42,6 +42,8 @@ namespace CraneMonitor
 
         public bool Update()
         {
+            if (cap == null) return false;
+
             cap.Read(mat);
             if (mat.Empty())
             {

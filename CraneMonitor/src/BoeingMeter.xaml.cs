@@ -103,7 +103,7 @@ namespace MeterDisplay
         }
         private void UpdateMeter()
         {
-            double ratio = meter_val / meter_max;
+            double ratio = GetMeterDrawValue(meter_val / meter_max);
             // do not update the differences less than the specified threshold
             if (System.Math.Abs(ratio - prev_ratio) >= update_threshold)
             {
@@ -137,6 +137,10 @@ namespace MeterDisplay
         {
             get { return arc_path_fill.Fill; }
             set { arc_path_fill.Fill = value; }
+        }
+        public float GetMeterDrawValue(float x)
+        {
+            return Math.Abs(x);
         }
 
         // ------------------------------------------------------------
