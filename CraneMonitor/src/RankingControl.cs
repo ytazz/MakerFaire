@@ -54,13 +54,18 @@ namespace CraneMonitor
 
         public string GetTimeAsText()
         {
-            return string.Format("{0:00}:{1:00}:{2:00}", RecordTime.Minutes, RecordTime.Seconds, RecordTime.Milliseconds/10);
+            return string.Format("{0:00}:{1:00}.{2:00}", RecordTime.Minutes, RecordTime.Seconds, RecordTime.Milliseconds/10);
         }
 
         public string GetPenaltiedTimeAsText()
         {
             TimeSpan time = GetPenaltiedTime();
-            return string.Format("{0:00}:{1:00}:{2:00}", time.Minutes, time.Seconds, time.Milliseconds/10);
+            return string.Format("{0:00}:{1:00}.{2:00}", time.Minutes, time.Seconds, time.Milliseconds/10);
+        }
+
+        public string GetStartTimeAsText()
+        {
+            return string.Format("{0}/{1}, {2:00}:{3:00}", StartTime.Month, StartTime.Day, StartTime.Hour, StartTime.Minute);
         }
     }
 
@@ -281,11 +286,11 @@ namespace CraneMonitor
             if (TimerEnabled && !PauseEnabled)
             {
                 TimeSpan span = DateTime.Now - StartTime;
-                return String.Format("{0:00}:{1:00}:{2:00}", span.Minutes, span.Seconds, span.Milliseconds / 10);
+                return String.Format("{0:00}:{1:00}.{2:00}", span.Minutes, span.Seconds, span.Milliseconds / 10);
             }
             else
             {
-                return String.Format("{0:00}:{1:00}:{2:00}", MeasuredTime.Minutes, MeasuredTime.Seconds, MeasuredTime.Milliseconds / 10);
+                return String.Format("{0:00}:{1:00}.{2:00}", MeasuredTime.Minutes, MeasuredTime.Seconds, MeasuredTime.Milliseconds / 10);
             }
 
         }
@@ -308,7 +313,7 @@ namespace CraneMonitor
                     Name = ranking[i].Name + new String(' ', MaxNameLen - len);
                 else
                     Name = ranking[i].Name.Substring(0, MaxNameLen);
-                text += String.Format("{0}   {1} {2}\r\n", i + 1, Name, ranking[i].GetTimeAsText());
+                text += String.Format("{0}  {1} {2}  ({3})\r\n", i + 1, Name, ranking[i].GetTimeAsText(), ranking[i].GetStartTimeAsText());
             }
             return text;
         }
