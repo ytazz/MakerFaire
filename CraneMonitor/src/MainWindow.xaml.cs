@@ -50,12 +50,45 @@ namespace CraneMonitor
             camera[0]  = new CameraUsb();
             camera[1]  = new CameraUsb();
 
-            // set camera id
-            camera[0].id = 0;
-            camera[0].id = 1;
-
-            ranking     = new RankingControl();
+            ranking = new RankingControl();
             ranking.SetLog(log);
+
+            // パラメータ読み込み ------------------------------------------------------------
+
+            param = Param.Load();
+
+            // set camera id
+            camera[0].id = param.UsbCameraId1;
+            camera[0].id = param.UsbCameraId2;
+
+            controller.comPort = param.ControllerComPort;
+
+            //MotorIp.Text = param.MotorIp + ":" + param.MotorPort;
+            //CameraIp.Text = param.CameraIp + ":" + param.CameraPort;
+            //ControllerIp.Text = param.ControllerIp;
+            //DisplayIp.Text = param.DisplayIp + ":" + param.DisplayPort;
+            //Contact1.Text = param.Contact1Ip;
+            //Contact2.Text = param.Contact2Ip;
+            //Contact3.Text = param.Contact3Ip;
+
+            //LowerX.Text = param.EnableLimitLowerX ? param.LimitLowerX.ToString() : "disabled";
+            //LowerY.Text = param.EnableLimitLowerY ? param.LimitLowerY.ToString() : "disabled";
+            //LowerZ.Text = param.EnableLimitLowerZ ? param.LimitLowerZ.ToString() : "disabled";
+            //UpperX.Text = param.EnableLimitUpperX ? param.LimitUpperX.ToString() : "disabled";
+            //UpperY.Text = param.EnableLimitUpperY ? param.LimitUpperY.ToString() : "disabled";
+            //UpperZ.Text = param.EnableLimitUpperZ ? param.LimitUpperZ.ToString() : "disabled";
+
+            //MotorGainX.Text = param.MotorGainX.ToString();
+            //MotorGainY.Text = param.MotorGainY.ToString();
+            //MotorGainZ.Text = param.MotorGainZ.ToString();
+
+            //param.DirectionX = (bool)directionX.IsChecked;
+            //param.DirectionY = (bool)directionY.IsChecked;
+            //param.DirectionZ = (bool)directionZ.IsChecked;
+
+            //UpdateInterval.Text = param.UpdateInterval.ToString();
+            //LightInterval.Text = param.LightUpdateInterval.ToString();
+            //SetLightInterval();
 
             // --------------------------------------------------
             // カメラ画像にダミーを表示
@@ -70,6 +103,9 @@ namespace CraneMonitor
             bi.EndInit();
             image1.Source = bi;
             image2.Source = bi;
+
+            // --------------------------------------------------
+            // メーター表示
 
             meters.Background = System.Windows.Media.Brushes.Black.Clone();
             meters.Background.Opacity = 0.5;
@@ -114,45 +150,18 @@ namespace CraneMonitor
 #endif
             foreach (Label label in meters.labels) label.Visibility = Visibility.Hidden;
 
-            param = Param.Load();
-
-            controller.comPort = param.ControllerComPort;
-
-            //MotorIp.Text = param.MotorIp + ":" + param.MotorPort;
-            //CameraIp.Text = param.CameraIp + ":" + param.CameraPort;
-            //ControllerIp.Text = param.ControllerIp;
-            //DisplayIp.Text = param.DisplayIp + ":" + param.DisplayPort;
-            //Contact1.Text = param.Contact1Ip;
-            //Contact2.Text = param.Contact2Ip;
-            //Contact3.Text = param.Contact3Ip;
-
-            //LowerX.Text = param.EnableLimitLowerX ? param.LimitLowerX.ToString() : "disabled";
-            //LowerY.Text = param.EnableLimitLowerY ? param.LimitLowerY.ToString() : "disabled";
-            //LowerZ.Text = param.EnableLimitLowerZ ? param.LimitLowerZ.ToString() : "disabled";
-            //UpperX.Text = param.EnableLimitUpperX ? param.LimitUpperX.ToString() : "disabled";
-            //UpperY.Text = param.EnableLimitUpperY ? param.LimitUpperY.ToString() : "disabled";
-            //UpperZ.Text = param.EnableLimitUpperZ ? param.LimitUpperZ.ToString() : "disabled";
-
-            //MotorGainX.Text = param.MotorGainX.ToString();
-            //MotorGainY.Text = param.MotorGainY.ToString();
-            //MotorGainZ.Text = param.MotorGainZ.ToString();
-
-            //param.DirectionX = (bool)directionX.IsChecked;
-            //param.DirectionY = (bool)directionY.IsChecked;
-            //param.DirectionZ = (bool)directionZ.IsChecked;
-
-            //UpdateInterval.Text = param.UpdateInterval.ToString();
-            //LightInterval.Text = param.LightUpdateInterval.ToString();
-            //SetLightInterval();
+            // --------------------------------------------------
 
             //// 操作卓のLEDボタン機能の割り当てはここで行う
-            controller.SwButtons = new EnableButton[] { BtnStart, BtnPause, BtnRsv2, BtnMag, BtnRsv3, BtnRsv4, BtnHalt, BtnRegister, BtnGrapL, BtnRsv1, BtnGrapR };
+            controller.PushButtons = new EnableButton[] { BtnRegister };
+            controller.SyncButtons = new EnableButton[] { BtnStart, BtnPause, BtnRsv2, BtnMag, BtnRsv3, BtnRsv4, BtnHalt, BtnGrapL, BtnRsv1, BtnGrapR };
 
             // 初期自動接続
             BtnJoystick.Enabled = true;
             BtnMotor.Enabled = true;
             BtnCtrl.Enabled = true;
             
+            // インターバルタイマ
             DispatcherTimer dispatcherTimer = new DispatcherTimer(DispatcherPriority.Normal);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, param.UpdateInterval);  // in milliseconds
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
@@ -198,6 +207,8 @@ namespace CraneMonitor
             TextButton10.Text = controller.button[10] ? "*" : "-";
             TextButton11.Text = controller.button[11] ? "*" : "-";
 #endif
+            controller.Update();
+
             camera[0].Update();
             if(camera[0].bitmap != null)
             {

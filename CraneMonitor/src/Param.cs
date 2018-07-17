@@ -56,6 +56,9 @@ namespace CraneMonitor
 
         public float SliderGain { get; set; }
 
+        public int UsbCameraId1 { get; set; }
+        public int UsbCameraId2 { get; set; }
+
         public void SetInitValue()  // default parameters
         {
             UpdateInterval = 50 * 1;
@@ -106,6 +109,9 @@ namespace CraneMonitor
             LimitUpperX = 90;
             LimitUpperY = 85;
             LimitUpperZ = 80;
+
+            UsbCameraId1 = 0;
+            UsbCameraId2 = 1;
         }
 
         //設定をファイルから読み込む

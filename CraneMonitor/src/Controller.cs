@@ -13,13 +13,16 @@ namespace CraneMonitor
 
         public string comPort;
         public double[] axis;  //< axis position [-1.0, 1.0]
-        public bool[] button;   //< button state {0, 1}
+        public bool[] PushButtonState;   //< button state {0, 1}
+        public bool[] SyncButtonState;   //< button state {0, 1}
+        public bool[] PrevPushButtonState;   //< button state {0, 1}
         //public bool           initialized = true;
         //public bool[]         swRequests = new bool[] { false, false, false, false };
         //public bool[]         ledSwRequests = new bool[] { false, false, false, false };
         //public bool[]         ledSwPrevHardRequests = new bool[] { false, false, false, false };
         //public bool[]         ledSwPrevSoftRequests = new bool[] { false, false, false, false };
-        public EnableButton[] SwButtons;
+        public EnableButton[] PushButtons;
+        public EnableButton[] SyncButtons;
         //public EnableButton[] LedSwButtons;
         //public int zeroPosX = -1;
         //public int zeroPosY = -1;
@@ -28,19 +31,21 @@ namespace CraneMonitor
         //public double outY = 0;
         //public double outZ = 0;
 
+        public int NumValues = 4;
+        public int NumPushButtons = 1;
+        public int NumSyncButtons = 10;
+
         public Controller(){
             comPort = "COM1";
-            axis = new double[4];
-            button = new bool[11];
+            axis = new double[NumValues];
+            PushButtonState = new bool[NumPushButtons];
+            PrevPushButtonState = new bool[NumPushButtons];
+            SyncButtonState = new bool[NumSyncButtons];
         }
 
         public bool Init()
         {
             com = new SerialClient();
-            //// 操作卓のLEDボタン機能の割り当てはここで行う
-            //LedSwButtons = new EnableButton[] { BtnStart, BtnPause, BtnAutoStart, BtnRegister };
-            ////SwButtons = new EnableButton[] { BtnHalt, BtnLight, BtnAdjust, null };
-
             com.ReceiveHandler = ReceiveHandler;
             com.Init(comPort);
             return com.Connected();
@@ -62,36 +67,56 @@ namespace CraneMonitor
             com.Init(comPort);
             return com.Connected();
         }
+        */
 
         public void Update()
         {
             if (com.Connected())
             {
-                //InterlockHardSwitch(swRequests, swButtons);
-                InterlockLedSwitch(ledSwRequests, ledSwPrevHardRequests, ledSwPrevSoftRequests, LedSwButtons);
+                // PUSHボタン
+                GenEventHardSwitch(PushButtonState, PrevPushButtonState, PushButtons);
+                for (int j = 0; j < NumPushButtons; j++) PrevPushButtonState[j] = PushButtonState[j];
+
+                // SYNCボタン（状態を保持するボタン）
+                InterlockHardSwitch(SyncButtonState, SyncButtons);
+
+                // LED付きSYNCボタン
+                //InterlockLedSwitch(ledSwRequests, ledSwPrevHardRequests, ledSwPrevSoftRequests, LedSwButtons);
             }
         }
-        */
 
         public void ReceiveHandler(object sender, string message)
         {
             string[] tok = message.Split(' ');
 
-            if (tok.Length < axis.Length + button.Length + 1) return;
+            if (tok.Length < NumValues + NumPushButtons + NumSyncButtons) return;
 
             int i = 0;
 
-            for(int j = 0; j < axis.Length; j++, i++) axis[j] = (double)(int.Parse(tok[i]) - 512) / 100.0;
-            for(int j = 0; j < button.Length; j++, i++)
+#if false   // 操作卓の送信側のコードを変えることができるならtrueにした方が分かりやすい
+            for (int j = 0; j < NumValues; j++, i++) axis[j] = (double)(int.Parse(tok[i]) - 512) / 100.0;
+            for (int j = 0; j < NumPushButtons; j++, i++) PushButtonState[j] = (int.Parse(tok[i]) != 0);
+            for (int j = 0; j < NumSyncButtons; j++, i++) SyncButtonState[j] = (int.Parse(tok[i]) != 0);
+#else
+            for (int j = 0; j < NumValues; j++, i++) axis[j] = (double)(int.Parse(tok[i]) - 512) / 100.0;
+            for (int j = 0; j < NumSyncButtons; j++, i++)
             {
-                button[j] = (int.Parse(tok[i]) != 0);
-                if (i == 11) i++;
+                SyncButtonState[j] = (int.Parse(tok[i]) != 0);
+                if (i == 10) i += 2;
             }
+            i = 11;
+            for (int j = 0; j < NumPushButtons; j++, i++) PushButtonState[j] = (int.Parse(tok[i]) != 0);
+#endif
+        }
 
-            InterlockHardSwitch(button, SwButtons);
-
-            //for (int i = 0; i < ledSwRequests.Length; i++)
-            //    ledSwPrevHardRequests[i] = ledSwRequests[i];
+        // プッシュボタンのイベント発生
+        void GenEventHardSwitch(bool[] Requests, bool[] PrevRequests, EnableButton[] Buttons)
+        {
+            for (int i = 0; i < Requests.Length; i++)
+            {
+                if (Buttons[i] != null && PrevRequests[i] == false && Requests[i] == true)
+                    Buttons[i].Enabled = !Buttons[i].Enabled;
+            }
         }
 
         // 疑似操作卓スイッチとの同期（疑似操作卓のスイッチ状態を優先し常に強制的に同期させる/非LEDスイッチ用）
