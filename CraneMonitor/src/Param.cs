@@ -59,6 +59,10 @@ namespace CraneMonitor
         public int UsbCameraId1 { get; set; }
         public int UsbCameraId2 { get; set; }
 
+        public bool MotorFbMode1 { get; set; }
+        public bool MotorFbMode2 { get; set; }
+        public bool MotorFbMode3 { get; set; }
+
         public void SetInitValue()  // default parameters
         {
             UpdateInterval = 50 * 1;

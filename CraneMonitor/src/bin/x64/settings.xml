@@ -11,7 +11,7 @@
   <CameraPort>8080</CameraPort>
   <DisplayIp>localhost</DisplayIp>
   <DisplayPort>65002</DisplayPort>
-  <MotorComPort>COMX</MotorComPort>
+  <MotorComPort>COM5</MotorComPort>
   <ControllerComPort>COM3</ControllerComPort>
   <Contact1ComPort>COM4</Contact1ComPort>
   <Contact2ComPort>COM5</Contact2ComPort>
@@ -34,7 +34,10 @@
   <MotorGainX>1</MotorGainX>
   <MotorGainY>1</MotorGainY>
   <MotorGainZ>1</MotorGainZ>
-  <SliderGain>3</SliderGain>
-  <UsbCameraId1>0</UsbCameraId1>
-  <UsbCameraId2>1</UsbCameraId2>
+  <SliderGain>1</SliderGain>
+  <UsbCameraId1>1</UsbCameraId1>
+  <UsbCameraId2>2</UsbCameraId2>
+  <MotorFbMode1>true</MotorFbMode1>
+  <MotorFbMode2>true</MotorFbMode2>
+  <MotorFbMode3>true</MotorFbMode3>
 </Param>

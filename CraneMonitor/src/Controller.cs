@@ -41,11 +41,11 @@ namespace CraneMonitor
             PushButtonState = new bool[NumPushButtons];
             PrevPushButtonState = new bool[NumPushButtons];
             SyncButtonState = new bool[NumSyncButtons];
+            com = new SerialClient();
         }
 
         public bool Init()
         {
-            com = new SerialClient();
             com.ReceiveHandler = ReceiveHandler;
             com.Init(comPort);
             return com.Connected();

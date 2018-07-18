@@ -45,17 +45,6 @@ namespace MeterDisplay
             meters[ 6] = Meter6;
             meters[ 7] = Meter7;
             meters[ 8] = Meter8;
-            meters[ 9] = Meter9;
-            meters[10] = Meter10;
-            meters[11] = Meter11;
-            meters[12] = Meter12;
-            meters[13] = Meter13;
-            meters[14] = Meter14;
-            meters[15] = Meter15;
-            meters[16] = Meter16;
-            meters[17] = Meter17;
-            meters[18] = Meter18;
-            meters[19] = Meter19;
 
             labels[ 0] = label0;
             labels[ 1] = label1;
@@ -66,17 +55,6 @@ namespace MeterDisplay
             labels[ 6] = label6;
             labels[ 7] = label7;
             labels[ 8] = label8;
-            labels[ 9] = label9;
-            labels[10] = label10;
-            labels[11] = label11;
-            labels[12] = label12;
-            labels[13] = label13;
-            labels[14] = label14;
-            labels[15] = label15;
-            labels[16] = label16;
-            labels[17] = label17;
-            labels[18] = label18;
-            labels[19] = label19;
 
             for (int i = 0; i < MainPanel.RowDefinitions.Count(); i++)
             {

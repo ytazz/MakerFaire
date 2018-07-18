@@ -36,7 +36,7 @@ namespace CraneMonitor
         public MotorDriver    motor;
         public Light          light;
         public RankingControl ranking;
-        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -59,9 +59,14 @@ namespace CraneMonitor
 
             // set camera id
             camera[0].id = param.UsbCameraId1;
-            camera[0].id = param.UsbCameraId2;
+            camera[1].id = param.UsbCameraId2;
 
+            motor.comPort = param.MotorComPort;
             controller.comPort = param.ControllerComPort;
+
+            BtnFbMode1.Enabled = param.MotorFbMode1;
+            BtnFbMode2.Enabled = param.MotorFbMode2;
+            BtnFbMode3.Enabled = param.MotorFbMode3;
 
             //MotorIp.Text = param.MotorIp + ":" + param.MotorPort;
             //CameraIp.Text = param.CameraIp + ":" + param.CameraPort;
@@ -112,26 +117,15 @@ namespace CraneMonitor
 
             meters.UpdateDisplayLayout(
                 new MeasureObj[] {
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.pwm_ref[0]) / (float)(motor.pwmMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.pwm_ref[1]) / (float)(motor.pwmMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.pwm_ref[2]) / (float)(motor.pwmMax); })),
-                    null,
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor.mode[0] == 0) ? motor.pwm_ref[0] : motor.pwm[0]) / (float)(motor.pwmMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor.mode[1] == 0) ? motor.pwm_ref[1] : motor.pwm[1]) / (float)(motor.pwmMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor.mode[2] == 0) ? motor.pwm_ref[2] : motor.pwm[2]) / (float)(motor.pwmMax); })),
                     new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[0]) / (float)(motor.velMax); })),
                     new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[1]) / (float)(motor.velMax); })),
                     new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[2]) / (float)(motor.velMax); })),
-                    null,
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.pwm[0]) / (float)(motor.pwmMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.pwm[1]) / (float)(motor.pwmMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.pwm[2]) / (float)(motor.pwmMax); })),
-                    null,
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)joystick.axis[0]; })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)joystick.axis[1]; })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)joystick.axis[2]; })),
-                    null,
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)controller.axis[0]; })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)controller.axis[1]; })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)controller.axis[2]; })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)controller.axis[3]; })),
+                    new MeasurePos(new GetRealValue(delegate() {return (pos_max[0] == pos_min[0]) ? 0 : (float)(motor.pos[0] - pos_min[0]) / (float)(pos_max[0] - pos_min[0]); })),
+                    new MeasurePos(new GetRealValue(delegate() {return (pos_max[1] == pos_min[1]) ? 0 : (float)(motor.pos[1] - pos_min[1]) / (float)(pos_max[1] - pos_min[1]); })),
+                    new MeasurePos(new GetRealValue(delegate() {return (pos_max[2] == pos_min[2]) ? 0 : (float)(motor.pos[2] - pos_min[2]) / (float)(pos_max[2] - pos_min[2]); })),
                 });
             
             for (int i = 0; i < meters.meter_controls.Length; i++)
@@ -139,7 +133,10 @@ namespace CraneMonitor
                 if(meters.meter_controls[i] != null)
                 {
                     meters.meter_controls[i].ThresholdScaleLen = 0.0f;  // スケールは表示しない
-                    SetMeterLimits(i, true, -85f, true, 85f);
+                    if (i < 6)
+                        SetMeterLimitsSigned(i, true, -85f, true, 85f);
+                    else
+                        SetMeterLimitsUnsigned(i, true, 10f, true, 90f);
                 }
             }
 
@@ -159,8 +156,9 @@ namespace CraneMonitor
             // 初期自動接続
             BtnJoystick.Enabled = true;
             BtnMotor.Enabled = true;
-            BtnCtrl.Enabled = true;
-            
+            //BtnCtrl.Enabled = true;
+            BtnLight.Enabled = true;
+
             // インターバルタイマ
             DispatcherTimer dispatcherTimer = new DispatcherTimer(DispatcherPriority.Normal);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, param.UpdateInterval);  // in milliseconds
@@ -170,44 +168,48 @@ namespace CraneMonitor
 
         // ------------------------------------------------------------
 
+        private int freqdiv_count = 0;
+        private double[] axis = new double[3];
+        private int[] pos_max = new int[3] { 0, 0, 0 };
+        private int[] pos_min = new int[3] { 1 << 15, 1 << 15, 1 << 15 };
+
         void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             double dt = 0.001 * param.UpdateInterval;
-            light.Update(dt);
 
-            if (ranking.RequestUpdateRanking) TextRanking.Text = ranking.GetRankingText();
-            if (ranking.RequestUpdateStart || ranking.RequestUpdateStop) TextElapseTime.Text = ranking.GetElapseTimeText();
+            if(BtnLight.Enabled) light.Update(dt);
 
-            joystick.Update();
+            if (BtnJoystick.Enabled)
+            {
+                joystick.Update();
+                axis[0] = joystick.axis[0];
+                axis[1] = joystick.axis[1];
+                axis[2] = joystick.axis[2];
+            }
+            else
+            {
+                axis[0] = controller.axis[0];
+                axis[1] = controller.axis[1];
+                axis[2] = controller.axis[2];
+            }
 
-            motor.vel_ref[0] = (int)(motor.velMax * joystick.axis[0]);
+            for(int i = 0; i < 3; i++)
+            {
+                if (motor.mode[i] == 0)
+                    motor.pwm_ref[i] = (int)(motor.pwmMax * axis[i]);
+                else
+                    motor.vel_ref[i] = (int)(motor.velMax * axis[i]);
 
-            //motor.pwm_ref[0] = (int)(motor.pwmMax * joystick.axis[0]);
-            //motor.pwm_ref[1] = (int)(motor.pwmMax * joystick.axis[1]);
-            //motor.pwm_ref[2] = (int)(motor.pwmMax * joystick.axis[2]);
+                if (pos_max[i] < motor.pos[i]) pos_max[i] = motor.pos[i];
+                if (pos_min[i] > motor.pos[i]) pos_min[i] = motor.pos[i];
+            }
 
             motor.Update(dt);
             
             meters.Update(false);
-            TextPos0.Text = motor.pos[0].ToString();
-            TextPos1.Text = motor.pos[1].ToString();
-            TextPos2.Text = motor.pos[2].ToString();
 
-#if false
-            TextButton0 .Text = controller.button[ 0] ? "*" : "-";
-            TextButton1 .Text = controller.button[ 1] ? "*" : "-";
-            TextButton2 .Text = controller.button[ 2] ? "*" : "-";
-            TextButton3 .Text = controller.button[ 3] ? "*" : "-";
-            TextButton4 .Text = controller.button[ 4] ? "*" : "-";
-            TextButton5 .Text = controller.button[ 5] ? "*" : "-";
-            TextButton6 .Text = controller.button[ 6] ? "*" : "-";
-            TextButton7 .Text = controller.button[ 7] ? "*" : "-";
-            TextButton8 .Text = controller.button[ 8] ? "*" : "-";
-            TextButton9 .Text = controller.button[ 9] ? "*" : "-";
-            TextButton10.Text = controller.button[10] ? "*" : "-";
-            TextButton11.Text = controller.button[11] ? "*" : "-";
-#endif
-            controller.Update();
+
+            // カメラ動画 ------------------------------
 
             camera[0].Update();
             if(camera[0].bitmap != null)
@@ -221,6 +223,24 @@ namespace CraneMonitor
                 image2.Source = Imaging.CreateBitmapSourceFromHBitmap(camera[1].bitmap.GetHbitmap(),
                     IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             }
+
+            // 頻度の低い更新（分周比 1/10） ------------------------------
+
+            if (freqdiv_count == 0)
+            {
+                controller.Update();
+
+                if (ranking.RequestUpdateRanking) TextRanking.Text = ranking.GetRankingText();
+                if (ranking.RequestUpdateStart || ranking.RequestUpdateStop) TextElapseTime.Text = ranking.GetElapseTimeText();
+
+                TextPos0.Text = motor.pos[0].ToString();
+                TextPos1.Text = motor.pos[1].ToString();
+                TextPos2.Text = motor.pos[2].ToString();
+
+                freqdiv_count = 10;
+            }
+
+            freqdiv_count--;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -238,7 +258,7 @@ namespace CraneMonitor
             BtnCamera2.Enabled = false;
 
             // 以下コメントアウトを有効にすると、前回に設定したパラメータが次回起動時に初期設定される
-            Param.Save(param);
+            //Param.Save(param);
         }
 
         private void BtnGetLog_Click(object sender, RoutedEventArgs e)
@@ -246,9 +266,12 @@ namespace CraneMonitor
             log.Visibility = Visibility.Visible;
         }
 
-        private void BtnShutdown_Click(object sender, RoutedEventArgs e)
+        private bool FbModeChanged()
         {
-            motor.Close();
+            motor.mode[0] = BtnFbMode1.Enabled ? 1 : 0;
+            motor.mode[1] = BtnFbMode2.Enabled ? 1 : 0;
+            motor.mode[2] = BtnFbMode3.Enabled ? 1 : 0;
+            return true;
         }
 
         private bool DummyEnableHandler(){ return true; }
@@ -276,7 +299,7 @@ namespace CraneMonitor
         private bool GameStopPause() { return ranking.GameStopPause(); }
         //public void AutoStart(bool IsStartEvent) { Dispatcher.BeginInvoke((Action)(() => { if (BtnAutoStart.Enabled) BtnStart.Enabled = IsStartEvent; })); }
 
-        private void SetMeterLimits(int MeterIndex, bool LowerEnable, float Lower, bool UpperEnable, float Upper)
+        private void SetMeterLimitsSigned(int MeterIndex, bool LowerEnable, float Lower, bool UpperEnable, float Upper)
         {
             MeterControl ctrl = meters.meter_controls[MeterIndex];
 
@@ -301,6 +324,35 @@ namespace CraneMonitor
                 ctrl.SetThreshold(0, Lower);
                 ctrl.SetThreshold(1, 0);
                 ctrl.SetThreshold(2, Upper);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+            ctrl.RedrawScales();
+        }
+
+        private void SetMeterLimitsUnsigned(int MeterIndex, bool LowerEnable, float Lower, bool UpperEnable, float Upper)
+        {
+            MeterControl ctrl = meters.meter_controls[MeterIndex];
+
+            if (LowerEnable && UpperEnable)
+            {
+                if (ctrl.NumThresholds != 2)
+                {
+                    ctrl.NumThresholds = 2;
+                    Brush sbr = new SolidColorBrush(Color.FromArgb(0xff, 0xff, 0x44, 0x44));
+                    ctrl.SetThresholdScaleBrush(0, sbr);
+                    ctrl.SetThresholdScaleBrush(1, sbr);
+                    Brush obr = new SolidColorBrush(Color.FromArgb(0x66, 0xff, 0x44, 0x44));
+                    ctrl.SetThresholdBrush(0, obr);
+                    ctrl.SetThresholdBrush(2, obr);
+                    Brush normal = new SolidColorBrush(Color.FromArgb(0x44, 0xff, 0xff, 0xff));
+                    ctrl.SetThresholdBrush(1, normal);
+                }
+                ctrl.SetThreshold(0, Lower);
+                ctrl.SetThreshold(1, Upper);
             }
             else if (LowerEnable || UpperEnable)
             {
