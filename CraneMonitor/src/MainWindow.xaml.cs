@@ -224,7 +224,7 @@ namespace CraneMonitor
                     IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             }
 
-            // 頻度の低い更新（分周比 1/10） ------------------------------
+            // 頻度の低い更新（分周比 1/5） ------------------------------
 
             if (freqdiv_count == 0)
             {
@@ -237,7 +237,7 @@ namespace CraneMonitor
                 TextPos1.Text = motor.pos[1].ToString();
                 TextPos2.Text = motor.pos[2].ToString();
 
-                freqdiv_count = 10;
+                freqdiv_count = 5;
             }
 
             freqdiv_count--;
