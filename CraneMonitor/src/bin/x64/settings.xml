@@ -12,7 +12,7 @@
   <DisplayIp>localhost</DisplayIp>
   <DisplayPort>65002</DisplayPort>
   <MotorComPort>COM5</MotorComPort>
-  <ControllerComPort>COM3</ControllerComPort>
+  <ControllerComPort>COM5</ControllerComPort>
   <Contact1ComPort>COM4</Contact1ComPort>
   <Contact2ComPort>COM5</Contact2ComPort>
   <Contact3ComPort>COM6</Contact3ComPort>

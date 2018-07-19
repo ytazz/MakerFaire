@@ -105,9 +105,9 @@
                 <TextBlock x:Name="TextPos2" Grid.Row="2" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
             </Grid>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Feedback / Direct" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Foreground="White"/>
-            <lib:EnableButton x:Name="BtnFbMode1" Content="CH1"          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="FbModeChanged" OnDisable="FbModeChanged"/>
-            <lib:EnableButton x:Name="BtnFbMode2" Content="CH2"          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="FbModeChanged" OnDisable="FbModeChanged"/>
-            <lib:EnableButton x:Name="BtnFbMode3" Content="CH3"          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="FbModeChanged" OnDisable="FbModeChanged"/>
+            <lib:EnableButton x:Name="BtnFbMode1" Content="CH1"          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="FbMode1On" OnDisable="FbMode1Off"/>
+            <lib:EnableButton x:Name="BtnFbMode2" Content="CH2"          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="FbMode2On" OnDisable="FbMode2Off"/>
+            <lib:EnableButton x:Name="BtnFbMode3" Content="CH3"          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="FbMode3On" OnDisable="FbMode3Off"/>
             <!--
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,0">
                 <Grid.RowDefinitions>

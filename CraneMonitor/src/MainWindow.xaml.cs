@@ -123,9 +123,15 @@ namespace CraneMonitor
                     new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[0]) / (float)(motor.velMax); })),
                     new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[1]) / (float)(motor.velMax); })),
                     new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[2]) / (float)(motor.velMax); })),
-                    new MeasurePos(new GetRealValue(delegate() {return (pos_max[0] == pos_min[0]) ? 0 : (float)(motor.pos[0] - pos_min[0]) / (float)(pos_max[0] - pos_min[0]); })),
-                    new MeasurePos(new GetRealValue(delegate() {return (pos_max[1] == pos_min[1]) ? 0 : (float)(motor.pos[1] - pos_min[1]) / (float)(pos_max[1] - pos_min[1]); })),
-                    new MeasurePos(new GetRealValue(delegate() {return (pos_max[2] == pos_min[2]) ? 0 : (float)(motor.pos[2] - pos_min[2]) / (float)(pos_max[2] - pos_min[2]); })),
+#if true
+                    new MeasurePos(new GetRealValue(delegate() {return motor.pos[0]; })),
+                    new MeasurePos(new GetRealValue(delegate() {return motor.pos[1]; })),
+                    new MeasurePos(new GetRealValue(delegate() {return motor.pos[2]; })),
+#else   // for debug
+                    new MeasurePos(new GetRealValue(delegate() {return (float)controller.axis[0]; })),
+                    new MeasurePos(new GetRealValue(delegate() {return (float)controller.axis[1]; })),
+                    new MeasurePos(new GetRealValue(delegate() {return (float)controller.axis[2]; })),
+#endif
                 });
             
             for (int i = 0; i < meters.meter_controls.Length; i++)
@@ -134,9 +140,9 @@ namespace CraneMonitor
                 {
                     meters.meter_controls[i].ThresholdScaleLen = 0.0f;  // スケールは表示しない
                     if (i < 6)
-                        SetMeterLimitsSigned(i, true, -85f, true, 85f);
+                        SetMeterLimitsSigned(i, true, -0.85f, true, 0.85f);
                     else
-                        SetMeterLimitsUnsigned(i, true, 10f, true, 90f);
+                        SetMeterLimitsUnsigned(i, true, 0.10f, true, 0.90f);
                 }
             }
 
@@ -170,8 +176,6 @@ namespace CraneMonitor
 
         private int freqdiv_count = 0;
         private double[] axis = new double[3];
-        private int[] pos_max = new int[3] { 0, 0, 0 };
-        private int[] pos_min = new int[3] { 1 << 15, 1 << 15, 1 << 15 };
 
         void dispatcherTimer_Tick(object sender, EventArgs e)
         {
@@ -199,9 +203,6 @@ namespace CraneMonitor
                     motor.pwm_ref[i] = (int)(motor.pwmMax * axis[i]);
                 else
                     motor.vel_ref[i] = (int)(motor.velMax * axis[i]);
-
-                if (pos_max[i] < motor.pos[i]) pos_max[i] = motor.pos[i];
-                if (pos_min[i] > motor.pos[i]) pos_min[i] = motor.pos[i];
             }
 
             motor.Update(dt);
@@ -266,13 +267,12 @@ namespace CraneMonitor
             log.Visibility = Visibility.Visible;
         }
 
-        private bool FbModeChanged()
-        {
-            motor.mode[0] = BtnFbMode1.Enabled ? 1 : 0;
-            motor.mode[1] = BtnFbMode2.Enabled ? 1 : 0;
-            motor.mode[2] = BtnFbMode3.Enabled ? 1 : 0;
-            return true;
-        }
+        private bool FbMode1On() { motor.mode[0] = 1; meters.Meter3.Visibility = Visibility.Visible; return true; }
+        private bool FbMode1Off() { motor.mode[0] = 0; meters.Meter3.Visibility = Visibility.Hidden; return true; }
+        private bool FbMode2On() { motor.mode[1] = 1; meters.Meter4.Visibility = Visibility.Visible; return true; }
+        private bool FbMode2Off() { motor.mode[1] = 0; meters.Meter4.Visibility = Visibility.Hidden; return true; }
+        private bool FbMode3On() { motor.mode[2] = 1; meters.Meter5.Visibility = Visibility.Visible; return true; }
+        private bool FbMode3Off() { motor.mode[2] = 0; meters.Meter5.Visibility = Visibility.Hidden; return true; }
 
         private bool DummyEnableHandler(){ return true; }
 

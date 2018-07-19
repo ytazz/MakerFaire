@@ -89,6 +89,14 @@ namespace CraneMonitor
         {
             string[] tok = message.Split(' ');
 
+#if false   // for test using controller of 2017
+            if (tok.Length > 4)
+            {
+                for (int j = 0; j < NumValues; j++) axis[j] = (double)(int.Parse(tok[j]) - 512) / 100.0;
+                return;
+            }
+#endif
+
             if (tok.Length < NumValues + NumPushButtons + NumSyncButtons) return;
 
             int i = 0;

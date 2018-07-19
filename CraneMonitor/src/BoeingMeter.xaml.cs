@@ -75,7 +75,6 @@ namespace MeterDisplay
             // set initial value
             prev_ratio = -1; // in order to draw at the 1st time, prev_ratio should not be less than -update_threshold
             meter_val = 0;
-            meter_max = 100;
         }
 
         const int margin = 5;
@@ -87,7 +86,7 @@ namespace MeterDisplay
         ArcSegment arc_fill_seg;
         LineSegment meter_index_seg;
         private float meter_val;
-        private float meter_max;
+        private float meter_ratio;
         private double prev_ratio;
 
         private void CircularCoordArc(ArcSegment arc, double ratio, double radius)
@@ -101,9 +100,9 @@ namespace MeterDisplay
             double angle = CircularConverter.CalcScaleAngle(ratio);
             line.Point = CircularConverter.CircularCoord(angle, radius);
         }
-        private void UpdateMeter()
+        public void UpdateMeter()
         {
-            double ratio = GetMeterDrawValue(meter_val / meter_max);
+            double ratio = Math.Abs(meter_ratio);
             // do not update the differences less than the specified threshold
             if (System.Math.Abs(ratio - prev_ratio) >= update_threshold)
             {
@@ -125,12 +124,12 @@ namespace MeterDisplay
         public float MeterValue 
         {
             get { return meter_val; }
-            set { meter_val = value; UpdateMeter(); }
+            set { meter_val = value; /* UpdateMeter(); */ }
         }
-        public float MeterMax
+        public float MeterNormValue
         {
-            get { return meter_max; }
-            set { meter_max = value; /* UpdateMeter(); */ }
+            get { return meter_ratio; }
+            set { meter_ratio = value; /* UpdateMeter(); */ }
         }
         public string ValueFormat { get; set; }
         public Brush FillBrush
@@ -138,18 +137,14 @@ namespace MeterDisplay
             get { return arc_path_fill.Fill; }
             set { arc_path_fill.Fill = value; }
         }
-        public float GetMeterDrawValue(float x)
-        {
-            return Math.Abs(x);
-        }
 
         // ------------------------------------------------------------
 
         System.Collections.ArrayList AdditionalList = new System.Collections.ArrayList();
 
-        public void AddScale(float value, Brush stroke, float begin_radius, float end_radius)
+        public void AddScale(float norm_value, Brush stroke, float begin_radius, float end_radius)
         {
-            double ratio = value / meter_max;
+            double ratio = Math.Abs(norm_value);
             double angle = CircularConverter.CalcScaleAngle(ratio);
             Point p1 = CircularConverter.CircularCoord(angle, begin_radius * meter_radius);
             Point p2 = CircularConverter.CircularCoord(angle, end_radius * meter_radius);

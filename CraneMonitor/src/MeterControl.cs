@@ -47,7 +47,10 @@ namespace MeterDisplay
         private MeasureObj measurement = null;
         private float prev_value;
         private float next_value;
+        private float prev_norm_value;
+        private float next_norm_value;
         private float delta_y;
+        private float delta_ny;
         private float delta_x;
         private float x;
 
@@ -55,9 +58,10 @@ namespace MeterDisplay
         {
             if (measurement != null)
             {
-                Meter.MeterMax = measurement.GetMax();
                 measurement.InitializeMeterFormat(Meter);
+                measurement.Update();
                 prev_value = next_value = measurement.GetValue();
+                prev_norm_value = next_norm_value = measurement.GetNormValue();
             }
         }
 
@@ -65,9 +69,15 @@ namespace MeterDisplay
         {
             if (measurement != null)
             {
+                measurement.Update();
+
                 prev_value = next_value;
                 next_value = measurement.GetValue();
                 delta_y = next_value - prev_value;
+
+                prev_norm_value = next_norm_value;
+                next_norm_value = measurement.GetNormValue();
+                delta_ny = next_norm_value - prev_norm_value;
             }
         }
 
@@ -78,7 +88,9 @@ namespace MeterDisplay
                 if (time_index == 0)
                 {
                     Meter.MeterValue = prev_value;
-                    SetMeterFillColor(Meter.MeterValue);
+                    Meter.MeterNormValue = prev_norm_value;
+                    SetMeterFillColor(Meter.MeterNormValue);
+                    Meter.UpdateMeter();
                     x = 0;
                 }
                 else
@@ -86,7 +98,9 @@ namespace MeterDisplay
                     float z = 1.0f - x;
                     float y = 1.0f - z * z;
                     Meter.MeterValue = prev_value + delta_y * y;
-                    SetMeterFillColor(Meter.MeterValue);
+                    Meter.MeterNormValue = prev_norm_value + delta_ny * y;
+                    SetMeterFillColor(Meter.MeterNormValue);
+                    Meter.UpdateMeter();
                 }
                 x += delta_x;
             }
@@ -97,7 +111,9 @@ namespace MeterDisplay
             if (measurement != null)
             {
                 Meter.MeterValue = next_value;
-                SetMeterFillColor(Meter.MeterValue);
+                Meter.MeterNormValue = next_norm_value;
+                SetMeterFillColor(Meter.MeterNormValue);
+                Meter.UpdateMeter();
             }
         }
 
@@ -173,9 +189,9 @@ namespace MeterDisplay
     public abstract class MeasureObj
     {
         public abstract void InitializeMeterFormat(BoeingMeter meter);
-        public abstract float GetMax();
-        public virtual float GetMin() { return 0; }
+        public abstract void Update();
         public abstract float GetValue();
+        public abstract float GetNormValue();
     }
 
     public delegate float GetRealValue();
@@ -183,35 +199,47 @@ namespace MeterDisplay
     public class MeasurePercent : MeasureObj
     {
         GetRealValue method;
+        float value;
         public MeasurePercent(GetRealValue x) { method = x; }
+        public override void Update() { value = method(); }
         public override void InitializeMeterFormat(BoeingMeter meter)
         {
             meter.ValueFormat = "{0:0}%";
         }
-        public override float GetMax()
-        {
-            return 100;
-        }
         public override float GetValue()
         {
-            return 100.0f * method();
+            return 100.0f * value;
+        }
+        public override float GetNormValue()
+        {
+            return value;
         }
     };
     public class MeasurePos : MeasureObj
     {
         GetRealValue method;
+        float value;
+        float min_value = float.MaxValue;
+        float max_value = float.MinValue;
+
         public MeasurePos(GetRealValue x) { method = x; }
+        public override void Update()
+        {
+            value = method();
+            if (value < min_value) min_value = value;
+            if (value > max_value) max_value = value;
+        }
         public override void InitializeMeterFormat(BoeingMeter meter)
         {
             meter.ValueFormat = "{0:0}";
         }
-        public override float GetMax()
-        {
-            return 100;
-        }
         public override float GetValue()
         {
-            return 100.0f * method();
+            return value;
+        }
+        public override float GetNormValue()
+        {
+            return (max_value == min_value) ? 0 : (value - min_value) / (max_value - min_value);
         }
     };
 
