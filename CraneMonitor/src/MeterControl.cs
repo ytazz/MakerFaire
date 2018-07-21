@@ -239,7 +239,12 @@ namespace MeterDisplay
         }
         public override float GetNormValue()
         {
-            return (max_value == min_value) ? 0 : (value - min_value) / (max_value - min_value);
+            return (max_value <= min_value) ? 0 : (value - min_value) / (max_value - min_value);
+        }
+        public void Reset()
+        {
+            min_value = value;
+            max_value = value;
         }
     };
 

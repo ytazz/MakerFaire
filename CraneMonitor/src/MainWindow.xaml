@@ -108,6 +108,8 @@
             <lib:EnableButton x:Name="BtnFbMode1" Content="CH1"          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="FbMode1On" OnDisable="FbMode1Off"/>
             <lib:EnableButton x:Name="BtnFbMode2" Content="CH2"          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="FbMode2On" OnDisable="FbMode2Off"/>
             <lib:EnableButton x:Name="BtnFbMode3" Content="CH3"          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="FbMode3On" OnDisable="FbMode3Off"/>
+
+            <Button x:Name="BtnPosReset" Content="Pos. Reset"            HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Width="75"  FontWeight="Bold" HorizontalContentAlignment="Left" BorderThickness="0" Click="BtnPosReset_Click"/>
             <!--
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,0">
                 <Grid.RowDefinitions>

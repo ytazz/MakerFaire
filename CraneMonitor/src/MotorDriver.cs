@@ -23,7 +23,7 @@ namespace CraneMonitor
 
         public int[] mode;        //< mode  0:direct pwm  1:position control
         public double[] vel_ref;    //< velocity reference
-        public int[] pwm_ref;    //< velocity reference
+        public int[] pwm_ref;    //< pwm reference
         public double[] pos_ref;    //< position reference
         public int[] pos;  //< current position (encoder count)
         public int[] pwm;  //< pwm duty ratio [0,255]

@@ -89,10 +89,11 @@ namespace CraneMonitor
         {
             string[] tok = message.Split(' ');
 
-#if false   // for test using controller of 2017
+#if false   // for test by using controller of 2017
             if (tok.Length > 4)
             {
-                for (int j = 0; j < NumValues; j++) axis[j] = (double)(int.Parse(tok[j]) - 512) / 100.0;
+                for (int j = 0; j < NumValues; j++) axis[j] = (double)(int.Parse(tok[j]) - 512) / 512;
+                //for (int j = 0; j < NumValues; j++) axis[j] = (double)int.Parse(tok[j]);
                 return;
             }
 #endif

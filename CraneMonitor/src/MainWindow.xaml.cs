@@ -37,6 +37,8 @@ namespace CraneMonitor
         public Light          light;
         public RankingControl ranking;
 
+        private MeasurePos mpos1 = null, mpos2 = null, mpos3 = null;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -63,6 +65,10 @@ namespace CraneMonitor
 
             motor.comPort = param.MotorComPort;
             controller.comPort = param.ControllerComPort;
+
+            motor.enc_pol[0] = param.DirectionX ? 1 : 0;
+            motor.enc_pol[1] = param.DirectionY ? 1 : 0;
+            motor.enc_pol[2] = param.DirectionZ ? 1 : 0;
 
             BtnFbMode1.Enabled = param.MotorFbMode1;
             BtnFbMode2.Enabled = param.MotorFbMode2;
@@ -120,17 +126,17 @@ namespace CraneMonitor
                     new MeasurePercent(new GetRealValue(delegate() {return (float)((motor.mode[0] == 0) ? motor.pwm_ref[0] : motor.pwm[0]) / (float)(motor.pwmMax); })),
                     new MeasurePercent(new GetRealValue(delegate() {return (float)((motor.mode[1] == 0) ? motor.pwm_ref[1] : motor.pwm[1]) / (float)(motor.pwmMax); })),
                     new MeasurePercent(new GetRealValue(delegate() {return (float)((motor.mode[2] == 0) ? motor.pwm_ref[2] : motor.pwm[2]) / (float)(motor.pwmMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[0]) / (float)(motor.velMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[1]) / (float)(motor.velMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)(motor.vel_ref[2]) / (float)(motor.velMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor.mode[0] == 0) ? vel[0] : motor.vel_ref[0]) / (float)(motor.velMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor.mode[1] == 0) ? vel[1] : motor.vel_ref[1]) / (float)(motor.velMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor.mode[2] == 0) ? vel[2] : motor.vel_ref[2]) / (float)(motor.velMax); })),
 #if true
-                    new MeasurePos(new GetRealValue(delegate() {return motor.pos[0]; })),
-                    new MeasurePos(new GetRealValue(delegate() {return motor.pos[1]; })),
-                    new MeasurePos(new GetRealValue(delegate() {return motor.pos[2]; })),
+                    mpos1 = new MeasurePos(new GetRealValue(delegate() {return motor.pos[0]; })),
+                    mpos2 = new MeasurePos(new GetRealValue(delegate() {return motor.pos[1]; })),
+                    mpos3 = new MeasurePos(new GetRealValue(delegate() {return motor.pos[2]; })),
 #else   // for debug
-                    new MeasurePos(new GetRealValue(delegate() {return (float)controller.axis[0]; })),
-                    new MeasurePos(new GetRealValue(delegate() {return (float)controller.axis[1]; })),
-                    new MeasurePos(new GetRealValue(delegate() {return (float)controller.axis[2]; })),
+                    mpos1 = new MeasurePos(new GetRealValue(delegate() {return (float)controller.axis[0]; })),
+                    mpos2 = new MeasurePos(new GetRealValue(delegate() {return (float)controller.axis[1]; })),
+                    mpos3 = new MeasurePos(new GetRealValue(delegate() {return (float)controller.axis[2]; })),
 #endif
                 });
             
@@ -176,6 +182,8 @@ namespace CraneMonitor
 
         private int freqdiv_count = 0;
         private double[] axis = new double[3];
+        private double[] vel = new double[3];
+        private int[] prev_pos = new int[3];
 
         void dispatcherTimer_Tick(object sender, EventArgs e)
         {
@@ -203,6 +211,9 @@ namespace CraneMonitor
                     motor.pwm_ref[i] = (int)(motor.pwmMax * axis[i]);
                 else
                     motor.vel_ref[i] = (int)(motor.velMax * axis[i]);
+
+                vel[i] = (motor.pos[i] - prev_pos[i]) * 1000 / param.UpdateInterval;
+                prev_pos[i] = motor.pos[i];
             }
 
             motor.Update(dt);
@@ -267,12 +278,19 @@ namespace CraneMonitor
             log.Visibility = Visibility.Visible;
         }
 
-        private bool FbMode1On() { motor.mode[0] = 1; meters.Meter3.Visibility = Visibility.Visible; return true; }
-        private bool FbMode1Off() { motor.mode[0] = 0; meters.Meter3.Visibility = Visibility.Hidden; return true; }
-        private bool FbMode2On() { motor.mode[1] = 1; meters.Meter4.Visibility = Visibility.Visible; return true; }
-        private bool FbMode2Off() { motor.mode[1] = 0; meters.Meter4.Visibility = Visibility.Hidden; return true; }
-        private bool FbMode3On() { motor.mode[2] = 1; meters.Meter5.Visibility = Visibility.Visible; return true; }
-        private bool FbMode3Off() { motor.mode[2] = 0; meters.Meter5.Visibility = Visibility.Hidden; return true; }
+        private void BtnPosReset_Click(object sender, RoutedEventArgs e)
+        {
+            if (mpos1 != null) mpos1.Reset();
+            if (mpos2 != null) mpos2.Reset();
+            if (mpos3 != null) mpos3.Reset();
+        }
+
+        private bool FbMode1On() { motor.mode[0] = 1; return true; }
+        private bool FbMode1Off() { motor.mode[0] = 0; return true; }
+        private bool FbMode2On() { motor.mode[1] = 1; return true; }
+        private bool FbMode2Off() { motor.mode[1] = 0; return true; }
+        private bool FbMode3On() { motor.mode[2] = 1; return true; }
+        private bool FbMode3Off() { motor.mode[2] = 0; return true; }
 
         private bool DummyEnableHandler(){ return true; }
 
