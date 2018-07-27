@@ -64,9 +64,9 @@
             <lib:EnableButton x:Name="BtnStart" Content="Start / Stop"   HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="LightGreen" OnEnable="GameStart" OnDisable="GameStop"/>
             <lib:EnableButton x:Name="BtnPause" Content="Pause"          HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Orange" OnEnable="GameStartPause" OnDisable="GameStopPause"/>
             <lib:EnableButton x:Name="BtnHalt" Content="HALT"            HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Red" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
-            <lib:EnableButton x:Name="BtnMag" Content="Grap Mag"         HorizontalAlignment="Left" Margin="10,15,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Orange" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
-            <lib:EnableButton x:Name="BtnGrapL" Content="Grap Rot L"     HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Pink" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
-            <lib:EnableButton x:Name="BtnGrapR" Content="Grap Rot R"     HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Aqua" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
+            <lib:EnableButton x:Name="BtnMag" Content="Grap Mag"         HorizontalAlignment="Left" Margin="10,15,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Aqua" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
+            <lib:EnableButton x:Name="BtnGrapL" Content="Grap Rot L"     HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
+            <lib:EnableButton x:Name="BtnGrapR" Content="Grap Rot R"     HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
             <lib:EnableButton x:Name="BtnRsv1" Content="A"               HorizontalAlignment="Left" Margin="10,15,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
             <lib:EnableButton x:Name="BtnRsv2" Content="B"               HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
             <lib:EnableButton x:Name="BtnRsv3" Content="C"               HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler"/>
@@ -115,10 +115,24 @@
                 <lib:EnableButton x:Name="BtnP2" Grid.Row="3" Grid.Column="2" Content="inv"          HorizontalAlignment="Stretch" Margin="5,5,5,0" VerticalAlignment="Top" Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" OnEnableChanged="OnMotorChanged"/>
             </Grid>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Feedback / Direct" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Foreground="White"/>
-            <lib:EnableButton x:Name="BtnFbMode0" Content="CH1 FB"           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" OnEnableChanged="OnMotorChanged"/>
-            <lib:EnableButton x:Name="BtnFbMode1" Content="CH2 FB"           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" OnEnableChanged="OnMotorChanged"/>
-            <lib:EnableButton x:Name="BtnFbMode2" Content="CH3 FB"           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" OnEnableChanged="OnMotorChanged"/>
-
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="1" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="2" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="3" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <lib:EnableButton x:Name="BtnFbMode0" Grid.Row="0" Grid.Column="1" Content="Feedback"           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" OnEnableChanged="OnMotorChanged"/>
+                <lib:EnableButton x:Name="BtnFbMode1" Grid.Row="1" Grid.Column="1" Content="Feedback"           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" OnEnableChanged="OnMotorChanged"/>
+                <lib:EnableButton x:Name="BtnFbMode2" Grid.Row="2" Grid.Column="1" Content="Feedback"           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" OnEnableChanged="OnMotorChanged"/>
+            </Grid>
             <Button x:Name="BtnPosReset" Content="Reset Pos."                HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Width="75"  FontWeight="Bold" HorizontalContentAlignment="Left" BorderThickness="0" Click="BtnPosReset_Click"/>
             <!--
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,0">
