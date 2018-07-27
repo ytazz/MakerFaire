@@ -102,12 +102,12 @@ namespace CraneMonitor
 
             int i = 0;
 
-#if false   // 操作卓の送信側のコードを変えることができるならtrueにした方が分かりやすい
-            for (int j = 0; j < NumValues; j++, i++) axis[j] = (double)(int.Parse(tok[i]) - 512) / 100.0;
+#if true   // 操作卓の送信側のコードを変えることができるならtrueにした方が分かりやすい
+            for (int j = 0; j < NumValues; j++, i++) axis[j] = (double)(int.Parse(tok[i]) - 512) / 512;
             for (int j = 0; j < NumPushButtons; j++, i++) PushButtonState[j] = (int.Parse(tok[i]) != 0);
             for (int j = 0; j < NumSyncButtons; j++, i++) SyncButtonState[j] = (int.Parse(tok[i]) != 0);
 #else
-            for (int j = 0; j < NumValues; j++, i++) axis[j] = (double)(int.Parse(tok[i]) - 512) / 100.0;
+            for (int j = 0; j < NumValues; j++, i++) axis[j] = (double)(int.Parse(tok[i]) - 512) / 512;
             for (int j = 0; j < NumSyncButtons; j++, i++)
             {
                 SyncButtonState[j] = (int.Parse(tok[i]) != 0);

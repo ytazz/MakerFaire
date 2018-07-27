@@ -52,9 +52,9 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="POWER"         HorizontalAlignment="Stretch" Margin="5,10,5,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center" FontSize="14"/>
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="VELOCITY"      HorizontalAlignment="Stretch" Margin="5,10,5,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center" FontSize="14"/>
-            <TextBlock Grid.Row="0" Grid.Column="2" Text="POSITION"      HorizontalAlignment="Stretch" Margin="5,10,5,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center" FontSize="14"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Power (PWM)"         HorizontalAlignment="Stretch" Margin="5,10,5,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center" FontSize="14"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Velocity"      HorizontalAlignment="Stretch" Margin="5,10,5,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center" FontSize="14"/>
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="Position"      HorizontalAlignment="Stretch" Margin="5,10,5,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center" FontSize="14"/>
             <lib:MeterGrid x:Name="meters" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
 
@@ -83,33 +83,43 @@
             <lib:EnableButton x:Name="BtnJoystick" Content="Joystick"    HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow" OnEnable="JoystickStart" OnDisable="JoystickStop"/>
             <lib:EnableButton x:Name="BtnCtrl" Content="Controller"      HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow" OnEnable="ControllerStart" OnDisable="ControllerStop"/>
             <Button x:Name="BtnGetLog" Content="Log"                     HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Width="75"  FontWeight="Bold" HorizontalContentAlignment="Left" BorderThickness="0" Click="BtnGetLog_Click"/>
+            <Button x:Name="BtnLoadParam" Content="Load Param."          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  FontWeight="Bold" HorizontalContentAlignment="Left" BorderThickness="0" Click="BtnLoadParam_Click"/>
+            <Button x:Name="BtnSaveParam" Content="Save Param."          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  FontWeight="Bold" HorizontalContentAlignment="Left" BorderThickness="0" Click="BtnSaveParam_Click"/>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="2"  Margin="5,0,5,0">
-            <TextBlock Text="Sensors" HorizontalAlignment="Stretch" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center" FontSize="14"/>
-            <TextBlock Text="Encoder" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
+            <TextBlock Text="Motors" HorizontalAlignment="Stretch" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="Black" Background="White" FontWeight="Bold" TextAlignment="Center" FontSize="14"/>
+            <TextBlock Text="Directions" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="CH1" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="CH2" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="CH3" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <TextBlock x:Name="TextPos0" Grid.Row="0" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <TextBlock x:Name="TextPos1" Grid.Row="1" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <TextBlock x:Name="TextPos2" Grid.Row="2" Grid.Column="1" Text="0" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="CH" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="Joy." HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Pos." HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="1" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="2" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="3" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <lib:EnableButton x:Name="BtnJ0" Grid.Row="1" Grid.Column="1" Content="inv"          HorizontalAlignment="Stretch" Margin="5,5,5,0" VerticalAlignment="Top" Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" OnEnableChanged="OnMotorChanged"/>
+                <lib:EnableButton x:Name="BtnJ1" Grid.Row="2" Grid.Column="1" Content="inv"          HorizontalAlignment="Stretch" Margin="5,5,5,0" VerticalAlignment="Top" Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" OnEnableChanged="OnMotorChanged"/>
+                <lib:EnableButton x:Name="BtnJ2" Grid.Row="3" Grid.Column="1" Content="inv"          HorizontalAlignment="Stretch" Margin="5,5,5,0" VerticalAlignment="Top" Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" OnEnableChanged="OnMotorChanged"/>
+                <lib:EnableButton x:Name="BtnP0" Grid.Row="1" Grid.Column="2" Content="inv"          HorizontalAlignment="Stretch" Margin="5,5,5,0" VerticalAlignment="Top" Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" OnEnableChanged="OnMotorChanged"/>
+                <lib:EnableButton x:Name="BtnP1" Grid.Row="2" Grid.Column="2" Content="inv"          HorizontalAlignment="Stretch" Margin="5,5,5,0" VerticalAlignment="Top" Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" OnEnableChanged="OnMotorChanged"/>
+                <lib:EnableButton x:Name="BtnP2" Grid.Row="3" Grid.Column="2" Content="inv"          HorizontalAlignment="Stretch" Margin="5,5,5,0" VerticalAlignment="Top" Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" OnEnableChanged="OnMotorChanged"/>
             </Grid>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Feedback / Direct" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Foreground="White"/>
-            <lib:EnableButton x:Name="BtnFbMode1" Content="CH1"          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="FbMode1On" OnDisable="FbMode1Off"/>
-            <lib:EnableButton x:Name="BtnFbMode2" Content="CH2"          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="FbMode2On" OnDisable="FbMode2Off"/>
-            <lib:EnableButton x:Name="BtnFbMode3" Content="CH3"          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="FbMode3On" OnDisable="FbMode3Off"/>
+            <lib:EnableButton x:Name="BtnFbMode0" Content="CH1 FB"           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" OnEnableChanged="OnMotorChanged"/>
+            <lib:EnableButton x:Name="BtnFbMode1" Content="CH2 FB"           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" OnEnableChanged="OnMotorChanged"/>
+            <lib:EnableButton x:Name="BtnFbMode2" Content="CH3 FB"           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"  Background="Yellow" FontWeight="Bold" OnEnable="DummyEnableHandler" OnDisable="DummyEnableHandler" OnEnableChanged="OnMotorChanged"/>
 
-            <Button x:Name="BtnPosReset" Content="Pos. Reset"            HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Width="75"  FontWeight="Bold" HorizontalContentAlignment="Left" BorderThickness="0" Click="BtnPosReset_Click"/>
+            <Button x:Name="BtnPosReset" Content="Reset Pos."                HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Width="75"  FontWeight="Bold" HorizontalContentAlignment="Left" BorderThickness="0" Click="BtnPosReset_Click"/>
             <!--
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,0">
                 <Grid.RowDefinitions>

@@ -1,43 +1,26 @@
 <?xml version="1.0"?>
-<Param xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<Param xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <UpdateInterval>50</UpdateInterval>
   <LightUpdateInterval>1000</LightUpdateInterval>
-  <BackColor />
-  <WindowWidth>0</WindowWidth>
-  <WindowHeight>0</WindowHeight>
-  <MotorIp>192.168.11.15</MotorIp>
-  <MotorPort>8888</MotorPort>
-  <CameraIp>192.168.11.15</CameraIp>
-  <CameraPort>8080</CameraPort>
-  <DisplayIp>localhost</DisplayIp>
-  <DisplayPort>65002</DisplayPort>
   <MotorComPort>COM5</MotorComPort>
-  <ControllerComPort>COM5</ControllerComPort>
-  <Contact1ComPort>COM4</Contact1ComPort>
-  <Contact2ComPort>COM5</Contact2ComPort>
-  <Contact3ComPort>COM6</Contact3ComPort>
-  <DirectionX>true</DirectionX>
-  <DirectionY>true</DirectionY>
-  <DirectionZ>true</DirectionZ>
-  <EnableLimitUpperX>false</EnableLimitUpperX>
-  <EnableLimitUpperY>false</EnableLimitUpperY>
-  <EnableLimitUpperZ>false</EnableLimitUpperZ>
-  <EnableLimitLowerX>false</EnableLimitLowerX>
-  <EnableLimitLowerY>false</EnableLimitLowerY>
-  <EnableLimitLowerZ>false</EnableLimitLowerZ>
-  <LimitUpperX>0</LimitUpperX>
-  <LimitUpperY>0</LimitUpperY>
-  <LimitUpperZ>0</LimitUpperZ>
-  <LimitLowerX>0</LimitLowerX>
-  <LimitLowerY>0</LimitLowerY>
-  <LimitLowerZ>0</LimitLowerZ>
-  <MotorGainX>1</MotorGainX>
-  <MotorGainY>1</MotorGainY>
-  <MotorGainZ>1</MotorGainZ>
-  <SliderGain>1</SliderGain>
-  <UsbCameraId1>1</UsbCameraId1>
-  <UsbCameraId2>2</UsbCameraId2>
-  <MotorFbMode1>true</MotorFbMode1>
-  <MotorFbMode2>true</MotorFbMode2>
-  <MotorFbMode3>true</MotorFbMode3>
+  <ControllerComPort>COM6</ControllerComPort>
+  <MotorFbMode>
+    <boolean>true</boolean>
+    <boolean>true</boolean>
+    <boolean>true</boolean>
+  </MotorFbMode>
+  <MotorDirection>
+    <boolean>false</boolean>
+    <boolean>false</boolean>
+    <boolean>true</boolean>
+  </MotorDirection>
+  <EncoderDirection>
+    <boolean>true</boolean>
+    <boolean>true</boolean>
+    <boolean>false</boolean>
+  </EncoderDirection>
+  <UsbCameraId>
+    <int>0</int>
+    <int>1</int>
+  </UsbCameraId>
 </Param>

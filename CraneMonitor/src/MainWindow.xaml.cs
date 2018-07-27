@@ -57,49 +57,7 @@ namespace CraneMonitor
 
             // パラメータ読み込み ------------------------------------------------------------
 
-            param = Param.Load();
-
-            // set camera id
-            camera[0].id = param.UsbCameraId1;
-            camera[1].id = param.UsbCameraId2;
-
-            motor.comPort = param.MotorComPort;
-            controller.comPort = param.ControllerComPort;
-
-            motor.enc_pol[0] = param.DirectionX ? 1 : 0;
-            motor.enc_pol[1] = param.DirectionY ? 1 : 0;
-            motor.enc_pol[2] = param.DirectionZ ? 1 : 0;
-
-            BtnFbMode1.Enabled = param.MotorFbMode1;
-            BtnFbMode2.Enabled = param.MotorFbMode2;
-            BtnFbMode3.Enabled = param.MotorFbMode3;
-
-            //MotorIp.Text = param.MotorIp + ":" + param.MotorPort;
-            //CameraIp.Text = param.CameraIp + ":" + param.CameraPort;
-            //ControllerIp.Text = param.ControllerIp;
-            //DisplayIp.Text = param.DisplayIp + ":" + param.DisplayPort;
-            //Contact1.Text = param.Contact1Ip;
-            //Contact2.Text = param.Contact2Ip;
-            //Contact3.Text = param.Contact3Ip;
-
-            //LowerX.Text = param.EnableLimitLowerX ? param.LimitLowerX.ToString() : "disabled";
-            //LowerY.Text = param.EnableLimitLowerY ? param.LimitLowerY.ToString() : "disabled";
-            //LowerZ.Text = param.EnableLimitLowerZ ? param.LimitLowerZ.ToString() : "disabled";
-            //UpperX.Text = param.EnableLimitUpperX ? param.LimitUpperX.ToString() : "disabled";
-            //UpperY.Text = param.EnableLimitUpperY ? param.LimitUpperY.ToString() : "disabled";
-            //UpperZ.Text = param.EnableLimitUpperZ ? param.LimitUpperZ.ToString() : "disabled";
-
-            //MotorGainX.Text = param.MotorGainX.ToString();
-            //MotorGainY.Text = param.MotorGainY.ToString();
-            //MotorGainZ.Text = param.MotorGainZ.ToString();
-
-            //param.DirectionX = (bool)directionX.IsChecked;
-            //param.DirectionY = (bool)directionY.IsChecked;
-            //param.DirectionZ = (bool)directionZ.IsChecked;
-
-            //UpdateInterval.Text = param.UpdateInterval.ToString();
-            //LightInterval.Text = param.LightUpdateInterval.ToString();
-            //SetLightInterval();
+            BtnLoadParam_Click(null, null);
 
             // --------------------------------------------------
             // カメラ画像にダミーを表示
@@ -119,7 +77,7 @@ namespace CraneMonitor
             // メーター表示
 
             meters.Background = System.Windows.Media.Brushes.Black.Clone();
-            meters.Background.Opacity = 0.5;
+            //meters.Background.Opacity = 0.5;
 
             meters.UpdateDisplayLayout(
                 new MeasureObj[] {
@@ -245,10 +203,6 @@ namespace CraneMonitor
                 if (ranking.RequestUpdateRanking) TextRanking.Text = ranking.GetRankingText();
                 if (ranking.RequestUpdateStart || ranking.RequestUpdateStop) TextElapseTime.Text = ranking.GetElapseTimeText();
 
-                TextPos0.Text = motor.pos[0].ToString();
-                TextPos1.Text = motor.pos[1].ToString();
-                TextPos2.Text = motor.pos[2].ToString();
-
                 freqdiv_count = 5;
             }
 
@@ -278,6 +232,58 @@ namespace CraneMonitor
             log.Visibility = Visibility.Visible;
         }
 
+        private void BtnLoadParam_Click(object sender, RoutedEventArgs e)
+        {
+            // パラメータ読み込み ------------------------------------------------------------
+
+            param = Param.Load();
+
+            motor.comPort = param.MotorComPort;
+            controller.comPort = param.ControllerComPort;
+
+            // set camera id
+            camera[0].id = param.UsbCameraId[0];
+            camera[1].id = param.UsbCameraId[1];
+
+            BtnFbMode0.Enabled = param.MotorFbMode[0];
+            BtnFbMode1.Enabled = param.MotorFbMode[1];
+            BtnFbMode2.Enabled = param.MotorFbMode[2];
+
+            BtnJ0.Enabled = param.MotorDirection[0];
+            BtnJ1.Enabled = param.MotorDirection[1];
+            BtnJ2.Enabled = param.MotorDirection[2];
+
+            BtnP0.Enabled = param.EncoderDirection[0];
+            BtnP1.Enabled = param.EncoderDirection[1];
+            BtnP2.Enabled = param.EncoderDirection[2];
+        }
+
+        private void BtnSaveParam_Click(object sender, RoutedEventArgs e)
+        {
+            // パラメータ書き込み ------------------------------------------------------------
+
+            param.MotorComPort = motor.comPort;
+            param.ControllerComPort = controller.comPort;
+
+            // set camera id
+            param.UsbCameraId[0] = camera[0].id;
+            param.UsbCameraId[1] = camera[1].id;
+
+            param.MotorFbMode[0] = BtnFbMode0.Enabled;
+            param.MotorFbMode[1] = BtnFbMode1.Enabled;
+            param.MotorFbMode[2] = BtnFbMode2.Enabled;
+
+            param.MotorDirection[0] = BtnJ0.Enabled;
+            param.MotorDirection[1] = BtnJ1.Enabled;
+            param.MotorDirection[2] = BtnJ2.Enabled;
+
+            param.EncoderDirection[0] = BtnP0.Enabled;
+            param.EncoderDirection[1] = BtnP1.Enabled;
+            param.EncoderDirection[2] = BtnP2.Enabled;
+
+            Param.Save(param);
+        }
+
         private void BtnPosReset_Click(object sender, RoutedEventArgs e)
         {
             if (mpos1 != null) mpos1.Reset();
@@ -285,12 +291,20 @@ namespace CraneMonitor
             if (mpos3 != null) mpos3.Reset();
         }
 
-        private bool FbMode1On() { motor.mode[0] = 1; return true; }
-        private bool FbMode1Off() { motor.mode[0] = 0; return true; }
-        private bool FbMode2On() { motor.mode[1] = 1; return true; }
-        private bool FbMode2Off() { motor.mode[1] = 0; return true; }
-        private bool FbMode3On() { motor.mode[2] = 1; return true; }
-        private bool FbMode3Off() { motor.mode[2] = 0; return true; }
+        private void OnMotorChanged()
+        {
+            motor.mot_pol[0] = BtnJ0.Enabled ? 1 : 0;
+            motor.mot_pol[1] = BtnJ1.Enabled ? 1 : 0;
+            motor.mot_pol[2] = BtnJ2.Enabled ? 1 : 0;
+
+            motor.enc_pol[0] = BtnP0.Enabled ? 1 : 0;
+            motor.enc_pol[1] = BtnP1.Enabled ? 1 : 0;
+            motor.enc_pol[2] = BtnP2.Enabled ? 1 : 0;
+
+            motor.mode[0] = BtnFbMode0.Enabled ? 1 : 0;
+            motor.mode[1] = BtnFbMode1.Enabled ? 1 : 0;
+            motor.mode[2] = BtnFbMode2.Enabled ? 1 : 0;
+        }
 
         private bool DummyEnableHandler(){ return true; }
 
@@ -316,6 +330,8 @@ namespace CraneMonitor
         private bool GameStartPause() { return ranking.GameStartPause(); }
         private bool GameStopPause() { return ranking.GameStopPause(); }
         //public void AutoStart(bool IsStartEvent) { Dispatcher.BeginInvoke((Action)(() => { if (BtnAutoStart.Enabled) BtnStart.Enabled = IsStartEvent; })); }
+
+        // ------------------------------------------------------------
 
         private void SetMeterLimitsSigned(int MeterIndex, bool LowerEnable, float Lower, bool UpperEnable, float Upper)
         {

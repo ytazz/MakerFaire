@@ -26,6 +26,7 @@ namespace MeterDisplay
         public Brush ForegroundDisabled { get; set; } = null;
         public Brush BackgroundDisabled { get; set; } = null;
 
+        public Action OnEnableChanged { get; set; } = new Action(() => { });
         public EnableEventHandler OnEnable { get; set; } = new EnableEventHandler(() => { return true; });
         public EnableEventHandler OnDisable { get; set; } = new EnableEventHandler(() => { return true; });
         public static readonly DependencyProperty EnabledProperty = DependencyProperty.Register(
@@ -63,7 +64,9 @@ namespace MeterDisplay
         protected override void OnClick()
         {
             base.OnClick();
-            Enabled = !Enabled;
+            bool old_state = Enabled;
+            Enabled = !old_state;
+            if (Enabled != old_state) OnEnableChanged();
         }
 
         private void Flip(bool enabled)
