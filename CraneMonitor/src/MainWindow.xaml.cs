@@ -325,8 +325,6 @@ namespace CraneMonitor
             motor[1].mode[2] = 0;
         }
 
-        private bool DummyEnableHandler(){ return true; }
-
         private bool MotorEnable () {
             return motor[0].Enable() && motor[1].Enable() && sensor.Enable();
         }
