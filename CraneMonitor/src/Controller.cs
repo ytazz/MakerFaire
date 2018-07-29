@@ -31,9 +31,9 @@ namespace CraneMonitor
         //public double outY = 0;
         //public double outZ = 0;
 
-        public int NumValues = 4;
+        public int NumValues = 5;
         public int NumPushButtons = 1;
-        public int NumSyncButtons = 10;
+        public int NumSyncButtons = 9;
 
         public Controller(){
             comPort = "COM1";
