@@ -120,6 +120,7 @@
     <Compile Include="RegisterUser.xaml.cs">
       <DependentUpon>RegisterUser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SensorBoard.cs" />
     <Compile Include="SocketClient.cs" />
     <Page Include="BoeingMeter.xaml">
       <Generator>MSBuild:Compile</Generator>

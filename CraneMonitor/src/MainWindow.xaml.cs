@@ -33,7 +33,8 @@ namespace CraneMonitor
         public Joystick       joystick;
         public Controller     controller;
         public CameraUsb[]    camera;
-        public MotorDriver    motor;
+        public MotorDriver[]  motor;
+        public SensorBoard    sensor;
         public Light          light;
         public RankingControl ranking;
 
@@ -44,7 +45,10 @@ namespace CraneMonitor
             InitializeComponent();
 
             log        = new LogWindow();            
-            motor      = new MotorDriver();
+            motor      = new MotorDriver[2];
+            motor[0]   = new MotorDriver();
+            motor[1]   = new MotorDriver();
+            sensor     = new SensorBoard();
             joystick   = new Joystick();
             controller = new Controller();
             light      = new Light();
@@ -81,16 +85,16 @@ namespace CraneMonitor
 
             meters.UpdateDisplayLayout(
                 new MeasureObj[] {
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor.mode[0] == 0) ? motor.pwm_ref[0] : motor.pwm[0]) / (float)(motor.pwmMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor.mode[1] == 0) ? motor.pwm_ref[1] : motor.pwm[1]) / (float)(motor.pwmMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor.mode[2] == 0) ? motor.pwm_ref[2] : motor.pwm[2]) / (float)(motor.pwmMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor.mode[0] == 0) ? vel[0] : motor.vel_ref[0]) / (float)(motor.velMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor.mode[1] == 0) ? vel[1] : motor.vel_ref[1]) / (float)(motor.velMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor.mode[2] == 0) ? vel[2] : motor.vel_ref[2]) / (float)(motor.velMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor[0].mode[0] == 0) ? motor[0].pwm_ref[0] : motor[0].pwm[0]) / (float)(motor[0].pwmMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor[0].mode[1] == 0) ? motor[0].pwm_ref[1] : motor[0].pwm[1]) / (float)(motor[0].pwmMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor[0].mode[2] == 0) ? motor[0].pwm_ref[2] : motor[0].pwm[2]) / (float)(motor[0].pwmMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor[0].mode[0] == 0) ? vel[0] : motor[0].vel_ref[0]) / (float)(motor[0].velMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor[0].mode[1] == 0) ? vel[1] : motor[0].vel_ref[1]) / (float)(motor[0].velMax); })),
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor[0].mode[2] == 0) ? vel[2] : motor[0].vel_ref[2]) / (float)(motor[0].velMax); })),
 #if true
-                    mpos1 = new MeasurePos(new GetRealValue(delegate() {return motor.pos[0]; })),
-                    mpos2 = new MeasurePos(new GetRealValue(delegate() {return motor.pos[1]; })),
-                    mpos3 = new MeasurePos(new GetRealValue(delegate() {return motor.pos[2]; })),
+                    mpos1 = new MeasurePos(new GetRealValue(delegate() {return motor[0].pos[0]; })),
+                    mpos2 = new MeasurePos(new GetRealValue(delegate() {return motor[0].pos[1]; })),
+                    mpos3 = new MeasurePos(new GetRealValue(delegate() {return motor[0].pos[2]; })),
 #else   // for debug
                     mpos1 = new MeasurePos(new GetRealValue(delegate() {return (float)controller.axis[0]; })),
                     mpos2 = new MeasurePos(new GetRealValue(delegate() {return (float)controller.axis[1]; })),
@@ -140,8 +144,8 @@ namespace CraneMonitor
 
         private int freqdiv_count = 0;
         private double[] axis = new double[3];
-        private double[] vel = new double[3];
-        private int[] prev_pos = new int[3];
+        private double[] vel = new double[2*3];
+        private int[] prev_pos = new int[2*3];
 
         void dispatcherTimer_Tick(object sender, EventArgs e)
         {
@@ -163,19 +167,21 @@ namespace CraneMonitor
                 axis[2] = controller.axis[2];
             }
 
-            for(int i = 0; i < 3; i++)
+            for(int i = 0; i < 2; i++)
             {
-                if (motor.mode[i] == 0)
-                    motor.pwm_ref[i] = (int)(motor.pwmMax * axis[i]);
-                else
-                    motor.vel_ref[i] = (int)(motor.velMax * axis[i]);
+                for (int j = 0; j < 3; j++)
+                {
+                    if (motor[i].mode[j] == 0)
+                        motor[i].pwm_ref[j] = (int)(motor[i].pwmMax * axis[j]);
+                    else
+                        motor[i].vel_ref[j] = (int)(motor[i].velMax * axis[j]);
 
-                vel[i] = (motor.pos[i] - prev_pos[i]) * 1000 / param.UpdateInterval;
-                prev_pos[i] = motor.pos[i];
+                    vel[3*i+j] = (motor[i].pos[j] - prev_pos[3*i+j]) * 1000 / param.UpdateInterval;
+                    prev_pos[3*i+j] = motor[i].pos[j];
+                }
+                motor[i].Update(dt);
             }
 
-            motor.Update(dt);
-            
             meters.Update(false);
 
 
@@ -211,7 +217,8 @@ namespace CraneMonitor
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            motor.Close();
+            motor[0].Close();
+            motor[1].Close();
 
             log.CloseAsHide = false;
             log.Close();
@@ -238,7 +245,8 @@ namespace CraneMonitor
 
             param = Param.Load();
 
-            motor.comPort = param.MotorComPort;
+            motor[0].comPort = param.MotorComPort1;
+            motor[1].comPort = param.MotorComPort2;
             controller.comPort = param.ControllerComPort;
 
             // set camera id
@@ -262,7 +270,9 @@ namespace CraneMonitor
         {
             // パラメータ書き込み ------------------------------------------------------------
 
-            param.MotorComPort = motor.comPort;
+            param.MotorComPort1 = motor[0].comPort;
+            param.MotorComPort2 = motor[1].comPort;
+            param.SensorComPort = sensor.comPort;
             param.ControllerComPort = controller.comPort;
 
             // set camera id
@@ -293,23 +303,36 @@ namespace CraneMonitor
 
         private void OnMotorChanged()
         {
-            motor.mot_pol[0] = BtnJ0.Enabled ? 1 : 0;
-            motor.mot_pol[1] = BtnJ1.Enabled ? 1 : 0;
-            motor.mot_pol[2] = BtnJ2.Enabled ? 1 : 0;
+            motor[0].mot_pol[0] = BtnJ0.Enabled ? 1 : 0;
+            motor[0].mot_pol[1] = BtnJ1.Enabled ? 1 : 0;
+            motor[0].mot_pol[2] = BtnJ2.Enabled ? 1 : 0;
+            motor[1].mot_pol[0] = 0;
+            motor[1].mot_pol[1] = 0;
+            motor[1].mot_pol[2] = 0;
 
-            motor.enc_pol[0] = BtnP0.Enabled ? 1 : 0;
-            motor.enc_pol[1] = BtnP1.Enabled ? 1 : 0;
-            motor.enc_pol[2] = BtnP2.Enabled ? 1 : 0;
+            motor[0].enc_pol[0] = BtnP0.Enabled ? 1 : 0;
+            motor[0].enc_pol[1] = BtnP1.Enabled ? 1 : 0;
+            motor[0].enc_pol[2] = BtnP2.Enabled ? 1 : 0;
+            motor[1].enc_pol[0] = 0;
+            motor[1].enc_pol[1] = 0;
+            motor[1].enc_pol[2] = 0;
 
-            motor.mode[0] = BtnFbMode0.Enabled ? 1 : 0;
-            motor.mode[1] = BtnFbMode1.Enabled ? 1 : 0;
-            motor.mode[2] = BtnFbMode2.Enabled ? 1 : 0;
+            motor[0].mode[0] = BtnFbMode0.Enabled ? 1 : 0;
+            motor[0].mode[1] = BtnFbMode1.Enabled ? 1 : 0;
+            motor[0].mode[2] = BtnFbMode2.Enabled ? 1 : 0;
+            motor[1].mode[0] = 0;
+            motor[1].mode[1] = 0;
+            motor[1].mode[2] = 0;
         }
 
         private bool DummyEnableHandler(){ return true; }
 
-        private bool MotorEnable () { return motor.Enable (); }
-        private bool MotorDisable() { return motor.Disable(); }
+        private bool MotorEnable () {
+            return motor[0].Enable() && motor[1].Enable() && sensor.Enable();
+        }
+        private bool MotorDisable() {
+            return motor[0].Disable() && motor[1].Disable() && sensor.Disable();
+        }
 
         private bool Camera1Start() { return camera[0].Init(); }
         private bool Camera1Stop() { return camera[0].Close(); }

@@ -137,6 +137,10 @@ uint16_t GetAD(int ch){
 	return val;
 }
 
+uint32_t cnt_ms;          //< ms after program start
+uint16_t pot[4];
+uint8_t  sw[4];
+
 int main(void){
 	SetupHardware();
 	
@@ -148,6 +152,16 @@ int main(void){
 	
 	for(;;){
 		if(cnt_ms % 50 == 0){
+			pot[0] = GetAD(4);
+			pot[1] = GetAD(5);
+			pot[2] = GetAD(6);
+			pot[3] = GetAD(7);
+			sw [0] = !!(PINB & _BV(0));
+			sw [1] = !!(PINB & _BV(1));
+			sw [2] = !!(PINB & _BV(2));
+			sw [3] = !!(PINB & _BV(3));
+			
+		
 			sprintf(strSend, "%d %d %d %d %d %d %d %d\r\n",
 			    pot[0], pot[1], pot[2], pot[3],
 			    sw[0], sw[1], sw[2], sw[3]);
@@ -178,10 +192,31 @@ void SetupHardware(void){
 	// port B pull-up
 	PORTB = 0x0f;  // 00001111
 	
+	// port F pull-up
+	PORTF = 0xf0;  // 11110000
+	
+	// timer0 for timing generation
+	TCCR0A = 0x00;  //< normal operation
+	TCCR0B = 0x03;  //< i/o clock 16Mhz  1/64 prescaling; overflow makes 1ms period
+	TIMSK0 = 0x01;  //< overflow interrupt enable
+	
 	// adc
+	ADCSRA |= _BV(ADPS0);  // prescaler 128 -> ADC clock 125kHz
+	ADCSRA |= _BV(ADPS1);
+	ADCSRA |= _BV(ADPS2);
+	ADCSRA |= _BV(ADEN); // A/D enable
 	
-	
-	
+	for(int i = 0; i < 4; i++){
+		pot[i] = 0;
+		sw [i] = 0;
+	}
+	cnt_ms = 0;
+}
+
+// timer0 overflow interrupt handler
+ISR(TIMER0_OVF_vect){
+	cnt_ms++;
+	TCNT0 = 5;
 }
 
 void EVENT_USB_Device_Connect               (void){}

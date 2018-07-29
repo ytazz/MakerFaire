@@ -16,7 +16,9 @@ namespace CraneMonitor
         public int UpdateInterval { get; set; }
         public int LightUpdateInterval { get; set; }
 
-        public string MotorComPort { get; set; }
+        public string MotorComPort1 { get; set; }
+        public string MotorComPort2 { get; set; }
+        public string SensorComPort { get; set; }
         public string ControllerComPort { get; set; }
 
         public bool[] MotorFbMode { get; set; }
@@ -32,14 +34,16 @@ namespace CraneMonitor
             LightUpdateInterval = 1000;
 
             // serial port of motor driver (2018)
-            MotorComPort = "COM5";
+            MotorComPort1 = "COM5";
+            MotorComPort2 = "COM6";
+            SensorComPort = "COM7";
 
             // serial port of controller box
             ControllerComPort = "COM3";
 
-            MotorFbMode = new bool[] { true, true, true };
-            MotorDirection = new bool[] { true, true, true };
-            EncoderDirection = new bool[] { true, true, true };
+            MotorFbMode = new bool[] { true, true, true, true, true, true };
+            MotorDirection = new bool[] { true, true, true, true, true, true };
+            EncoderDirection = new bool[] { true, true, true, true, true, true };
 
             UsbCameraId = new int[] { 0, 1 };
         }
