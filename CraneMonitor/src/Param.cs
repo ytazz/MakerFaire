@@ -14,7 +14,6 @@ namespace CraneMonitor
         public Param() { SetInitValue(); }
 
         public int UpdateInterval { get; set; }
-        public int LightUpdateInterval { get; set; }
 
         public string MotorComPort1 { get; set; }
         public string MotorComPort2 { get; set; }
@@ -27,12 +26,13 @@ namespace CraneMonitor
 
         public int[] UsbCameraId { get; set; }
 
+        public double LightAmplitude { get; set; }
+        public double LightFrequency { get; set; }
 
         public void SetInitValue()  // default parameters
         {
             UpdateInterval = 50 * 1;
-            LightUpdateInterval = 1000;
-
+            
             // serial port of motor driver (2018)
             MotorComPort1 = "COM5";
             MotorComPort2 = "COM6";
@@ -46,6 +46,9 @@ namespace CraneMonitor
             EncoderDirection = new bool[] { true, true, true, true, true, true };
 
             UsbCameraId = new int[] { 0, 1 };
+
+            LightAmplitude = 255;
+            LightFrequency = 1.0;
         }
 
         //設定をファイルから読み込む

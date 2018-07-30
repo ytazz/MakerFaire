@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
 <Param xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <UpdateInterval>50</UpdateInterval>
-  <LightUpdateInterval>1000</LightUpdateInterval>
-  <MotorComPort1>COM5</MotorComPort1>
-  <MotorComPort2>COM6</MotorComPort2>
-  <SensorComPort>COM5</SensorComPort>
+  <MotorComPort1>COM11</MotorComPort1>
+  <MotorComPort2>COM12</MotorComPort2>
+  <SensorComPort>COM13</SensorComPort>
   <ControllerComPort>COM6</ControllerComPort>
   <MotorFbMode>
     <boolean>true</boolean>
@@ -25,4 +24,6 @@
     <int>0</int>
     <int>1</int>
   </UsbCameraId>
+  <LightAmplitude>255</LightAmplitude>
+  <LightFrequency>1.0</LightFrequency>
 </Param>

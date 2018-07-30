@@ -46,7 +46,7 @@ namespace CraneMonitor
             pos     = new int[3] { 0, 0, 0 };
             pwm     = new int[3] { 0, 0, 0 };
             dir     = new int[3] { 0, 0, 0 };
-            mot_pol = new int[3] { 1, 1, 0 };
+            mot_pol = new int[3] { 0, 0, 0 };
             enc_pol = new int[3] { 0, 0, 0 };
         }
 
@@ -94,7 +94,7 @@ namespace CraneMonitor
 
         public void ReceiveHandler(object sender, string message)
         {
-            System.Diagnostics.Debug.WriteLine(message);
+            //System.Diagnostics.Debug.WriteLine(message);
 
             string[] tokens = message.Split(' ');
             if(tokens.Length != 9)
@@ -102,15 +102,19 @@ namespace CraneMonitor
                 return;
             }
 
-            pos[0] = int.Parse(tokens[0]);
-            pos[1] = int.Parse(tokens[1]);
-            pos[2] = int.Parse(tokens[2]);
-            pwm[0] = int.Parse(tokens[3]);
-            pwm[1] = int.Parse(tokens[4]);
-            pwm[2] = int.Parse(tokens[5]);
-            dir[0] = int.Parse(tokens[6]);
-            dir[1] = int.Parse(tokens[7]);
-            dir[2] = int.Parse(tokens[8]);
+            try
+            {
+                pos[0] = int.Parse(tokens[0]);
+                pos[1] = int.Parse(tokens[1]);
+                pos[2] = int.Parse(tokens[2]);
+                pwm[0] = int.Parse(tokens[3]);
+                pwm[1] = int.Parse(tokens[4]);
+                pwm[2] = int.Parse(tokens[5]);
+                dir[0] = int.Parse(tokens[6]);
+                dir[1] = int.Parse(tokens[7]);
+                dir[2] = int.Parse(tokens[8]);
+            }
+            catch (FormatException) { }
 
             //System.Diagnostics.Debug.WriteLine(
             //    String.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}",
@@ -143,7 +147,7 @@ namespace CraneMonitor
                 }
             }
 
-            string cmd = String.Format("set {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11}\n",
+            string cmd = String.Format("set {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n",
                 mode[0], mode[1], mode[2],
                 (int)pos_ref[0], (int)pos_ref[1], (int)pos_ref[2],
                 pwm_ref[0], pwm_ref[1], pwm_ref[2],

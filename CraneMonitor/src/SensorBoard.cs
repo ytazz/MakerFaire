@@ -63,7 +63,7 @@ namespace CraneMonitor
 
         public void ReceiveHandler(object sender, string message)
         {
-            System.Diagnostics.Debug.WriteLine(message);
+            //System.Diagnostics.Debug.WriteLine(message);
 
             string[] tokens = message.Split(' ');
             if(tokens.Length != 8)
@@ -71,18 +71,23 @@ namespace CraneMonitor
                 return;
             }
 
-            pot[0] = int.Parse(tokens[0]);
-            pot[1] = int.Parse(tokens[1]);
-            pot[2] = int.Parse(tokens[2]);
-            pot[3] = int.Parse(tokens[3]);
-            sw [0] = int.Parse(tokens[4]);
-            sw [1] = int.Parse(tokens[5]);
-            sw [2] = int.Parse(tokens[6]);
-            sw [3] = int.Parse(tokens[7]);
+            try
+            {
+                pot[0] = int.Parse(tokens[0]);
+                pot[1] = int.Parse(tokens[1]);
+                pot[2] = int.Parse(tokens[2]);
+                pot[3] = int.Parse(tokens[3]);
+                sw[0] = int.Parse(tokens[4]);
+                sw[1] = int.Parse(tokens[5]);
+                sw[2] = int.Parse(tokens[6]);
+                sw[3] = int.Parse(tokens[7]);
+            }
+            catch (FormatException) { }
             
             //System.Diagnostics.Debug.WriteLine(
-            //    String.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}",
-            //    pos[0], pos[1], pos[2], pwm[0], pwm[1], pwm[2], dir[0], dir[1], dir[2]));
+            //    String.Format("{0} {1} {2} {3} {4} {5} {6} {7}",
+            //    pot[0], pot[1], pot[2], pot[3],
+            //    sw[0], sw[1], sw[2], sw[3]));
 
             //if (message.Length < 3) return;
             //string prefix = message.Substring(0, 2);

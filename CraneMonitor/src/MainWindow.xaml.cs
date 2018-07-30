@@ -133,6 +133,10 @@ namespace CraneMonitor
             //BtnCtrl.Enabled = true;
             BtnLight.Enabled = true;
 
+            motor[0].Init();
+            motor[1].Init();
+            sensor  .Init();
+
             // インターバルタイマ
             DispatcherTimer dispatcherTimer = new DispatcherTimer(DispatcherPriority.Normal);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, param.UpdateInterval);  // in milliseconds
@@ -144,14 +148,12 @@ namespace CraneMonitor
 
         private int freqdiv_count = 0;
         private double[] axis = new double[3];
-        private double[] vel = new double[2*3];
-        private int[] prev_pos = new int[2*3];
+        private double[] vel = new double[3];
+        private int[] prev_pos = new int[3];
 
         void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             double dt = 0.001 * param.UpdateInterval;
-
-            if(BtnLight.Enabled) light.Update(dt);
 
             if (BtnJoystick.Enabled)
             {
@@ -167,20 +169,39 @@ namespace CraneMonitor
                 axis[2] = controller.axis[2];
             }
 
-            for(int i = 0; i < 2; i++)
+            // motor[0]:
+            // ch0 : axis[0]
+            // ch1 : axis[1]
+            // ch2 : axis[2]
+            for (int j = 0; j < 3; j++)
             {
-                for (int j = 0; j < 3; j++)
-                {
-                    if (motor[i].mode[j] == 0)
-                        motor[i].pwm_ref[j] = (int)(motor[i].pwmMax * axis[j]);
-                    else
-                        motor[i].vel_ref[j] = (int)(motor[i].velMax * axis[j]);
+                if (motor[0].mode[j] == 0)
+                    motor[0].pwm_ref[j] = (int)(motor[0].pwmMax * axis[j]);
+                else
+                    motor[0].vel_ref[j] = (int)(motor[0].velMax * axis[j]);
 
-                    vel[3*i+j] = (motor[i].pos[j] - prev_pos[3*i+j]) * 1000 / param.UpdateInterval;
-                    prev_pos[3*i+j] = motor[i].pos[j];
-                }
-                motor[i].Update(dt);
+                vel[j] = (motor[0].pos[j] - prev_pos[j]) * 1000 / param.UpdateInterval;
+                prev_pos[j] = motor[0].pos[j];
             }
+            motor[0].Update(dt);
+
+            // motor[1]:
+            // ch0 : light
+            if (BtnLight.Enabled)
+            {
+                light.Update(dt);
+            }
+            else
+            {
+                light.output = 0;
+            }
+            motor[1].mode[0] = 0;
+            motor[1].mode[1] = 0;
+            motor[1].mode[2] = 0;
+            motor[1].pwm_ref[0] = light.output;
+            motor[1].pwm_ref[1] = 0;
+            motor[1].pwm_ref[2] = 0;
+            motor[1].Update(dt);
 
             meters.Update(false);
 
@@ -247,6 +268,7 @@ namespace CraneMonitor
 
             motor[0].comPort = param.MotorComPort1;
             motor[1].comPort = param.MotorComPort2;
+            sensor.comPort = param.SensorComPort;
             controller.comPort = param.ControllerComPort;
 
             // set camera id
@@ -264,6 +286,9 @@ namespace CraneMonitor
             BtnP0.Enabled = param.EncoderDirection[0];
             BtnP1.Enabled = param.EncoderDirection[1];
             BtnP2.Enabled = param.EncoderDirection[2];
+
+            light.amplitude = param.LightAmplitude;
+            light.frequency = param.LightFrequency;
         }
 
         private void BtnSaveParam_Click(object sender, RoutedEventArgs e)
