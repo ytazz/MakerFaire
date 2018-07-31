@@ -102,8 +102,8 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="CH" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="Joy." HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <TextBlock Grid.Row="0" Grid.Column="2" Text="Pos." HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="Mot." HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Enc." HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="1" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="2" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="3" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White"/>

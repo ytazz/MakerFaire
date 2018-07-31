@@ -137,6 +137,8 @@ namespace CraneMonitor
             motor[1].Init();
             sensor  .Init();
 
+            OnMotorChanged();
+
             // インターバルタイマ
             DispatcherTimer dispatcherTimer = new DispatcherTimer(DispatcherPriority.Normal);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, param.UpdateInterval);  // in milliseconds
@@ -175,13 +177,22 @@ namespace CraneMonitor
             // ch2 : axis[2]
             for (int j = 0; j < 3; j++)
             {
-                if (motor[0].mode[j] == 0)
-                    motor[0].pwm_ref[j] = (int)(motor[0].pwmMax * axis[j]);
+                // haltが押されていたら指令値を0
+                if (BtnHalt.Enabled)
+                {
+                    motor[0].pwm_ref[j] = 0;
+                    motor[0].vel_ref[j] = 0;
+                }
                 else
-                    motor[0].vel_ref[j] = (int)(motor[0].velMax * axis[j]);
+                {
+                    if (motor[0].mode[j] == 0)
+                        motor[0].pwm_ref[j] = (int)(motor[0].pwmMax * axis[j]);
+                    else
+                        motor[0].vel_ref[j] = (int)(motor[0].velMax * axis[j]);
 
-                vel[j] = (motor[0].pos[j] - prev_pos[j]) * 1000 / param.UpdateInterval;
-                prev_pos[j] = motor[0].pos[j];
+                    vel[j] = (motor[0].pos[j] - prev_pos[j]) * 1000 / param.UpdateInterval;
+                    prev_pos[j] = motor[0].pos[j];
+                }
             }
             motor[0].Update(dt);
 
@@ -343,12 +354,12 @@ namespace CraneMonitor
             motor[1].enc_pol[1] = 0;
             motor[1].enc_pol[2] = 0;
 
-            motor[0].mode[0] = BtnFbMode0.Enabled ? 1 : 0;
-            motor[0].mode[1] = BtnFbMode1.Enabled ? 1 : 0;
-            motor[0].mode[2] = BtnFbMode2.Enabled ? 1 : 0;
-            motor[1].mode[0] = 0;
-            motor[1].mode[1] = 0;
-            motor[1].mode[2] = 0;
+            motor[0].SetMode(0, BtnFbMode0.Enabled ? 1 : 0);
+            motor[0].SetMode(1, BtnFbMode1.Enabled ? 1 : 0);
+            motor[0].SetMode(2, BtnFbMode2.Enabled ? 1 : 0);
+            motor[1].SetMode(0, 0);
+            motor[1].SetMode(1, 0);
+            motor[1].SetMode(2, 0);
         }
 
         private bool MotorEnable () {

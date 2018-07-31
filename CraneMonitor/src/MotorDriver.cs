@@ -39,7 +39,7 @@ namespace CraneMonitor
             velMax = 50.0;
             pwmMax = 255;
 
-            mode    = new int[3] { 1, 0, 0 };
+            mode    = new int[3] { 1, 1, 1 };
             vel_ref = new double[3] { 0.0, 0.0, 0.0 };
             pwm_ref = new int[3] { 0, 0, 0 };
             pos_ref = new double[3] { 0.0, 0.0, 0.0 };
@@ -129,6 +129,15 @@ namespace CraneMonitor
             //    posY = double.Parse(tokens[2]);
             //    posZ = double.Parse(tokens[3]);
             //}
+        }
+
+        public void SetMode(int ch, int m)
+        {
+            // reset position reference to current position when switching to feedback mode
+            if (mode[ch] == 0 && m == 1)
+                pos_ref[ch] = pos[ch];
+
+            mode[ch] = m;
         }
 
         public void Update(double dt)
