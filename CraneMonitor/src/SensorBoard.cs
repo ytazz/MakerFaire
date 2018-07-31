@@ -10,14 +10,18 @@ namespace CraneMonitor
     {
         public SerialClient com;
         public string comPort;
-        
+
+        public int potMax;
+
         public int[] pot;  //< potentiometer [0, 1024)
         public int[] sw;   //< switch {0, 1}
-
+        
         public SensorBoard()
         {
             comPort = "COM5";
             com = new SerialClient();
+
+            potMax = 1024;
 
             pot = new int[4] { 0, 0, 0, 0 };
             sw  = new int[4] { 0, 0, 0, 0 };

@@ -21,6 +21,7 @@
             <ColumnDefinition Width="10*" />
             <ColumnDefinition Width="10*" />
             <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="10*" />
         </Grid.ColumnDefinitions>
         <lib:BoeingMeter x:Name="Meter0"  Grid.Row="0" Grid.Column="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></lib:BoeingMeter>
         <lib:BoeingMeter x:Name="Meter1"  Grid.Row="1" Grid.Column="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></lib:BoeingMeter>
@@ -31,6 +32,9 @@
         <lib:BoeingMeter x:Name="Meter6"  Grid.Row="0" Grid.Column="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></lib:BoeingMeter>
         <lib:BoeingMeter x:Name="Meter7"  Grid.Row="1" Grid.Column="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></lib:BoeingMeter>
         <lib:BoeingMeter x:Name="Meter8"  Grid.Row="2" Grid.Column="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></lib:BoeingMeter>
+        <lib:BoeingMeter x:Name="Meter9"  Grid.Row="0" Grid.Column="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></lib:BoeingMeter>
+        <lib:BoeingMeter x:Name="Meter10"  Grid.Row="1" Grid.Column="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></lib:BoeingMeter>
+        <lib:BoeingMeter x:Name="Meter11"  Grid.Row="2" Grid.Column="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></lib:BoeingMeter>
         <Label Content="Label" Name="label0"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="White" FontFamily="Arial" Padding="0" FontSize="12" />
         <Label Content="Label" Name="label1"  Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="White" FontFamily="Arial" Padding="0" FontSize="12" />
         <Label Content="Label" Name="label2"  Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="White" FontFamily="Arial" Padding="0" FontSize="12" />
@@ -40,5 +44,8 @@
         <Label Content="Label" Name="label6"  Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="White" FontFamily="Arial" Padding="0" FontSize="12" />
         <Label Content="Label" Name="label7"  Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="White" FontFamily="Arial" Padding="0" FontSize="12" />
         <Label Content="Label" Name="label8"  Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="White" FontFamily="Arial" Padding="0" FontSize="12" />
+        <Label Content="Label" Name="label9"  Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="White" FontFamily="Arial" Padding="0" FontSize="12" />
+        <Label Content="Label" Name="label10"  Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="White" FontFamily="Arial" Padding="0" FontSize="12" />
+        <Label Content="Label" Name="label11"  Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="White" FontFamily="Arial" Padding="0" FontSize="12" />
     </Grid>
 </UserControl>

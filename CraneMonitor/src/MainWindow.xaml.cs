@@ -100,6 +100,9 @@ namespace CraneMonitor
                     mpos2 = new MeasurePos(new GetRealValue(delegate() {return (float)controller.axis[1]; })),
                     mpos3 = new MeasurePos(new GetRealValue(delegate() {return (float)controller.axis[2]; })),
 #endif
+                    new MeasurePercent(new GetRealValue(delegate() {return (float)(sensor.pot[0] / (float)(sensor.potMax)); })),
+                    null,
+                    null
                 });
             
             for (int i = 0; i < meters.meter_controls.Length; i++)
