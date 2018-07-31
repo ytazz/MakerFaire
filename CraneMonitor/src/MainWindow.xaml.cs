@@ -240,6 +240,7 @@ namespace CraneMonitor
         {
             motor[0].Close();
             motor[1].Close();
+            sensor.Close();
 
             log.CloseAsHide = false;
             log.Close();

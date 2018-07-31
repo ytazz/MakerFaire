@@ -188,6 +188,7 @@ namespace CraneMonitor
             try
             {
                 this.port = new System.IO.Ports.SerialPort(PortName, BaudRate, Parity, DataBits, StopBits);
+                this.port.ReadTimeout = 1000;
                 this.port.Open();
 
             }
