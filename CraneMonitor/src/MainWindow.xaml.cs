@@ -20,6 +20,7 @@ using MeterDisplay;
 using System.IO;
 using System.Xml.Serialization;
 
+
 namespace CraneMonitor
 {
     /// <summary>
@@ -128,7 +129,7 @@ namespace CraneMonitor
 
             //// 操作卓のLEDボタン機能の割り当てはここで行う
             controller.PushButtons = new EnableButton[] { BtnRegister };
-            controller.SyncButtons = new EnableButton[] { BtnStart, BtnPause, BtnRsv2, BtnMag, BtnRsv3, BtnRsv4, BtnHalt, BtnGrapL, BtnRsv1, BtnGrapR };
+            controller.SyncButtons = new EnableButton[] { BtnMag, BtnPause, BtnRsv2, BtnStart, BtnRsv3, BtnRsv4, BtnHalt, BtnGrapL, BtnRsv1, BtnGrapR };
 
             // 初期自動接続
             BtnJoystick.Enabled = true;
@@ -219,21 +220,9 @@ namespace CraneMonitor
 
             meters.Update(false);
 
-
             // カメラ動画 ------------------------------
-
-            camera[0].Update();
-            if(camera[0].bitmap != null)
-            {
-                image1.Source = Imaging.CreateBitmapSourceFromHBitmap(camera[0].bitmap.GetHbitmap(),
-                    IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            }
-            camera[1].Update();
-            if(camera[1].bitmap != null)
-            {
-                image2.Source = Imaging.CreateBitmapSourceFromHBitmap(camera[1].bitmap.GetHbitmap(),
-                    IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            }
+            if (camera[0].Update()) image1.Source = camera[0].image;
+            if (camera[1].Update()) image1.Source = camera[1].image;
 
             // 頻度の低い更新（分周比 1/5） ------------------------------
 
