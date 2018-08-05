@@ -31,9 +31,9 @@ namespace CraneMonitor
         //public double outY = 0;
         //public double outZ = 0;
 
-        public int NumValues = 5;
+        public int NumValues = 4;
         public int NumPushButtons = 1;
-        public int NumSyncButtons = 9;
+        public int NumSyncButtons = 10;
 
         public Controller(){
             comPort = "COM1";
@@ -101,21 +101,25 @@ namespace CraneMonitor
             if (tok.Length < NumValues + NumPushButtons + NumSyncButtons) return;
 
             int i = 0;
-
-#if true   // 操作卓の送信側のコードを変えることができるならtrueにした方が分かりやすい
-            for (int j = 0; j < NumValues; j++, i++) axis[j] = (double)(int.Parse(tok[i]) - 512) / 512;
-            for (int j = 0; j < NumPushButtons; j++, i++) PushButtonState[j] = (int.Parse(tok[i]) != 0);
-            for (int j = 0; j < NumSyncButtons; j++, i++) SyncButtonState[j] = (int.Parse(tok[i]) != 0);
-#else
-            for (int j = 0; j < NumValues; j++, i++) axis[j] = (double)(int.Parse(tok[i]) - 512) / 512;
-            for (int j = 0; j < NumSyncButtons; j++, i++)
+            try
             {
-                SyncButtonState[j] = (int.Parse(tok[i]) != 0);
-                if (i == 10) i += 2;
-            }
-            i = 11;
-            for (int j = 0; j < NumPushButtons; j++, i++) PushButtonState[j] = (int.Parse(tok[i]) != 0);
+#if true   // 操作卓の送信側のコードを変えることができるならtrueにした方が分かりやすい
+                for (int j = 0; j < NumValues; j++, i++) axis[j] = (double)(int.Parse(tok[i]) - 512) / 512;
+                for (int j = 0; j < NumPushButtons; j++, i++) PushButtonState[j] = (int.Parse(tok[i]) != 0);
+                for (int j = 0; j < NumSyncButtons; j++, i++) SyncButtonState[j] = (int.Parse(tok[i]) != 0);
+#else
+                for (int j = 0; j < NumValues; j++, i++) axis[j] = (double)(int.Parse(tok[i]) - 512) / 512;
+                for (int j = 0; j < NumSyncButtons; j++, i++)
+                {
+                    SyncButtonState[j] = (int.Parse(tok[i]) != 0);
+                    if (i == 10) i += 2;
+                }
+                i = 11;
+                for (int j = 0; j < NumPushButtons; j++, i++) PushButtonState[j] = (int.Parse(tok[i]) != 0);
 #endif
+            }
+            catch (FormatException) { }
+
         }
 
         // プッシュボタンのイベント発生
