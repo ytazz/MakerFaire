@@ -304,6 +304,9 @@ namespace CraneMonitor
 
             light.amplitude = param.LightAmplitude;
             light.frequency = param.LightFrequency;
+
+            sensor.potLower[0] = param.PotentioLower;
+            sensor.potUpper[0] = param.PotentioUpper;
         }
 
         private void BtnSaveParam_Click(object sender, RoutedEventArgs e)

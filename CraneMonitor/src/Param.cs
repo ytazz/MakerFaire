@@ -29,6 +29,9 @@ namespace CraneMonitor
         public double LightAmplitude { get; set; }
         public double LightFrequency { get; set; }
 
+        public int PotentioLower { get; set; }
+        public int PotentioUpper { get; set; }
+
         public void SetInitValue()  // default parameters
         {
             UpdateInterval = 50 * 1;
@@ -49,6 +52,9 @@ namespace CraneMonitor
 
             LightAmplitude = 255;
             LightFrequency = 1.0;
+
+            PotentioLower = 0;
+            PotentioUpper = 1024;
         }
 
         //設定をファイルから読み込む

@@ -13,8 +13,10 @@ namespace CraneMonitor
 
         public int potMax;
 
-        public int[] pot;  //< potentiometer [0, 1024)
-        public int[] sw;   //< switch {0, 1}
+        public int[] pot;       //< potentiometer [0, 1024)
+        public int[] potLower;  //< lower limit of potentiometer value
+        public int[] potUpper;  //< lower limit of potentiometer value
+        public int[] sw;        //< switch {0, 1}
         
         public SensorBoard()
         {
@@ -23,8 +25,10 @@ namespace CraneMonitor
 
             potMax = 1024;
 
-            pot = new int[4] { 0, 0, 0, 0 };
-            sw  = new int[4] { 0, 0, 0, 0 };
+            pot      = new int[4] { 0, 0, 0, 0 };
+            potLower = new int[4] { 0, 0, 0, 0 };
+            potUpper = new int[4] { 1024, 1024, 1024, 1024 };
+            sw       = new int[4] { 0, 0, 0, 0 };
         }
 
         public bool Init()
