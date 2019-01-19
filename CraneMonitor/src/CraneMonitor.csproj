@@ -122,6 +122,7 @@
     </Compile>
     <Compile Include="SensorBoard.cs" />
     <Compile Include="SocketClient.cs" />
+    <Compile Include="TitleBar.xaml.cs" />
     <Page Include="BoeingMeter.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -163,6 +164,10 @@
     <Page Include="RegisterUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TitleBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
