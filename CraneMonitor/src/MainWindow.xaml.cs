@@ -81,7 +81,7 @@ namespace CraneMonitor
             // --------------------------------------------------
             // メーター表示
 
-            meters.Background = System.Windows.Media.Brushes.Black.Clone();
+            //meters.Background = System.Windows.Media.Brushes.Black.Clone();
             //meters.Background.Opacity = 0.5;
 
             meters.UpdateDisplayLayout(
@@ -382,6 +382,37 @@ namespace CraneMonitor
         private bool GameStop() { PlayerName.Text = ranking.GetPlayerNameText(); if (ranking.GameStop()) BtnRegister.Enabled = false; return true; }
         private bool GameStartPause() { return ranking.GameStartPause(); }
         private bool GameStopPause() { return ranking.GameStopPause(); }
+
+        private int CollapseMode = 0;
+
+        private void Window_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            CollapseMode = (CollapseMode + 1) % 4;
+            switch (CollapseMode)
+            {
+                case 0:
+                    PanelFunc.Visibility = Visibility.Visible;
+                    PanelEnable.Visibility = Visibility.Visible;
+                    PanelMotor.Visibility = Visibility.Visible;
+                    PanelRanking.Visibility = Visibility.Visible;
+                    PanelPlayer.Visibility = Visibility.Visible;
+                    PanelMeter.Visibility = Visibility.Visible;
+                    break;
+                case 1:
+                    PanelFunc.Visibility = Visibility.Collapsed;
+                    PanelEnable.Visibility = Visibility.Collapsed;
+                    PanelMotor.Visibility = Visibility.Collapsed;
+                    break;
+                case 2:
+                    PanelRanking.Visibility = Visibility.Collapsed;
+                    PanelPlayer.Visibility = Visibility.Collapsed;
+                    break;
+                case 3:
+                    PanelMeter.Visibility = Visibility.Collapsed;
+                    break;
+            }
+        }
+
         //public void AutoStart(bool IsStartEvent) { Dispatcher.BeginInvoke((Action)(() => { if (BtnAutoStart.Enabled) BtnStart.Enabled = IsStartEvent; })); }
 
         // ------------------------------------------------------------

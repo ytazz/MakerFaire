@@ -113,7 +113,7 @@ namespace MeterDisplay
         {
             BackgroundEnabled = brush;
             Color color = brush.Color;
-            color.A = 0x88;
+            color.A = 0x66;
             BackgroundDisabled = new SolidColorBrush(color);
         }
 
