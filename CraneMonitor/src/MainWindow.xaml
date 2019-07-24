@@ -62,13 +62,6 @@
                 <lib:EnableButton x:Name="BtnStart" Content="Start / Stop"   HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="LightGreen" OnEnable="GameStart" OnDisable="GameStop"/>
                 <lib:EnableButton x:Name="BtnPause" Content="Pause"          HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Orange" OnEnable="GameStartPause" OnDisable="GameStopPause"/>
                 <lib:EnableButton x:Name="BtnHalt" Content="HALT"            HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Red"/>
-                <lib:EnableButton x:Name="BtnMag" Content="Grap Mag"         HorizontalAlignment="Left" Margin="10,15,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Aqua"/>
-                <lib:EnableButton x:Name="BtnGrapL" Content="Grap Rot L"     HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow"/>
-                <lib:EnableButton x:Name="BtnGrapR" Content="Grap Rot R"     HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow"/>
-                <lib:EnableButton x:Name="BtnRsv1" Content="A"               HorizontalAlignment="Left" Margin="10,15,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow"/>
-                <lib:EnableButton x:Name="BtnRsv2" Content="B"               HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow"/>
-                <lib:EnableButton x:Name="BtnRsv3" Content="C"               HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow"/>
-                <lib:EnableButton x:Name="BtnRsv4" Content="D"               HorizontalAlignment="Left" Margin="10,5,0,0"  VerticalAlignment="Top" Width="75"  FontWeight="Bold" Background="Yellow"/>
             </StackPanel>
 
             <StackPanel Margin="5,0,5,0" Width="130" Name="PanelEnable">
