@@ -14,7 +14,7 @@
 
 //------------------------------------------------------------------------------
 
-#define IR_RECEIVER 0
+#define IR_RECEIVER 1
 #define TEST_BOARD 0
 
 // The transmitter side ------------------------------
@@ -32,6 +32,9 @@
 #define SW_RELAY        (PINB & _BV(4))
 #define SW_MOTOR_ON     (PINB & _BV(5))
 #define SW_MOTOR_ON_INV (PINB & _BV(6))
+#define LIMIT_SW_IN		(PINB & _BV(2))		// Input: Limit Switch1(Grapple in)
+#define LIMIT_SW_OUT	(PINB & _BV(3))		// Input: Limit Switch2(Grapple OUT)
+
 
 // The receiver side ------------------------------
 
@@ -43,6 +46,11 @@
 #define MOTOR_DISABLE cbi(PORTB, 4)
 #define MOTOR_INV_1 sbi(PORTB, 2)
 #define MOTOR_INV_0 cbi(PORTB, 2)
+
+#define MOTOR_INV_1_RW sbi(PORTB, 1)
+#define MOTOR_INV_0_RW cbi(PORTB, 1)
+
+
 
 // IR Transmissions ------------------------------
 

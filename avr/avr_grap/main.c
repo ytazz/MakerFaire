@@ -143,18 +143,33 @@ void IrReceiveProc()
 	case IR_CODE_INVALID:
 		break;
 	case IR_CODE_RELAY_ON:
-		RELAY_ON;
-		LEDG_ON;
+		//RELAY_ON;
+		//LEDG_ON;
 		break;
 	case IR_CODE_RELAY_OFF:
-		RELAY_OFF;
-		LEDG_OFF;
+		//RELAY_OFF;
+		//LEDG_OFF;
 		break;
 	case IR_CODE_MOTOR_OFF:
 		MotorPwm(0);
+		MotorPwm_RW(0);
 		break;
 	default:
-		if(-256 < data && data < 256) MotorPwm(data);
+		//if(-256 < data && data < 256) MotorPwm(data);
+		if(LIMIT_SW_IN){
+			//OUT Only
+			MotorPwm(0);
+			if(-256 < data && data < 0) MotorPwm(data*3);
+		}else if(LIMIT_SW_OUT){
+			//IN Only
+			MotorPwm(0);
+			if(0 < data && data < 256) MotorPwm(data*3);
+		}else{
+			if(-256 < data && data < 256) MotorPwm(data*3);
+		}
+
+		
+		if(-256 < data && data < 256) MotorPwm_RW(data);
 		break;
 	}
 	//fprintf(&USBSerialStream, "received : %d\r\n", sdata);
@@ -201,23 +216,27 @@ void IrTransmissionProc()
 void DebugLed(int cnt)
 {
 #if IR_RECEIVER
+	/*
 	RELAY_OFF;
 	if(cnt % 4 == 0) RELAY_ON;
 	LEDR_OFF;
 	LEDG_OFF;
 	if(cnt % 2 == 0) LEDR_ON;
 	if(cnt % 2 == 1) LEDG_ON;
+	*/
 #else
+	/*
 	LEDM_OFF;
 	LEDR_OFF;
 	LEDG_OFF;
-	LEDB_OFF;
+	//LEDB_OFF;
 	LEDW_OFF;
 	if(cnt % 2 == 0) LEDM_ON;
 	if(cnt % 4 == 0) LEDR_ON;
 	if(cnt % 4 == 1) LEDG_ON;
-	if(cnt % 4 == 2) LEDB_ON;
+	//if(cnt % 4 == 2) LEDB_ON;
 	if(cnt % 4 == 3) LEDW_ON;
+	*/
 #endif
 }
 
@@ -238,6 +257,12 @@ int main(void)
 			fputc('\n', &USBSerialStream);
 		}
 
+		if(LIMIT_SW_IN){
+			LEDB_ON;
+		}else{
+			LEDB_OFF;
+		}
+		
 		//sprintf(str, "%d \r\n", cnt);
 		//fputs(str, &USBSerialStream);
 			
@@ -246,7 +271,6 @@ int main(void)
 #else
 		IrTransmissionProc();
 #endif
-
 		CDC_Device_USBTask(&VirtualSerial_CDC_Interface);
 		USB_USBTask();
 		
@@ -256,6 +280,7 @@ int main(void)
 		_delay_us(1500);
 #endif
 	}
+	
 }
 
 void SetupHardware(void)
@@ -288,18 +313,8 @@ void SetupHardware(void)
 	sbi(DDRF, 4);	// LED0
 	sbi(DDRF, 5);	// LED1
 	sbi(DDRF, 6);	// LED2
-#else
-#if TEST_BOARD
-	sbi(DDRF, 4);	// LED0
-	sbi(DDRF, 5);	// LED1
-	sbi(DDRF, 6);	// LED2
-	sbi(DDRF, 7);	// LED3
-	cbi(DDRB, 4);	// SW RELAY
-	cbi(DDRB, 5);	// SW MOTOR ON
-	cbi(DDRB, 6);	// SW MOTOR ON INV
-	sbi(PORTB, 5);	// pull-up enable
-	sbi(PORTB, 6);	// pull-up enable
-#endif
+	cbi(DDRB, 2);	// Input: Limit Switch1(Grapple in)
+	cbi(DDRB, 3);	// Input: Limit Swtich2(GRapple out)
 #endif
 
 
