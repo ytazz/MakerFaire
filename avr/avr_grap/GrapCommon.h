@@ -44,11 +44,11 @@
 #define RELAY_OFF cbi(PORTB, 1)
 #define MOTOR_ENABLE  sbi(PORTB, 4)
 #define MOTOR_DISABLE cbi(PORTB, 4)
-#define MOTOR_INV_1 sbi(PORTB, 2)
-#define MOTOR_INV_0 cbi(PORTB, 2)
+#define MOTOR_INV_1 sbi(PORTB, 1)
+#define MOTOR_INV_0 cbi(PORTB, 1)
 
-#define MOTOR_INV_1_RW sbi(PORTB, 1)
-#define MOTOR_INV_0_RW cbi(PORTB, 1)
+#define MOTOR_INV_1_RW sbi(PORTB, 0)
+#define MOTOR_INV_0_RW cbi(PORTB, 0)
 
 
 

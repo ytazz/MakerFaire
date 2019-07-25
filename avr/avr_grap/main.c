@@ -143,10 +143,12 @@ void IrReceiveProc()
 	case IR_CODE_INVALID:
 		break;
 	case IR_CODE_RELAY_ON:
+		MotorPwm_RW(data);
 		//RELAY_ON;
 		//LEDG_ON;
 		break;
 	case IR_CODE_RELAY_OFF:
+		MotorPwm_RW(0);
 		//RELAY_OFF;
 		//LEDG_OFF;
 		break;
@@ -156,20 +158,29 @@ void IrReceiveProc()
 		break;
 	default:
 		//if(-256 < data && data < 256) MotorPwm(data);
-		if(LIMIT_SW_IN){
-			//OUT Only
-			MotorPwm(0);
-			if(-256 < data && data < 0) MotorPwm(data*3);
-		}else if(LIMIT_SW_OUT){
-			//IN Only
-			MotorPwm(0);
-			if(0 < data && data < 256) MotorPwm(data*3);
-		}else{
-			if(-256 < data && data < 256) MotorPwm(data*3);
-		}
-
 		
-		if(-256 < data && data < 256) MotorPwm_RW(data);
+		if(0 < data && data< 256){
+			//Grapple close mode コントローラのレバーボタン左ON→data>0の時
+			if(LIMIT_SW_IN){
+				//Limit SW onで停止
+				MotorPwm(0);
+			}else{
+				MotorPwm(300);
+			}
+		}else if(-256< data && data < 0){
+			//Grapple open mode コントローラのレバーボタン右ON右data<0の時
+			if(LIMIT_SW_OUT){
+				//Limit SW onで停止
+				MotorPwm(0);
+			}else{
+				MotorPwm(-300);
+			}
+		}else{
+			//コントローラのレバーボタンどちらもOFF→data=0。停止
+			MotorPwm(0);
+		}
+		
+
 		break;
 	}
 	//fprintf(&USBSerialStream, "received : %d\r\n", sdata);
@@ -309,12 +320,14 @@ void SetupHardware(void)
 	sbi(DDRC, 7);	// BOARD LED
 
 #if IR_RECEIVER
-	sbi(DDRB, 1);	// RELAY
+	sbi(DDRB, 0);	// Motor(RW) DIR
+	sbi(DDRB, 1);	// Motor(Grapple) DIR
 	sbi(DDRF, 4);	// LED0
 	sbi(DDRF, 5);	// LED1
 	sbi(DDRF, 6);	// LED2
 	cbi(DDRB, 2);	// Input: Limit Switch1(Grapple in)
 	cbi(DDRB, 3);	// Input: Limit Swtich2(GRapple out)
+	
 #endif
 
 

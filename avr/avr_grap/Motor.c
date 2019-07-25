@@ -24,9 +24,9 @@ void InitMotor()
 	TCCR3B = _BV(CS32);	// Prescaler 1/256
 	TCCR3C = 0;
 	
-	sbi(DDRB, 5);	// PWM
-	sbi(DDRB, 4);	// ENABLE
-	sbi(DDRB, 2);	// INV
+	sbi(DDRB, 5);	// PWM(GrappleópÅjÇèoóÕÇ…ê›íË
+//	sbi(DDRB, 4);	// ENABLE
+//	sbi(DDRB, 2);	// INV
 
 	MotorPwm(0);
 	MotorPwm_RW(0);
