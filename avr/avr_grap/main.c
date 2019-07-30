@@ -1,5 +1,5 @@
 /**
-    Maker Faire 2018 - Grapple with a reaction wheel
+	Maker Faire 2019 - Grapple with a reaction wheel(Tnt)
  **/
 
 #include <avr/io.h>
@@ -79,6 +79,11 @@ void CheckJoystickMovement(void);
 #include "irTrans.h"
 #include "Motor.h"
 
+
+
+//global
+int ir_data;	//赤外線データ→シリアル通信（デバッグ用）
+
 // ------------------------------------------------------------
 
 void SelectADChannel(int ch){
@@ -138,7 +143,8 @@ uint16_t GetAD(int ch){
 void IrReceiveProc()
 {
 	int data = IrReceive();
-
+	ir_data = data;
+	
 	switch(data){
 	case IR_CODE_INVALID:
 		break;
@@ -261,6 +267,7 @@ int main(void)
 
 	int  cnt;
 	char str[256];
+	
 	for(cnt = 0; ; cnt++){
 		char c = CDC_Device_ReceiveByte(&VirtualSerial_CDC_Interface);
 		if(isalpha(c)){
@@ -274,8 +281,10 @@ int main(void)
 			LEDB_OFF;
 		}
 		
+		//デバッグ用シリアル出力（デバッグ終了後、コメントアウトすること）
 		//sprintf(str, "%d \r\n", cnt);
-		//fputs(str, &USBSerialStream);
+		sprintf(str, "%d \r\n", ir_data);
+		fputs(str, &USBSerialStream);
 			
 #if IR_RECEIVER
 		IrReceiveProc();
