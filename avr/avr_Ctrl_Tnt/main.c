@@ -162,17 +162,24 @@ void IrReceiveProc()
 	//fprintf(&USBSerialStream, "received : %d\r\n", sdata);
 }
 
-void IrTransmissionProc()
+void IrTransmissionProc(int cmd)
 {
 	{
 		static int prev_data = 0;
 		static int prev_relay = 0;
 		int data = 0;
-		int rdata = 3 * RotEncoderGetVal();	// 3 is due to usability
-		//if(rdata <= -256) rdata = -255;
-		//if(rdata > 256) rdata = 255;
-		if(rdata <= -20) rdata = -20;
-		if(rdata > 20) rdata = 20;
+		int rdata = 0;
+		static int ir_cmd_mode=0;
+		int enc_data=0;
+		
+		uint16_t joy2a  = GetAD(7);		//右レバー左右（RWレバーmode用）
+		uint8_t  sw_LR	= !(PINB & _BV(5));
+		uint8_t  sw_RL	= !(PINB & _BV(7));
+		
+		
+		enc_data = 3 * RotEncoderGetVal();	// 3 is due to usability
+		if(enc_data <= -120) enc_data = -120;
+		if(enc_data > 120) enc_data = 120;
 
 		if(SW_MOTOR_ON == 0){
 			data = rdata;
@@ -187,15 +194,40 @@ void IrTransmissionProc()
 			LEDB_OFF;
 		}
 
-		if(SW_RELAY != prev_relay){
-			if(SW_RELAY == 0){
-				IrSend(IR_CODE_RELAY_ON);
-			}else{
-				IrSend(IR_CODE_RELAY_OFF);
+		//IrSend(data);
+		if(cmd==0){		//制御mode設定
+			if(sw_LR == 0){			//RWレバーモード
+				if(sw_RL == 0){		//グラップル低速
+					ir_cmd_mode = 10;
+					IrSend(ir_cmd_mode);
+				}else{				//グラップル高速
+					ir_cmd_mode = 30;
+					IrSend(ir_cmd_mode);	
+				}
+			}else if(sw_LR == 1){	//RWジャイロモード
+				if(sw_RL == 0){		//グラップル低速
+					ir_cmd_mode = 20;
+					IrSend(ir_cmd_mode);
+				}else{				//グラップル高速
+					ir_cmd_mode = 40;
+					IrSend(ir_cmd_mode);
+				}
 			}
+		}else if(cmd==1){			//RW出力
+			if(ir_cmd_mode == 20 || ir_cmd_mode == 40){		//ジャイロモード
+				IrSend(enc_data);
+			}else{			//レバーモード
+				IrSend(-joy2a/3);
+			}
+			
+			
+			//IrSend(-20);
+		}else if(cmd==2){
+			//IrSend(20);
 		}else{
-			IrSend(data);
+			IrSend(1);
 		}
+			
 		prev_data = data;
 		prev_relay = SW_RELAY;
 
@@ -295,25 +327,21 @@ int main(void)
 
 			fputs(str, &USBSerialStream);
 			
-			/*
-			if((SW_RELAY != prev_relay) || (SW_MOTOR_ON != prev_motor_on) || (SW_MOTOR_ON_INV != prev_motor_on_inv)){
-				IrTransmissionProc();
-			}else if(rdata > (prev_data+2) || (rdata < (prev_data-2))){
-				IrTransmissionProc();
-			}*/
-			/*
-			if(SW_RELAY == 0){
-				IrSend(IR_CODE_RELAY_ON);
-			}else{
-				IrSend(IR_CODE_RELAY_OFF);
-			}*/
-									
-			if(cnt % 6000 == 0){
+			
+			
+			//赤外線出力
+			/*if(cnt % 6000 == 0){
 				IrTransmissionProc();
 				cnt = 0;
+			}*/
+			if(cnt == 2000){
+				IrTransmissionProc(0);
+			}else if(cnt == 4000){
+				IrTransmissionProc(1);
+			}else if(cnt == 6000){
+				IrTransmissionProc(2);
+				cnt = 0;
 			}
-			
-			
 			
 		//cnt = 0;
 		}

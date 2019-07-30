@@ -29,9 +29,11 @@
 #define LEDB_OFF cbi(PORTF, 6)
 #define LEDW_ON  sbi(PORTF, 7)
 #define LEDW_OFF cbi(PORTF, 7)
-#define SW_RELAY        (PINB & _BV(4))
+#define SW_RELAY        (PINB & _BV(4))		//sw_LL（トグルSW、赤LED）
 #define SW_MOTOR_ON     (PINB & _BV(3))
 #define SW_MOTOR_ON_INV (PINB & _BV(6))
+#define SW_MODE_RW      (PINB & _BV(5))		//sw_LR（トグルSW、緑LED）
+#define SW_MODE_GRAP	(PINB & _BV(7))		//sw_RL（トグルSW、黄LED）
 
 // The receiver side ------------------------------
 
