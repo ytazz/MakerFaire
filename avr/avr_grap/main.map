@@ -706,7 +706,7 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x21d4
+.text           0x00000000     0x21dc
  *(.vectors)
  .vectors       0x00000000       0xac c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32u4.o
                 0x00000000                __vectors
@@ -826,259 +826,259 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .text.IrReceiveProc
                 0x000001de       0x80 obj/main.o
                 0x000001de                IrReceiveProc
- .text.main     0x0000025e       0xde obj/main.o
+ .text.main     0x0000025e       0xe6 obj/main.o
                 0x0000025e                main
  .text.EVENT_USB_Device_ControlRequest
-                0x0000033c        0x6 obj/main.o
-                0x0000033c                EVENT_USB_Device_ControlRequest
+                0x00000344        0x6 obj/main.o
+                0x00000344                EVENT_USB_Device_ControlRequest
  .text.EVENT_USB_Device_ConfigurationChanged
-                0x00000342        0x6 obj/main.o
-                0x00000342                EVENT_USB_Device_ConfigurationChanged
+                0x0000034a        0x6 obj/main.o
+                0x0000034a                EVENT_USB_Device_ConfigurationChanged
  .text.CALLBACK_USB_GetDescriptor
-                0x00000348       0x5c obj/Descriptors.o
-                0x00000348                CALLBACK_USB_GetDescriptor
+                0x00000350       0x5c obj/Descriptors.o
+                0x00000350                CALLBACK_USB_GetDescriptor
  .text.Endpoint_Write_Control_Stream_LE
-                0x000003a4       0xd4 obj/EndpointStream_AVR8.o
-                0x000003a4                Endpoint_Write_Control_Stream_LE
+                0x000003ac       0xd4 obj/EndpointStream_AVR8.o
+                0x000003ac                Endpoint_Write_Control_Stream_LE
  .text.Endpoint_Write_Control_PStream_LE
-                0x00000478       0xd6 obj/EndpointStream_AVR8.o
-                0x00000478                Endpoint_Write_Control_PStream_LE
+                0x00000480       0xd6 obj/EndpointStream_AVR8.o
+                0x00000480                Endpoint_Write_Control_PStream_LE
  .text.Endpoint_ConfigureEndpoint_Prv
-                0x0000054e       0x70 obj/Endpoint_AVR8.o
-                0x0000054e                Endpoint_ConfigureEndpoint_Prv
+                0x00000556       0x70 obj/Endpoint_AVR8.o
+                0x00000556                Endpoint_ConfigureEndpoint_Prv
  .text.Endpoint_ConfigureEndpointTable
-                0x000005be       0x78 obj/Endpoint_AVR8.o
-                0x000005be                Endpoint_ConfigureEndpointTable
+                0x000005c6       0x78 obj/Endpoint_AVR8.o
+                0x000005c6                Endpoint_ConfigureEndpointTable
  .text.Endpoint_ClearStatusStage
-                0x00000636       0x42 obj/Endpoint_AVR8.o
-                0x00000636                Endpoint_ClearStatusStage
+                0x0000063e       0x42 obj/Endpoint_AVR8.o
+                0x0000063e                Endpoint_ClearStatusStage
  .text.Endpoint_WaitUntilReady
-                0x00000678       0x64 obj/Endpoint_AVR8.o
-                0x00000678                Endpoint_WaitUntilReady
+                0x00000680       0x64 obj/Endpoint_AVR8.o
+                0x00000680                Endpoint_WaitUntilReady
  .text.USB_ResetInterface
-                0x000006dc       0x88 obj/USBController_AVR8.o
-                0x000006dc                USB_ResetInterface
+                0x000006e4       0x88 obj/USBController_AVR8.o
+                0x000006e4                USB_ResetInterface
  .text.USB_Init
-                0x00000764       0x20 obj/USBController_AVR8.o
-                0x00000764                USB_Init
+                0x0000076c       0x20 obj/USBController_AVR8.o
+                0x0000076c                USB_Init
  .text.USB_INT_DisableAllInterrupts
-                0x00000784       0x10 obj/USBInterrupt_AVR8.o
-                0x00000784                USB_INT_DisableAllInterrupts
+                0x0000078c       0x10 obj/USBInterrupt_AVR8.o
+                0x0000078c                USB_INT_DisableAllInterrupts
  .text.USB_INT_ClearAllInterrupts
-                0x00000794        0xa obj/USBInterrupt_AVR8.o
-                0x00000794                USB_INT_ClearAllInterrupts
+                0x0000079c        0xa obj/USBInterrupt_AVR8.o
+                0x0000079c                USB_INT_ClearAllInterrupts
  .text.__vector_11
-                0x0000079e       0x76 obj/USBInterrupt_AVR8.o
-                0x0000079e                __vector_11
+                0x000007a6       0x76 obj/USBInterrupt_AVR8.o
+                0x000007a6                __vector_11
  .text.__vector_10
-                0x00000814      0x196 obj/USBInterrupt_AVR8.o
-                0x00000814                __vector_10
+                0x0000081c      0x196 obj/USBInterrupt_AVR8.o
+                0x0000081c                __vector_10
  .text.USB_Device_ProcessControlRequest
-                0x000009aa      0x2e0 obj/DeviceStandardReq.o
-                0x000009aa                USB_Device_ProcessControlRequest
+                0x000009b2      0x2e0 obj/DeviceStandardReq.o
+                0x000009b2                USB_Device_ProcessControlRequest
  .text.USB_Event_Stub
-                0x00000c8a        0x2 obj/Events.o
-                0x00000c8a                EVENT_USB_Device_WakeUp
-                0x00000c8a                USB_Event_Stub
-                0x00000c8a                EVENT_USB_Device_Suspend
-                0x00000c8a                EVENT_USB_Device_StartOfFrame
-                0x00000c8a                EVENT_USB_Device_Reset
+                0x00000c92        0x2 obj/Events.o
+                0x00000c92                EVENT_USB_Device_WakeUp
+                0x00000c92                USB_Event_Stub
+                0x00000c92                EVENT_USB_Device_Suspend
+                0x00000c92                EVENT_USB_Device_StartOfFrame
+                0x00000c92                EVENT_USB_Device_Reset
  .text.USB_USBTask
-                0x00000c8c       0x2a obj/USBTask.o
-                0x00000c8c                USB_USBTask
+                0x00000c94       0x2a obj/USBTask.o
+                0x00000c94                USB_USBTask
  .text.CDC_Device_ReceiveByte
-                0x00000cb6       0x78 obj/CDCClassDevice.o
-                0x00000cb6                CDC_Device_ReceiveByte
+                0x00000cbe       0x78 obj/CDCClassDevice.o
+                0x00000cbe                CDC_Device_ReceiveByte
  .text.CDC_Device_CreateStream
-                0x00000d2e       0x26 obj/CDCClassDevice.o
-                0x00000d2e                CDC_Device_CreateStream
+                0x00000d36       0x26 obj/CDCClassDevice.o
+                0x00000d36                CDC_Device_CreateStream
  .text.CDC_Device_getchar
-                0x00000d54       0x16 obj/CDCClassDevice.o
+                0x00000d5c       0x16 obj/CDCClassDevice.o
  .text.CDC_Device_Event_Stub
-                0x00000d6a        0x2 obj/CDCClassDevice.o
-                0x00000d6a                EVENT_CDC_Device_LineEncodingChanged
-                0x00000d6a                EVENT_CDC_Device_BreakSent
-                0x00000d6a                CDC_Device_Event_Stub
+                0x00000d72        0x2 obj/CDCClassDevice.o
+                0x00000d72                EVENT_CDC_Device_LineEncodingChanged
+                0x00000d72                EVENT_CDC_Device_BreakSent
+                0x00000d72                CDC_Device_Event_Stub
  .text.CDC_Device_Flush
-                0x00000d6c       0x68 obj/CDCClassDevice.o
-                0x00000d6c                CDC_Device_Flush
+                0x00000d74       0x68 obj/CDCClassDevice.o
+                0x00000d74                CDC_Device_Flush
  .text.CDC_Device_USBTask
-                0x00000dd4       0x30 obj/CDCClassDevice.o
-                0x00000dd4                CDC_Device_USBTask
+                0x00000ddc       0x30 obj/CDCClassDevice.o
+                0x00000ddc                CDC_Device_USBTask
  .text.CDC_Device_SendByte
-                0x00000e04       0x4c obj/CDCClassDevice.o
-                0x00000e04                CDC_Device_SendByte
+                0x00000e0c       0x4c obj/CDCClassDevice.o
+                0x00000e0c                CDC_Device_SendByte
  .text.CDC_Device_putchar
-                0x00000e50       0x1e obj/CDCClassDevice.o
+                0x00000e58       0x1e obj/CDCClassDevice.o
  .text.CDC_Device_ConfigureEndpoints
-                0x00000e6e       0x4e obj/CDCClassDevice.o
-                0x00000e6e                CDC_Device_ConfigureEndpoints
+                0x00000e76       0x4e obj/CDCClassDevice.o
+                0x00000e76                CDC_Device_ConfigureEndpoints
  .text.CDC_Device_ProcessControlRequest
-                0x00000ebc      0x15a obj/CDCClassDevice.o
-                0x00000ebc                CDC_Device_ProcessControlRequest
+                0x00000ec4      0x15a obj/CDCClassDevice.o
+                0x00000ec4                CDC_Device_ProcessControlRequest
  .text._Z10MATCH_MARKii
-                0x00001016       0x86 obj/IRremote.o
-                0x00001016                MATCH_MARK(int, int)
+                0x0000101e       0x86 obj/IRremote.o
+                0x0000101e                MATCH_MARK(int, int)
  .text._Z11MATCH_SPACEii
-                0x0000109c       0x86 obj/IRremote.o
-                0x0000109c                MATCH_SPACE(int, int)
+                0x000010a4       0x86 obj/IRremote.o
+                0x000010a4                MATCH_SPACE(int, int)
  .text.__vector_41
-                0x00001122      0x144 obj/IRremote.o
-                0x00001122                __vector_41
+                0x0000112a      0x144 obj/IRremote.o
+                0x0000112a                __vector_41
  .text._Z19TIMER_CONFIG_NORMALv
-                0x00001266       0x30 obj/irRecv.o
-                0x00001266                TIMER_CONFIG_NORMAL()
+                0x0000126e       0x30 obj/irRecv.o
+                0x0000126e                TIMER_CONFIG_NORMAL()
  .text._ZN6IRrecvC1Ev
-                0x00001296        0x2 obj/irRecv.o
-                0x00001296                IRrecv::IRrecv()
+                0x0000129e        0x2 obj/irRecv.o
+                0x0000129e                IRrecv::IRrecv()
  .text._ZN6IRrecv10enableIRInEv
-                0x00001298       0x18 obj/irRecv.o
-                0x00001298                IRrecv::enableIRIn()
+                0x000012a0       0x18 obj/irRecv.o
+                0x000012a0                IRrecv::enableIRIn()
  .text._ZN6IRrecv6resumeEv
-                0x000012b0        0xc obj/irRecv.o
-                0x000012b0                IRrecv::resume()
+                0x000012b8        0xc obj/irRecv.o
+                0x000012b8                IRrecv::resume()
  .text._ZN6IRrecv10decodeMainEP14decode_results
-                0x000012bc      0x128 obj/irRecv.o
-                0x000012bc                IRrecv::decodeMain(decode_results*)
+                0x000012c4      0x128 obj/irRecv.o
+                0x000012c4                IRrecv::decodeMain(decode_results*)
  .text._ZN6IRrecv6decodeEP14decode_results
-                0x000013e4       0x40 obj/irRecv.o
-                0x000013e4                IRrecv::decode(decode_results*)
+                0x000013ec       0x40 obj/irRecv.o
+                0x000013ec                IRrecv::decode(decode_results*)
  .text._Z12CalcCheckSumm
-                0x00001424       0x2c obj/irTrans.o
-                0x00001424                CalcCheckSum(unsigned long)
+                0x0000142c       0x2c obj/irTrans.o
+                0x0000142c                CalcCheckSum(unsigned long)
  .text._GLOBAL__I_IrSendSetup
-                0x00001450        0x6 obj/irTrans.o
+                0x00001458        0x6 obj/irTrans.o
  .text.IrRawRecive
-                0x00001456       0x6c obj/irTrans.o
-                0x00001456                IrRawRecive
+                0x0000145e       0x6c obj/irTrans.o
+                0x0000145e                IrRawRecive
  .text.IrReceive
-                0x000014c2       0xb4 obj/irTrans.o
-                0x000014c2                IrReceive
+                0x000014ca       0xb4 obj/irTrans.o
+                0x000014ca                IrReceive
  .text.IrReceiveSetup
-                0x00001576        0x8 obj/irTrans.o
-                0x00001576                IrReceiveSetup
+                0x0000157e        0x8 obj/irTrans.o
+                0x0000157e                IrReceiveSetup
  .text.SendShiftReg
-                0x0000157e        0xc obj/led7seg.o
-                0x0000157e                SendShiftReg
+                0x00001586        0xc obj/led7seg.o
+                0x00001586                SendShiftReg
  .text.Led7Seg_SetDisplayNumber
-                0x0000158a       0x7a obj/led7seg.o
-                0x0000158a                Led7Seg_SetDisplayNumber
+                0x00001592       0x7a obj/led7seg.o
+                0x00001592                Led7Seg_SetDisplayNumber
  .text.__vector_23
-                0x00001604       0x80 obj/led7seg.o
-                0x00001604                __vector_23
+                0x0000160c       0x80 obj/led7seg.o
+                0x0000160c                __vector_23
  .text.__vector_3
-                0x00001684       0x98 obj/RotEncoder.o
-                0x00001684                __vector_3
+                0x0000168c       0x98 obj/RotEncoder.o
+                0x0000168c                __vector_3
  .text.MotorPwm
-                0x0000171c       0x2e obj/Motor.o
-                0x0000171c                MotorPwm
+                0x00001724       0x2e obj/Motor.o
+                0x00001724                MotorPwm
  .text.MotorPwm_RW
-                0x0000174a       0x2e obj/Motor.o
-                0x0000174a                MotorPwm_RW
+                0x00001752       0x2e obj/Motor.o
+                0x00001752                MotorPwm_RW
  .text.InitMotor
-                0x00001778       0x2c obj/Motor.o
-                0x00001778                InitMotor
+                0x00001780       0x2c obj/Motor.o
+                0x00001780                InitMotor
  .text.avr-libc.fplib
-                0x000017a4        0xa c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(addsf3.o)
-                0x000017a4                __subsf3
-                0x000017a6                __addsf3
+                0x000017ac        0xa c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(addsf3.o)
+                0x000017ac                __subsf3
+                0x000017ae                __addsf3
  .text.avr-libc.fplib
-                0x000017ae       0xc0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(addsf3x.o)
-                0x000017c8                __addsf3x
+                0x000017b6       0xc0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(addsf3x.o)
+                0x000017d0                __addsf3x
  .text.avr-libc.fplib
-                0x0000186e        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(divsf3.o)
-                0x0000186e                __divsf3
+                0x00001876        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(divsf3.o)
+                0x00001876                __divsf3
  .text.avr-libc.fplib
-                0x00001872       0xcc c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(divsf3x.o)
-                0x00001888                __divsf3x
-                0x0000188c                __divsf3_pse
+                0x0000187a       0xcc c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(divsf3x.o)
+                0x00001890                __divsf3x
+                0x00001894                __divsf3_pse
  .text.avr-libc.fplib
-                0x0000193e        0xa c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fixsfsi.o)
-                0x0000193e                __fixsfsi
+                0x00001946        0xa c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fixsfsi.o)
+                0x00001946                __fixsfsi
  .text.avr-libc.fplib
-                0x00001948       0x58 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fixunssfsi.o)
-                0x00001948                __fixunssfsi
+                0x00001950       0x58 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fixunssfsi.o)
+                0x00001950                __fixunssfsi
  .text.avr-libc.fplib
-                0x000019a0       0x7a c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(floatsisf.o)
-                0x000019a4                __floatsisf
-                0x000019a0                __floatunsisf
+                0x000019a8       0x7a c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(floatsisf.o)
+                0x000019ac                __floatsisf
+                0x000019a8                __floatunsisf
  .text.avr-libc.fplib
-                0x00001a1a        0xc c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_inf.o)
-                0x00001a1a                __fp_inf
+                0x00001a22        0xc c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_inf.o)
+                0x00001a22                __fp_inf
  .text.avr-libc.fplib
-                0x00001a26        0x6 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_nan.o)
-                0x00001a26                __fp_nan
+                0x00001a2e        0x6 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_nan.o)
+                0x00001a2e                __fp_nan
  .text.avr-libc.fplib
-                0x00001a2c        0xe c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_pscA.o)
-                0x00001a2c                __fp_pscA
+                0x00001a34        0xe c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_pscA.o)
+                0x00001a34                __fp_pscA
  .text.avr-libc.fplib
-                0x00001a3a        0xe c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_pscB.o)
-                0x00001a3a                __fp_pscB
+                0x00001a42        0xe c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_pscB.o)
+                0x00001a42                __fp_pscB
  .text.avr-libc.fplib
-                0x00001a48       0x22 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_round.o)
-                0x00001a48                __fp_round
+                0x00001a50       0x22 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_round.o)
+                0x00001a50                __fp_round
  .text.avr-libc.fplib
-                0x00001a6a       0x44 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_split3.o)
-                0x00001a6a                __fp_split3
-                0x00001a7a                __fp_splitA
+                0x00001a72       0x44 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_split3.o)
+                0x00001a72                __fp_split3
+                0x00001a82                __fp_splitA
  .text.avr-libc.fplib
-                0x00001aae        0xe c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_zero.o)
-                0x00001aae                __fp_zero
-                0x00001ab0                __fp_szero
+                0x00001ab6        0xe c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_zero.o)
+                0x00001ab6                __fp_zero
+                0x00001ab8                __fp_szero
  .text.avr-libc.fplib
-                0x00001abc        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(mulsf3.o)
-                0x00001abc                __mulsf3
+                0x00001ac4        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(mulsf3.o)
+                0x00001ac4                __mulsf3
  .text.avr-libc.fplib
-                0x00001ac0       0xc2 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(mulsf3x.o)
-                0x00001ad8                __mulsf3_pse
-                0x00001ad4                __mulsf3x
- .text.libgcc   0x00001b82       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
-                0x00001b82                __udivmodhi4
- .text.libgcc   0x00001baa       0x26 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodhi4.o)
-                0x00001baa                __divmodhi4
-                0x00001baa                _div
- .text.libgcc   0x00001bd0        0xc c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_tablejump.o)
-                0x00001bd4                __tablejump__
-                0x00001bd0                __tablejump2__
+                0x00001ac8       0xc2 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(mulsf3x.o)
+                0x00001ae0                __mulsf3_pse
+                0x00001adc                __mulsf3x
+ .text.libgcc   0x00001b8a       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
+                0x00001b8a                __udivmodhi4
+ .text.libgcc   0x00001bb2       0x26 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodhi4.o)
+                0x00001bb2                __divmodhi4
+                0x00001bb2                _div
+ .text.libgcc   0x00001bd8        0xc c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_tablejump.o)
+                0x00001bdc                __tablejump__
+                0x00001bd8                __tablejump2__
  .text.avr-libc
-                0x00001bdc       0x12 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(isalpha.o)
-                0x00001be2                islower
-                0x00001bdc                isupper
-                0x00001be0                isalpha
+                0x00001be4       0x12 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(isalpha.o)
+                0x00001bea                islower
+                0x00001be4                isupper
+                0x00001be8                isalpha
  .text.avr-libc
-                0x00001bee       0x58 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fputc.o)
-                0x00001bee                fputc
+                0x00001bf6       0x58 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fputc.o)
+                0x00001bf6                fputc
  .text.avr-libc
-                0x00001c46       0x50 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fputs.o)
-                0x00001c46                fputs
+                0x00001c4e       0x50 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fputs.o)
+                0x00001c4e                fputs
  .text.avr-libc
-                0x00001c96       0x42 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(sprintf.o)
-                0x00001c96                sprintf
+                0x00001c9e       0x42 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(sprintf.o)
+                0x00001c9e                sprintf
  .text.avr-libc
-                0x00001cd8      0x39c c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
-                0x00001cd8                vfprintf
+                0x00001ce0      0x39c c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+                0x00001ce0                vfprintf
  .text.avr-libc
-                0x00002074        0x6 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(cty_isfalse.o)
-                0x00002078                __ctype_istrue
-                0x00002074                __ctype_isfalse
+                0x0000207c        0x6 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(cty_isfalse.o)
+                0x00002080                __ctype_istrue
+                0x0000207c                __ctype_isfalse
  .text.avr-libc
-                0x0000207a       0x16 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
-                0x0000207a                strnlen_P
+                0x00002082       0x16 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
+                0x00002082                strnlen_P
  .text.avr-libc
-                0x00002090       0x16 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen.o)
-                0x00002090                strnlen
+                0x00002098       0x16 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen.o)
+                0x00002098                strnlen
  .text.avr-libc
-                0x000020a6       0xbc c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
-                0x000020a6                __ultoa_invert
- .text.libgcc   0x00002162       0x38 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
-                0x00002162                __prologue_saves__
- .text.libgcc   0x0000219a       0x36 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
-                0x0000219a                __epilogue_restores__
-                0x000021d0                . = ALIGN (0x2)
+                0x000020ae       0xbc c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
+                0x000020ae                __ultoa_invert
+ .text.libgcc   0x0000216a       0x38 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+                0x0000216a                __prologue_saves__
+ .text.libgcc   0x000021a2       0x36 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+                0x000021a2                __epilogue_restores__
+                0x000021d8                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000021d0        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                0x000021d0                exit
-                0x000021d0                _exit
+ .fini9         0x000021d8        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x000021d8                exit
+                0x000021d8                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -1097,11 +1097,11 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000021d0        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .fini0         0x000021d8        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000021d4                _etext = .
+                0x000021dc                _etext = .
 
-.data           0x00800100       0x3a load address 0x000021d4
+.data           0x00800100       0x3a load address 0x000021dc
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100       0x2f obj/main.o
@@ -1142,8 +1142,8 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  COMMON         0x0080022c        0x4 obj/led7seg.o
                 0x0080022c                g_DisplayPatterns
                 0x00800230                PROVIDE (__bss_end, .)
-                0x000021d4                __data_load_start = LOADADDR (.data)
-                0x0000220e                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000021dc                __data_load_start = LOADADDR (.data)
+                0x00002216                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800230        0x0
                 0x00800230                PROVIDE (__noinit_start, .)
@@ -1397,47 +1397,47 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .debug_abbrev  0x00002bc7       0x7f obj/RotEncoder.o
  .debug_abbrev  0x00002c46       0x86 obj/Motor.o
 
-.debug_line     0x00000000     0x8318
+.debug_line     0x00000000     0x8320
  *(.debug_line)
- .debug_line    0x00000000      0x66c obj/main.o
- .debug_line    0x0000066c      0x228 obj/Descriptors.o
- .debug_line    0x00000894      0x5b8 obj/HIDParser.o
- .debug_line    0x00000e4c      0x153 obj/Device_AVR8.o
- .debug_line    0x00000f9f     0x185b obj/EndpointStream_AVR8.o
- .debug_line    0x000027fa      0x59d obj/Endpoint_AVR8.o
- .debug_line    0x00002d97       0x3e obj/Host_AVR8.o
- .debug_line    0x00002dd5       0x3e obj/PipeStream_AVR8.o
- .debug_line    0x00002e13       0x3e obj/Pipe_AVR8.o
- .debug_line    0x00002e51      0x438 obj/USBController_AVR8.o
- .debug_line    0x00003289      0x684 obj/USBInterrupt_AVR8.o
- .debug_line    0x0000390d      0x26c obj/ConfigDescriptors.o
- .debug_line    0x00003b79      0x5d4 obj/DeviceStandardReq.o
- .debug_line    0x0000414d       0x96 obj/Events.o
- .debug_line    0x000041e3       0x3e obj/HostStandardReq.o
- .debug_line    0x00004221      0x1e9 obj/USBTask.o
- .debug_line    0x0000440a      0x54e obj/AudioClassDevice.o
- .debug_line    0x00004958      0x9d3 obj/CDCClassDevice.o
- .debug_line    0x0000532b      0x5ed obj/HIDClassDevice.o
- .debug_line    0x00005918      0x5ed obj/MassStorageClassDevice.o
- .debug_line    0x00005f05      0x4a0 obj/MIDIClassDevice.o
- .debug_line    0x000063a5      0x868 obj/PrinterClassDevice.o
- .debug_line    0x00006c0d      0x7ae obj/RNDISClassDevice.o
- .debug_line    0x000073bb       0x3e obj/AndroidAccessoryClassHost.o
- .debug_line    0x000073f9       0x3e obj/AudioClassHost.o
- .debug_line    0x00007437       0x3e obj/CDCClassHost.o
- .debug_line    0x00007475       0x3e obj/HIDClassHost.o
- .debug_line    0x000074b3       0x3e obj/MassStorageClassHost.o
- .debug_line    0x000074f1       0x3e obj/MIDIClassHost.o
- .debug_line    0x0000752f       0x3e obj/PrinterClassHost.o
- .debug_line    0x0000756d       0x3e obj/RNDISClassHost.o
- .debug_line    0x000075ab       0x3e obj/StillImageClassHost.o
- .debug_line    0x000075e9      0x24b obj/irSend.o
- .debug_line    0x00007834      0x1d8 obj/IRremote.o
- .debug_line    0x00007a0c      0x2a6 obj/irRecv.o
- .debug_line    0x00007cb2      0x1ee obj/irTrans.o
- .debug_line    0x00007ea0      0x1bc obj/led7seg.o
- .debug_line    0x0000805c      0x12c obj/RotEncoder.o
- .debug_line    0x00008188      0x190 obj/Motor.o
+ .debug_line    0x00000000      0x674 obj/main.o
+ .debug_line    0x00000674      0x228 obj/Descriptors.o
+ .debug_line    0x0000089c      0x5b8 obj/HIDParser.o
+ .debug_line    0x00000e54      0x153 obj/Device_AVR8.o
+ .debug_line    0x00000fa7     0x185b obj/EndpointStream_AVR8.o
+ .debug_line    0x00002802      0x59d obj/Endpoint_AVR8.o
+ .debug_line    0x00002d9f       0x3e obj/Host_AVR8.o
+ .debug_line    0x00002ddd       0x3e obj/PipeStream_AVR8.o
+ .debug_line    0x00002e1b       0x3e obj/Pipe_AVR8.o
+ .debug_line    0x00002e59      0x438 obj/USBController_AVR8.o
+ .debug_line    0x00003291      0x684 obj/USBInterrupt_AVR8.o
+ .debug_line    0x00003915      0x26c obj/ConfigDescriptors.o
+ .debug_line    0x00003b81      0x5d4 obj/DeviceStandardReq.o
+ .debug_line    0x00004155       0x96 obj/Events.o
+ .debug_line    0x000041eb       0x3e obj/HostStandardReq.o
+ .debug_line    0x00004229      0x1e9 obj/USBTask.o
+ .debug_line    0x00004412      0x54e obj/AudioClassDevice.o
+ .debug_line    0x00004960      0x9d3 obj/CDCClassDevice.o
+ .debug_line    0x00005333      0x5ed obj/HIDClassDevice.o
+ .debug_line    0x00005920      0x5ed obj/MassStorageClassDevice.o
+ .debug_line    0x00005f0d      0x4a0 obj/MIDIClassDevice.o
+ .debug_line    0x000063ad      0x868 obj/PrinterClassDevice.o
+ .debug_line    0x00006c15      0x7ae obj/RNDISClassDevice.o
+ .debug_line    0x000073c3       0x3e obj/AndroidAccessoryClassHost.o
+ .debug_line    0x00007401       0x3e obj/AudioClassHost.o
+ .debug_line    0x0000743f       0x3e obj/CDCClassHost.o
+ .debug_line    0x0000747d       0x3e obj/HIDClassHost.o
+ .debug_line    0x000074bb       0x3e obj/MassStorageClassHost.o
+ .debug_line    0x000074f9       0x3e obj/MIDIClassHost.o
+ .debug_line    0x00007537       0x3e obj/PrinterClassHost.o
+ .debug_line    0x00007575       0x3e obj/RNDISClassHost.o
+ .debug_line    0x000075b3       0x3e obj/StillImageClassHost.o
+ .debug_line    0x000075f1      0x24b obj/irSend.o
+ .debug_line    0x0000783c      0x1d8 obj/IRremote.o
+ .debug_line    0x00007a14      0x2a6 obj/irRecv.o
+ .debug_line    0x00007cba      0x1ee obj/irTrans.o
+ .debug_line    0x00007ea8      0x1bc obj/led7seg.o
+ .debug_line    0x00008064      0x12c obj/RotEncoder.o
+ .debug_line    0x00008190      0x190 obj/Motor.o
 
 .debug_frame    0x00000000      0xac0
  *(.debug_frame)

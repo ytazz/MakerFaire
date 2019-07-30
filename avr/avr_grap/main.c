@@ -283,8 +283,11 @@ int main(void)
 		
 		//デバッグ用シリアル出力（デバッグ終了後、コメントアウトすること）
 		//sprintf(str, "%d \r\n", cnt);
-		sprintf(str, "%d \r\n", ir_data);
-		fputs(str, &USBSerialStream);
+		
+		if(ir_data<1000){
+			sprintf(str, "%d \r\n", ir_data);
+			fputs(str, &USBSerialStream);
+		}
 			
 #if IR_RECEIVER
 		IrReceiveProc();
