@@ -175,6 +175,8 @@ void IrTransmissionProc(int cmd)
 		uint16_t joy2a  = GetAD(7);		//右レバー左右（RWレバーmode用）
 		uint8_t  sw_LR	= !(PINB & _BV(5));
 		uint8_t  sw_RL	= !(PINB & _BV(7));
+		uint8_t  sw_joy1= !(PINB & _BV(3));		//左レバーのスイッチ
+		uint8_t  sw_joy2= !(PINB & _BV(6));		//右レバーのスイッチ
 		
 		
 		enc_data = 3 * RotEncoderGetVal();	// 3 is due to usability
@@ -217,12 +219,30 @@ void IrTransmissionProc(int cmd)
 			if(ir_cmd_mode == 20 || ir_cmd_mode == 40){		//ジャイロモード
 				IrSend(enc_data);
 			}else{			//レバーモード
-				IrSend(-joy2a/3);
+				IrSend(-joy2a/3 + 100);
 			}
 			
 			
 			//IrSend(-20);
-		}else if(cmd==2){
+		}else if(cmd==2){			//グラップル出力
+			if(sw_RL ==0){		//グラップル低速
+				if(sw_joy1==1){		//
+					IrSend(-200);
+				}else if(sw_joy2==1){
+					IrSend(-300);
+				}else{
+					IrSend(-100);
+				}
+			}else{				//グラップル高速
+				if(sw_joy1==1){		//
+					IrSend(-200);
+				}else if(sw_joy2==1){
+					IrSend(-300);
+				}else{
+					IrSend(-100);
+				}
+			}
+			
 			//IrSend(20);
 		}else{
 			IrSend(1);
