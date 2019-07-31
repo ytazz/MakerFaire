@@ -144,6 +144,7 @@ void IrReceiveProc()
 {
 	int data = IrReceive();
 	ir_data = data;
+	static int ir_cmd_mode=0;
 	
 	switch(data){
 	case IR_CODE_INVALID:
@@ -165,27 +166,31 @@ void IrReceiveProc()
 	default:
 		//if(-256 < data && data < 256) MotorPwm(data);
 		
-		if(0 < data && data< 256){
+		if(-90 < data && data< 90){		//制御モード
 			//Grapple close mode コントローラのレバーボタン左ON→data>0の時
-			if(LIMIT_SW_IN){
-				//Limit SW onで停止
-				MotorPwm(0);
+			ir_cmd_mode = data;
+
+		}else if(100< data && data < 440){		//RW出力
+			if(data>290){
+				MotorPwm_RW(data-270);
+				MOTOR_INV_1_RW;
+			}else if(data<250){
+				MotorPwm_RW(270-data);
+				MOTOR_INV_0_RW;
 			}else{
+				MotorPwm_RW(0);
+			}
+		}else if(-400<data && data < -90){		//グラップル出力
+			if(data==-200){
 				MotorPwm(300);
-			}
-		}else if(-256< data && data < 0){
-			//Grapple open mode コントローラのレバーボタン右ON右data<0の時
-			if(LIMIT_SW_OUT){
-				//Limit SW onで停止
-				MotorPwm(0);
+				MOTOR_INV_1;
+			}else if(data==-300){
+				MotorPwm(300);
+				MOTOR_INV_0;
 			}else{
-				MotorPwm(-300);
+				MotorPwm(0);
 			}
-		}else{
-			//コントローラのレバーボタンどちらもOFF→data=0。停止
-			MotorPwm(0);
 		}
-		
 
 		break;
 	}
