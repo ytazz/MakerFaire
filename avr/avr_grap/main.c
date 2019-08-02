@@ -181,12 +181,22 @@ void IrReceiveProc()
 				MotorPwm_RW(0);
 			}
 		}else if(-400<data && data < -90){		//グラップル出力
-			if(data==-200){
-				MotorPwm(300);
-				MOTOR_INV_1;
+			if(data==-200){			//左SW、グラップル閉じる
+				if(LIMIT_SW_IN){
+					MotorPwm(0);
+					MOTOR_INV_0;
+				}else{
+					MotorPwm(300);
+					MOTOR_INV_0;
+				}
 			}else if(data==-300){
-				MotorPwm(300);
-				MOTOR_INV_0;
+				if(LIMIT_SW_OUT){
+					MotorPwm(0);
+					MOTOR_INV_1;
+				}else{
+					MotorPwm(300);
+					MOTOR_INV_1;
+				}
 			}else{
 				MotorPwm(0);
 			}
