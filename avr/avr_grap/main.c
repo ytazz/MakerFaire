@@ -145,6 +145,7 @@ void IrReceiveProc()
 	int data = IrReceive();
 	ir_data = data;
 	static int ir_cmd_mode=0;
+	int RW_pow_level = 2;
 	
 	switch(data){
 	case IR_CODE_INVALID:
@@ -172,10 +173,10 @@ void IrReceiveProc()
 
 		}else if(100< data && data < 440){		//RWo—Í
 			if(data>290){
-				MotorPwm_RW(data-270);
+				MotorPwm_RW((data-270)* RW_pow_level);
 				MOTOR_INV_1_RW;
 			}else if(data<250){
-				MotorPwm_RW(270-data);
+				MotorPwm_RW((270-data)* RW_pow_level);
 				MOTOR_INV_0_RW;
 			}else{
 				MotorPwm_RW(0);
