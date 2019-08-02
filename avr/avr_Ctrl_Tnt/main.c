@@ -303,6 +303,11 @@ int main(void)
 	int data = 0;
 	static int prev_motor_on = 0;
 	static int prev_motor_on_inv = 0;
+	uint16_t joy1a_fix = 0;
+	uint16_t joy1b_fix = 0;
+	uint16_t joy2a_fix = 0;
+	uint16_t joy2b_fix = 0;
+
 	char str[256];
 	for(cnt = 0; ; cnt++){
 		char c = CDC_Device_ReceiveByte(&VirtualSerial_CDC_Interface);
@@ -329,18 +334,44 @@ int main(void)
 			uint8_t  sw_C2	= !(PIND & _BV(5));
 			uint8_t  sw_C3	= !(PIND & _BV(6));
 
-			int rdata = 3 * RotEncoderGetVal();	// 3 is due to usability
-			if(rdata <= -256) rdata = -255;
-			if(rdata > 256) rdata = 255;
 			
-			if(SW_MOTOR_ON == 0){
-				data = rdata;
+			int rdata = 3 * RotEncoderGetVal();	// 3 is due to usability
+			if(rdata <= -120) rdata = -120;
+			if(rdata > 120) rdata = 120;
+
+			//不感帯の設定
+			if((410+10)<joy2a && joy2a<(620+10)){		 //右レバー左右
+				joy2a_fix = 515;
 			}else{
-				data = -rdata;
+				if(joy2a<10){
+					joy2a_fix=0;
+				}else{
+					joy2a_fix = joy2a-10;
+				}
 			}
+
+			if((410-5)<joy2b && joy2b<(620-5)){		//右レバー上下
+				joy2b_fix = 515;
+			}else{
+				joy2b_fix = joy2b+5;
+			}
+
+			if(410<joy1a && joy1a<620){
+				joy1a_fix = 515;
+			}else{
+				joy1a_fix = joy1a;
+			}
+
+			if(410<joy1b && joy1b<620){
+				joy1b_fix = 515;
+			}else{
+				joy1b_fix = joy1b;
+			}
+
+			
 			GRAP_rot = data;
 			sprintf(str, "%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\r\n",
-		     joy1a, joy1b, joy2a, joy2b,
+		     joy1a_fix, joy1b_fix, joy2a_fix, joy2b_fix,
 		     sw_HOME, sw_LL, sw_LR, sw_C2,
 		     sw_RL, sw_C3, sw_RR, sw_EMG,
 		     sw_joy1, sw_C1, sw_joy2, GRAP_rot);

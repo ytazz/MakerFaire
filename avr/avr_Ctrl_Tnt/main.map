@@ -739,7 +739,7 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x1f98
+.text           0x00000000     0x1fcc
  *(.vectors)
  .vectors       0x00000000       0xac c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32u4.o
                 0x00000000                __vectors
@@ -864,194 +864,194 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .text.IrTransmissionProc
                 0x000002b8      0x146 obj/main.o
                 0x000002b8                IrTransmissionProc
- .text.main     0x000003fe      0x330 obj/main.o
+ .text.main     0x000003fe      0x364 obj/main.o
                 0x000003fe                main
  .text.EVENT_USB_Device_ControlRequest
-                0x0000072e        0x6 obj/main.o
-                0x0000072e                EVENT_USB_Device_ControlRequest
+                0x00000762        0x6 obj/main.o
+                0x00000762                EVENT_USB_Device_ControlRequest
  .text.EVENT_USB_Device_ConfigurationChanged
-                0x00000734        0x6 obj/main.o
-                0x00000734                EVENT_USB_Device_ConfigurationChanged
+                0x00000768        0x6 obj/main.o
+                0x00000768                EVENT_USB_Device_ConfigurationChanged
  .text.CALLBACK_USB_GetDescriptor
-                0x0000073a       0x5c obj/Descriptors.o
-                0x0000073a                CALLBACK_USB_GetDescriptor
+                0x0000076e       0x5c obj/Descriptors.o
+                0x0000076e                CALLBACK_USB_GetDescriptor
  .text.Endpoint_Write_Control_Stream_LE
-                0x00000796       0xd4 obj/EndpointStream_AVR8.o
-                0x00000796                Endpoint_Write_Control_Stream_LE
+                0x000007ca       0xd4 obj/EndpointStream_AVR8.o
+                0x000007ca                Endpoint_Write_Control_Stream_LE
  .text.Endpoint_Write_Control_PStream_LE
-                0x0000086a       0xd6 obj/EndpointStream_AVR8.o
-                0x0000086a                Endpoint_Write_Control_PStream_LE
+                0x0000089e       0xd6 obj/EndpointStream_AVR8.o
+                0x0000089e                Endpoint_Write_Control_PStream_LE
  .text.Endpoint_ConfigureEndpoint_Prv
-                0x00000940       0x70 obj/Endpoint_AVR8.o
-                0x00000940                Endpoint_ConfigureEndpoint_Prv
+                0x00000974       0x70 obj/Endpoint_AVR8.o
+                0x00000974                Endpoint_ConfigureEndpoint_Prv
  .text.Endpoint_ConfigureEndpointTable
-                0x000009b0       0x78 obj/Endpoint_AVR8.o
-                0x000009b0                Endpoint_ConfigureEndpointTable
+                0x000009e4       0x78 obj/Endpoint_AVR8.o
+                0x000009e4                Endpoint_ConfigureEndpointTable
  .text.Endpoint_ClearStatusStage
-                0x00000a28       0x42 obj/Endpoint_AVR8.o
-                0x00000a28                Endpoint_ClearStatusStage
+                0x00000a5c       0x42 obj/Endpoint_AVR8.o
+                0x00000a5c                Endpoint_ClearStatusStage
  .text.Endpoint_WaitUntilReady
-                0x00000a6a       0x64 obj/Endpoint_AVR8.o
-                0x00000a6a                Endpoint_WaitUntilReady
+                0x00000a9e       0x64 obj/Endpoint_AVR8.o
+                0x00000a9e                Endpoint_WaitUntilReady
  .text.USB_ResetInterface
-                0x00000ace       0x88 obj/USBController_AVR8.o
-                0x00000ace                USB_ResetInterface
+                0x00000b02       0x88 obj/USBController_AVR8.o
+                0x00000b02                USB_ResetInterface
  .text.USB_Init
-                0x00000b56       0x20 obj/USBController_AVR8.o
-                0x00000b56                USB_Init
+                0x00000b8a       0x20 obj/USBController_AVR8.o
+                0x00000b8a                USB_Init
  .text.USB_INT_DisableAllInterrupts
-                0x00000b76       0x10 obj/USBInterrupt_AVR8.o
-                0x00000b76                USB_INT_DisableAllInterrupts
+                0x00000baa       0x10 obj/USBInterrupt_AVR8.o
+                0x00000baa                USB_INT_DisableAllInterrupts
  .text.USB_INT_ClearAllInterrupts
-                0x00000b86        0xa obj/USBInterrupt_AVR8.o
-                0x00000b86                USB_INT_ClearAllInterrupts
+                0x00000bba        0xa obj/USBInterrupt_AVR8.o
+                0x00000bba                USB_INT_ClearAllInterrupts
  .text.__vector_11
-                0x00000b90       0x76 obj/USBInterrupt_AVR8.o
-                0x00000b90                __vector_11
+                0x00000bc4       0x76 obj/USBInterrupt_AVR8.o
+                0x00000bc4                __vector_11
  .text.__vector_10
-                0x00000c06      0x196 obj/USBInterrupt_AVR8.o
-                0x00000c06                __vector_10
+                0x00000c3a      0x196 obj/USBInterrupt_AVR8.o
+                0x00000c3a                __vector_10
  .text.USB_Device_ProcessControlRequest
-                0x00000d9c      0x2e0 obj/DeviceStandardReq.o
-                0x00000d9c                USB_Device_ProcessControlRequest
+                0x00000dd0      0x2e0 obj/DeviceStandardReq.o
+                0x00000dd0                USB_Device_ProcessControlRequest
  .text.USB_Event_Stub
-                0x0000107c        0x2 obj/Events.o
-                0x0000107c                EVENT_USB_Device_WakeUp
-                0x0000107c                USB_Event_Stub
-                0x0000107c                EVENT_USB_Device_Suspend
-                0x0000107c                EVENT_USB_Device_StartOfFrame
-                0x0000107c                EVENT_USB_Device_Reset
+                0x000010b0        0x2 obj/Events.o
+                0x000010b0                EVENT_USB_Device_WakeUp
+                0x000010b0                USB_Event_Stub
+                0x000010b0                EVENT_USB_Device_Suspend
+                0x000010b0                EVENT_USB_Device_StartOfFrame
+                0x000010b0                EVENT_USB_Device_Reset
  .text.USB_USBTask
-                0x0000107e       0x2a obj/USBTask.o
-                0x0000107e                USB_USBTask
+                0x000010b2       0x2a obj/USBTask.o
+                0x000010b2                USB_USBTask
  .text.CDC_Device_ReceiveByte
-                0x000010a8       0x78 obj/CDCClassDevice.o
-                0x000010a8                CDC_Device_ReceiveByte
+                0x000010dc       0x78 obj/CDCClassDevice.o
+                0x000010dc                CDC_Device_ReceiveByte
  .text.CDC_Device_CreateStream
-                0x00001120       0x26 obj/CDCClassDevice.o
-                0x00001120                CDC_Device_CreateStream
+                0x00001154       0x26 obj/CDCClassDevice.o
+                0x00001154                CDC_Device_CreateStream
  .text.CDC_Device_getchar
-                0x00001146       0x16 obj/CDCClassDevice.o
+                0x0000117a       0x16 obj/CDCClassDevice.o
  .text.CDC_Device_Event_Stub
-                0x0000115c        0x2 obj/CDCClassDevice.o
-                0x0000115c                EVENT_CDC_Device_LineEncodingChanged
-                0x0000115c                EVENT_CDC_Device_BreakSent
-                0x0000115c                CDC_Device_Event_Stub
+                0x00001190        0x2 obj/CDCClassDevice.o
+                0x00001190                EVENT_CDC_Device_LineEncodingChanged
+                0x00001190                EVENT_CDC_Device_BreakSent
+                0x00001190                CDC_Device_Event_Stub
  .text.CDC_Device_Flush
-                0x0000115e       0x68 obj/CDCClassDevice.o
-                0x0000115e                CDC_Device_Flush
+                0x00001192       0x68 obj/CDCClassDevice.o
+                0x00001192                CDC_Device_Flush
  .text.CDC_Device_USBTask
-                0x000011c6       0x30 obj/CDCClassDevice.o
-                0x000011c6                CDC_Device_USBTask
+                0x000011fa       0x30 obj/CDCClassDevice.o
+                0x000011fa                CDC_Device_USBTask
  .text.CDC_Device_SendByte
-                0x000011f6       0x4c obj/CDCClassDevice.o
-                0x000011f6                CDC_Device_SendByte
+                0x0000122a       0x4c obj/CDCClassDevice.o
+                0x0000122a                CDC_Device_SendByte
  .text.CDC_Device_putchar
-                0x00001242       0x1e obj/CDCClassDevice.o
+                0x00001276       0x1e obj/CDCClassDevice.o
  .text.CDC_Device_ConfigureEndpoints
-                0x00001260       0x4e obj/CDCClassDevice.o
-                0x00001260                CDC_Device_ConfigureEndpoints
+                0x00001294       0x4e obj/CDCClassDevice.o
+                0x00001294                CDC_Device_ConfigureEndpoints
  .text.CDC_Device_ProcessControlRequest
-                0x000012ae      0x15c obj/CDCClassDevice.o
-                0x000012ae                CDC_Device_ProcessControlRequest
+                0x000012e2      0x15c obj/CDCClassDevice.o
+                0x000012e2                CDC_Device_ProcessControlRequest
  .text._Z16TIMER_CONFIG_KHZi
-                0x0000140a       0x46 obj/irSend.o
-                0x0000140a                TIMER_CONFIG_KHZ(int)
+                0x0000143e       0x46 obj/irSend.o
+                0x0000143e                TIMER_CONFIG_KHZ(int)
  .text._ZN6IRsend11enableIROutEi
-                0x00001450        0x8 obj/irSend.o
-                0x00001450                IRsend::enableIROut(int)
+                0x00001484        0x8 obj/irSend.o
+                0x00001484                IRsend::enableIROut(int)
  .text._ZN6IRsend4sendEmi
-                0x00001458       0xce obj/irSend.o
-                0x00001458                IRsend::send(unsigned long, int)
+                0x0000148c       0xce obj/irSend.o
+                0x0000148c                IRsend::send(unsigned long, int)
  .text.__vector_41
-                0x00001526      0x144 obj/IRremote.o
-                0x00001526                __vector_41
+                0x0000155a      0x144 obj/IRremote.o
+                0x0000155a                __vector_41
  .text._ZN6IRrecvC1Ev
-                0x0000166a        0x2 obj/irRecv.o
-                0x0000166a                IRrecv::IRrecv()
+                0x0000169e        0x2 obj/irRecv.o
+                0x0000169e                IRrecv::IRrecv()
  .text._Z12CalcCheckSumm
-                0x0000166c       0x2c obj/irTrans.o
-                0x0000166c                CalcCheckSum(unsigned long)
+                0x000016a0       0x2c obj/irTrans.o
+                0x000016a0                CalcCheckSum(unsigned long)
  .text._GLOBAL__I_IrSendSetup
-                0x00001698        0x6 obj/irTrans.o
+                0x000016cc        0x6 obj/irTrans.o
  .text.IrRawSend
-                0x0000169e       0x22 obj/irTrans.o
-                0x0000169e                IrRawSend
- .text.IrSend   0x000016c0       0x4a obj/irTrans.o
-                0x000016c0                IrSend
+                0x000016d2       0x22 obj/irTrans.o
+                0x000016d2                IrRawSend
+ .text.IrSend   0x000016f4       0x4a obj/irTrans.o
+                0x000016f4                IrSend
  .text.IrSendSetup
-                0x0000170a        0xe obj/irTrans.o
-                0x0000170a                IrSendSetup
+                0x0000173e        0xe obj/irTrans.o
+                0x0000173e                IrSendSetup
  .text.Led7Seg_Init
-                0x00001718       0x20 obj/led7seg.o
-                0x00001718                Led7Seg_Init
+                0x0000174c       0x20 obj/led7seg.o
+                0x0000174c                Led7Seg_Init
  .text.SendShiftReg
-                0x00001738        0xc obj/led7seg.o
-                0x00001738                SendShiftReg
+                0x0000176c        0xc obj/led7seg.o
+                0x0000176c                SendShiftReg
  .text.Led7Seg_SetDisplayNumber
-                0x00001744       0x7a obj/led7seg.o
-                0x00001744                Led7Seg_SetDisplayNumber
+                0x00001778       0x7a obj/led7seg.o
+                0x00001778                Led7Seg_SetDisplayNumber
  .text.__vector_23
-                0x000017be       0x80 obj/led7seg.o
-                0x000017be                __vector_23
+                0x000017f2       0x80 obj/led7seg.o
+                0x000017f2                __vector_23
  .text.RotEncoderGetVal
-                0x0000183e        0xc obj/RotEncoder.o
-                0x0000183e                RotEncoderGetVal
+                0x00001872        0xc obj/RotEncoder.o
+                0x00001872                RotEncoderGetVal
  .text.__vector_3
-                0x0000184a       0x98 obj/RotEncoder.o
-                0x0000184a                __vector_3
+                0x0000187e       0x98 obj/RotEncoder.o
+                0x0000187e                __vector_3
  .text.InitRotEncoder
-                0x000018e2       0x20 obj/RotEncoder.o
-                0x000018e2                InitRotEncoder
- .text.libgcc   0x00001902       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
-                0x00001902                __udivmodhi4
- .text.libgcc   0x0000192a       0x26 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodhi4.o)
-                0x0000192a                __divmodhi4
-                0x0000192a                _div
- .text.libgcc   0x00001950       0x44 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
-                0x00001950                __udivmodsi4
- .text.libgcc   0x00001994        0xc c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_tablejump.o)
-                0x00001998                __tablejump__
-                0x00001994                __tablejump2__
+                0x00001916       0x20 obj/RotEncoder.o
+                0x00001916                InitRotEncoder
+ .text.libgcc   0x00001936       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
+                0x00001936                __udivmodhi4
+ .text.libgcc   0x0000195e       0x26 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodhi4.o)
+                0x0000195e                __divmodhi4
+                0x0000195e                _div
+ .text.libgcc   0x00001984       0x44 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
+                0x00001984                __udivmodsi4
+ .text.libgcc   0x000019c8        0xc c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_tablejump.o)
+                0x000019cc                __tablejump__
+                0x000019c8                __tablejump2__
  .text.avr-libc
-                0x000019a0       0x12 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(isalpha.o)
-                0x000019a6                islower
-                0x000019a0                isupper
-                0x000019a4                isalpha
+                0x000019d4       0x12 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(isalpha.o)
+                0x000019da                islower
+                0x000019d4                isupper
+                0x000019d8                isalpha
  .text.avr-libc
-                0x000019b2       0x58 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fputc.o)
-                0x000019b2                fputc
+                0x000019e6       0x58 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fputc.o)
+                0x000019e6                fputc
  .text.avr-libc
-                0x00001a0a       0x50 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fputs.o)
-                0x00001a0a                fputs
+                0x00001a3e       0x50 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fputs.o)
+                0x00001a3e                fputs
  .text.avr-libc
-                0x00001a5a       0x42 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(sprintf.o)
-                0x00001a5a                sprintf
+                0x00001a8e       0x42 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(sprintf.o)
+                0x00001a8e                sprintf
  .text.avr-libc
-                0x00001a9c      0x39c c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
-                0x00001a9c                vfprintf
+                0x00001ad0      0x39c c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+                0x00001ad0                vfprintf
  .text.avr-libc
-                0x00001e38        0x6 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(cty_isfalse.o)
-                0x00001e3c                __ctype_istrue
-                0x00001e38                __ctype_isfalse
+                0x00001e6c        0x6 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(cty_isfalse.o)
+                0x00001e70                __ctype_istrue
+                0x00001e6c                __ctype_isfalse
  .text.avr-libc
-                0x00001e3e       0x16 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
-                0x00001e3e                strnlen_P
+                0x00001e72       0x16 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
+                0x00001e72                strnlen_P
  .text.avr-libc
-                0x00001e54       0x16 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen.o)
-                0x00001e54                strnlen
+                0x00001e88       0x16 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen.o)
+                0x00001e88                strnlen
  .text.avr-libc
-                0x00001e6a       0xbc c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
-                0x00001e6a                __ultoa_invert
- .text.libgcc   0x00001f26       0x38 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
-                0x00001f26                __prologue_saves__
- .text.libgcc   0x00001f5e       0x36 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
-                0x00001f5e                __epilogue_restores__
-                0x00001f94                . = ALIGN (0x2)
+                0x00001e9e       0xbc c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
+                0x00001e9e                __ultoa_invert
+ .text.libgcc   0x00001f5a       0x38 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+                0x00001f5a                __prologue_saves__
+ .text.libgcc   0x00001f92       0x36 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+                0x00001f92                __epilogue_restores__
+                0x00001fc8                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00001f94        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                0x00001f94                exit
-                0x00001f94                _exit
+ .fini9         0x00001fc8        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x00001fc8                exit
+                0x00001fc8                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -1070,11 +1070,11 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00001f94        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .fini0         0x00001fc8        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00001f98                _etext = .
+                0x00001fcc                _etext = .
 
-.data           0x00800100       0x66 load address 0x00001f98
+.data           0x00800100       0x66 load address 0x00001fcc
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100       0x5b obj/main.o
@@ -1115,8 +1115,8 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  COMMON         0x0080025c        0x4 obj/led7seg.o
                 0x0080025c                g_DisplayPatterns
                 0x00800260                PROVIDE (__bss_end, .)
-                0x00001f98                __data_load_start = LOADADDR (.data)
-                0x00001ffe                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00001fcc                __data_load_start = LOADADDR (.data)
+                0x00002032                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800260        0x0
                 0x00800260                PROVIDE (__noinit_start, .)
@@ -1285,47 +1285,47 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .debug_pubnames
                 0x0000118f       0x2d obj/Motor.o
 
-.debug_info     0x00000000     0xa04e
+.debug_info     0x00000000     0xa083
  *(.debug_info)
- .debug_info    0x00000000      0x74a obj/main.o
- .debug_info    0x0000074a      0x6b5 obj/Descriptors.o
- .debug_info    0x00000dff      0x6ee obj/HIDParser.o
- .debug_info    0x000014ed       0xc0 obj/Device_AVR8.o
- .debug_info    0x000015ad     0x15d0 obj/EndpointStream_AVR8.o
- .debug_info    0x00002b7d      0x5ee obj/Endpoint_AVR8.o
- .debug_info    0x0000316b       0x5d obj/Host_AVR8.o
- .debug_info    0x000031c8       0x5d obj/PipeStream_AVR8.o
- .debug_info    0x00003225       0x5d obj/Pipe_AVR8.o
- .debug_info    0x00003282      0x4a6 obj/USBController_AVR8.o
- .debug_info    0x00003728      0x6a3 obj/USBInterrupt_AVR8.o
- .debug_info    0x00003dcb      0x34a obj/ConfigDescriptors.o
- .debug_info    0x00004115      0x9ce obj/DeviceStandardReq.o
- .debug_info    0x00004ae3       0x75 obj/Events.o
- .debug_info    0x00004b58       0x5d obj/HostStandardReq.o
- .debug_info    0x00004bb5      0x265 obj/USBTask.o
- .debug_info    0x00004e1a      0x55a obj/AudioClassDevice.o
- .debug_info    0x00005374      0xca2 obj/CDCClassDevice.o
- .debug_info    0x00006016      0x629 obj/HIDClassDevice.o
- .debug_info    0x0000663f      0x7c6 obj/MassStorageClassDevice.o
- .debug_info    0x00006e05      0x4cf obj/MIDIClassDevice.o
- .debug_info    0x000072d4      0xac8 obj/PrinterClassDevice.o
- .debug_info    0x00007d9c      0xe59 obj/RNDISClassDevice.o
- .debug_info    0x00008bf5       0x5d obj/AndroidAccessoryClassHost.o
- .debug_info    0x00008c52       0x5d obj/AudioClassHost.o
- .debug_info    0x00008caf       0x5d obj/CDCClassHost.o
- .debug_info    0x00008d0c       0x5d obj/HIDClassHost.o
- .debug_info    0x00008d69       0x5d obj/MassStorageClassHost.o
- .debug_info    0x00008dc6       0x5d obj/MIDIClassHost.o
- .debug_info    0x00008e23       0x5d obj/PrinterClassHost.o
- .debug_info    0x00008e80       0x5d obj/RNDISClassHost.o
- .debug_info    0x00008edd       0x5d obj/StillImageClassHost.o
- .debug_info    0x00008f3a      0x3bf obj/irSend.o
- .debug_info    0x000092f9      0x207 obj/IRremote.o
- .debug_info    0x00009500      0x3ec obj/irRecv.o
- .debug_info    0x000098ec      0x41f obj/irTrans.o
- .debug_info    0x00009d0b      0x1af obj/led7seg.o
- .debug_info    0x00009eba       0xd3 obj/RotEncoder.o
- .debug_info    0x00009f8d       0xc1 obj/Motor.o
+ .debug_info    0x00000000      0x77f obj/main.o
+ .debug_info    0x0000077f      0x6b5 obj/Descriptors.o
+ .debug_info    0x00000e34      0x6ee obj/HIDParser.o
+ .debug_info    0x00001522       0xc0 obj/Device_AVR8.o
+ .debug_info    0x000015e2     0x15d0 obj/EndpointStream_AVR8.o
+ .debug_info    0x00002bb2      0x5ee obj/Endpoint_AVR8.o
+ .debug_info    0x000031a0       0x5d obj/Host_AVR8.o
+ .debug_info    0x000031fd       0x5d obj/PipeStream_AVR8.o
+ .debug_info    0x0000325a       0x5d obj/Pipe_AVR8.o
+ .debug_info    0x000032b7      0x4a6 obj/USBController_AVR8.o
+ .debug_info    0x0000375d      0x6a3 obj/USBInterrupt_AVR8.o
+ .debug_info    0x00003e00      0x34a obj/ConfigDescriptors.o
+ .debug_info    0x0000414a      0x9ce obj/DeviceStandardReq.o
+ .debug_info    0x00004b18       0x75 obj/Events.o
+ .debug_info    0x00004b8d       0x5d obj/HostStandardReq.o
+ .debug_info    0x00004bea      0x265 obj/USBTask.o
+ .debug_info    0x00004e4f      0x55a obj/AudioClassDevice.o
+ .debug_info    0x000053a9      0xca2 obj/CDCClassDevice.o
+ .debug_info    0x0000604b      0x629 obj/HIDClassDevice.o
+ .debug_info    0x00006674      0x7c6 obj/MassStorageClassDevice.o
+ .debug_info    0x00006e3a      0x4cf obj/MIDIClassDevice.o
+ .debug_info    0x00007309      0xac8 obj/PrinterClassDevice.o
+ .debug_info    0x00007dd1      0xe59 obj/RNDISClassDevice.o
+ .debug_info    0x00008c2a       0x5d obj/AndroidAccessoryClassHost.o
+ .debug_info    0x00008c87       0x5d obj/AudioClassHost.o
+ .debug_info    0x00008ce4       0x5d obj/CDCClassHost.o
+ .debug_info    0x00008d41       0x5d obj/HIDClassHost.o
+ .debug_info    0x00008d9e       0x5d obj/MassStorageClassHost.o
+ .debug_info    0x00008dfb       0x5d obj/MIDIClassHost.o
+ .debug_info    0x00008e58       0x5d obj/PrinterClassHost.o
+ .debug_info    0x00008eb5       0x5d obj/RNDISClassHost.o
+ .debug_info    0x00008f12       0x5d obj/StillImageClassHost.o
+ .debug_info    0x00008f6f      0x3bf obj/irSend.o
+ .debug_info    0x0000932e      0x207 obj/IRremote.o
+ .debug_info    0x00009535      0x3ec obj/irRecv.o
+ .debug_info    0x00009921      0x41f obj/irTrans.o
+ .debug_info    0x00009d40      0x1af obj/led7seg.o
+ .debug_info    0x00009eef       0xd3 obj/RotEncoder.o
+ .debug_info    0x00009fc2       0xc1 obj/Motor.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev   0x00000000     0x2c9a
@@ -1370,47 +1370,47 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .debug_abbrev  0x00002b95       0x7f obj/RotEncoder.o
  .debug_abbrev  0x00002c14       0x86 obj/Motor.o
 
-.debug_line     0x00000000     0x84d9
+.debug_line     0x00000000     0x84ef
  *(.debug_line)
- .debug_line    0x00000000      0x867 obj/main.o
- .debug_line    0x00000867      0x228 obj/Descriptors.o
- .debug_line    0x00000a8f      0x5b8 obj/HIDParser.o
- .debug_line    0x00001047      0x153 obj/Device_AVR8.o
- .debug_line    0x0000119a     0x185b obj/EndpointStream_AVR8.o
- .debug_line    0x000029f5      0x59d obj/Endpoint_AVR8.o
- .debug_line    0x00002f92       0x3e obj/Host_AVR8.o
- .debug_line    0x00002fd0       0x3e obj/PipeStream_AVR8.o
- .debug_line    0x0000300e       0x3e obj/Pipe_AVR8.o
- .debug_line    0x0000304c      0x438 obj/USBController_AVR8.o
- .debug_line    0x00003484      0x684 obj/USBInterrupt_AVR8.o
- .debug_line    0x00003b08      0x26c obj/ConfigDescriptors.o
- .debug_line    0x00003d74      0x5d4 obj/DeviceStandardReq.o
- .debug_line    0x00004348       0x96 obj/Events.o
- .debug_line    0x000043de       0x3e obj/HostStandardReq.o
- .debug_line    0x0000441c      0x1e9 obj/USBTask.o
- .debug_line    0x00004605      0x54e obj/AudioClassDevice.o
- .debug_line    0x00004b53      0x9d3 obj/CDCClassDevice.o
- .debug_line    0x00005526      0x5ed obj/HIDClassDevice.o
- .debug_line    0x00005b13      0x5ed obj/MassStorageClassDevice.o
- .debug_line    0x00006100      0x4a0 obj/MIDIClassDevice.o
- .debug_line    0x000065a0      0x868 obj/PrinterClassDevice.o
- .debug_line    0x00006e08      0x7ae obj/RNDISClassDevice.o
- .debug_line    0x000075b6       0x3e obj/AndroidAccessoryClassHost.o
- .debug_line    0x000075f4       0x3e obj/AudioClassHost.o
- .debug_line    0x00007632       0x3e obj/CDCClassHost.o
- .debug_line    0x00007670       0x3e obj/HIDClassHost.o
- .debug_line    0x000076ae       0x3e obj/MassStorageClassHost.o
- .debug_line    0x000076ec       0x3e obj/MIDIClassHost.o
- .debug_line    0x0000772a       0x3e obj/PrinterClassHost.o
- .debug_line    0x00007768       0x3e obj/RNDISClassHost.o
- .debug_line    0x000077a6       0x3e obj/StillImageClassHost.o
- .debug_line    0x000077e4      0x24b obj/irSend.o
- .debug_line    0x00007a2f      0x1d8 obj/IRremote.o
- .debug_line    0x00007c07      0x2a6 obj/irRecv.o
- .debug_line    0x00007ead      0x1ee obj/irTrans.o
- .debug_line    0x0000809b      0x1bc obj/led7seg.o
- .debug_line    0x00008257      0x12c obj/RotEncoder.o
- .debug_line    0x00008383      0x156 obj/Motor.o
+ .debug_line    0x00000000      0x87d obj/main.o
+ .debug_line    0x0000087d      0x228 obj/Descriptors.o
+ .debug_line    0x00000aa5      0x5b8 obj/HIDParser.o
+ .debug_line    0x0000105d      0x153 obj/Device_AVR8.o
+ .debug_line    0x000011b0     0x185b obj/EndpointStream_AVR8.o
+ .debug_line    0x00002a0b      0x59d obj/Endpoint_AVR8.o
+ .debug_line    0x00002fa8       0x3e obj/Host_AVR8.o
+ .debug_line    0x00002fe6       0x3e obj/PipeStream_AVR8.o
+ .debug_line    0x00003024       0x3e obj/Pipe_AVR8.o
+ .debug_line    0x00003062      0x438 obj/USBController_AVR8.o
+ .debug_line    0x0000349a      0x684 obj/USBInterrupt_AVR8.o
+ .debug_line    0x00003b1e      0x26c obj/ConfigDescriptors.o
+ .debug_line    0x00003d8a      0x5d4 obj/DeviceStandardReq.o
+ .debug_line    0x0000435e       0x96 obj/Events.o
+ .debug_line    0x000043f4       0x3e obj/HostStandardReq.o
+ .debug_line    0x00004432      0x1e9 obj/USBTask.o
+ .debug_line    0x0000461b      0x54e obj/AudioClassDevice.o
+ .debug_line    0x00004b69      0x9d3 obj/CDCClassDevice.o
+ .debug_line    0x0000553c      0x5ed obj/HIDClassDevice.o
+ .debug_line    0x00005b29      0x5ed obj/MassStorageClassDevice.o
+ .debug_line    0x00006116      0x4a0 obj/MIDIClassDevice.o
+ .debug_line    0x000065b6      0x868 obj/PrinterClassDevice.o
+ .debug_line    0x00006e1e      0x7ae obj/RNDISClassDevice.o
+ .debug_line    0x000075cc       0x3e obj/AndroidAccessoryClassHost.o
+ .debug_line    0x0000760a       0x3e obj/AudioClassHost.o
+ .debug_line    0x00007648       0x3e obj/CDCClassHost.o
+ .debug_line    0x00007686       0x3e obj/HIDClassHost.o
+ .debug_line    0x000076c4       0x3e obj/MassStorageClassHost.o
+ .debug_line    0x00007702       0x3e obj/MIDIClassHost.o
+ .debug_line    0x00007740       0x3e obj/PrinterClassHost.o
+ .debug_line    0x0000777e       0x3e obj/RNDISClassHost.o
+ .debug_line    0x000077bc       0x3e obj/StillImageClassHost.o
+ .debug_line    0x000077fa      0x24b obj/irSend.o
+ .debug_line    0x00007a45      0x1d8 obj/IRremote.o
+ .debug_line    0x00007c1d      0x2a6 obj/irRecv.o
+ .debug_line    0x00007ec3      0x1ee obj/irTrans.o
+ .debug_line    0x000080b1      0x1bc obj/led7seg.o
+ .debug_line    0x0000826d      0x12c obj/RotEncoder.o
+ .debug_line    0x00008399      0x156 obj/Motor.o
 
 .debug_frame    0x00000000      0xab0
  *(.debug_frame)
@@ -1441,109 +1441,109 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .debug_frame   0x00000a40       0x40 obj/RotEncoder.o
  .debug_frame   0x00000a80       0x30 obj/Motor.o
 
-.debug_str      0x00000000     0x3fd0
+.debug_str      0x00000000     0x3ff8
  *(.debug_str)
- .debug_str     0x00000000      0x419 obj/main.o
-                                0x497 (size before relaxing)
- .debug_str     0x00000419      0x581 obj/Descriptors.o
+ .debug_str     0x00000000      0x441 obj/main.o
+                                0x4bf (size before relaxing)
+ .debug_str     0x00000441      0x581 obj/Descriptors.o
                                 0x6d5 (size before relaxing)
- .debug_str     0x0000099a      0x497 obj/HIDParser.o
+ .debug_str     0x000009c2      0x497 obj/HIDParser.o
                                 0x5ab (size before relaxing)
- .debug_str     0x00000e31       0x8d obj/Device_AVR8.o
+ .debug_str     0x00000e59       0x8d obj/Device_AVR8.o
                                 0x106 (size before relaxing)
- .debug_str     0x00000ebe      0x657 obj/EndpointStream_AVR8.o
+ .debug_str     0x00000ee6      0x657 obj/EndpointStream_AVR8.o
                                 0x734 (size before relaxing)
- .debug_str     0x00001515      0x304 obj/Endpoint_AVR8.o
+ .debug_str     0x0000153d      0x304 obj/Endpoint_AVR8.o
                                 0x530 (size before relaxing)
- .debug_str     0x00001819       0x43 obj/Host_AVR8.o
+ .debug_str     0x00001841       0x43 obj/Host_AVR8.o
                                  0xb6 (size before relaxing)
- .debug_str     0x0000185c       0x49 obj/PipeStream_AVR8.o
+ .debug_str     0x00001884       0x49 obj/PipeStream_AVR8.o
                                  0xbc (size before relaxing)
- .debug_str     0x000018a5       0x43 obj/Pipe_AVR8.o
+ .debug_str     0x000018cd       0x43 obj/Pipe_AVR8.o
                                  0xb6 (size before relaxing)
- .debug_str     0x000018e8      0x263 obj/USBController_AVR8.o
+ .debug_str     0x00001910      0x263 obj/USBController_AVR8.o
                                 0x418 (size before relaxing)
- .debug_str     0x00001b4b      0x13c obj/USBInterrupt_AVR8.o
+ .debug_str     0x00001b73      0x13c obj/USBInterrupt_AVR8.o
                                 0x413 (size before relaxing)
- .debug_str     0x00001c87      0x233 obj/ConfigDescriptors.o
+ .debug_str     0x00001caf      0x233 obj/ConfigDescriptors.o
                                 0x2d4 (size before relaxing)
- .debug_str     0x00001eba      0x418 obj/DeviceStandardReq.o
+ .debug_str     0x00001ee2      0x418 obj/DeviceStandardReq.o
                                 0x804 (size before relaxing)
- .debug_str     0x000022d2       0x4a obj/Events.o
+ .debug_str     0x000022fa       0x4a obj/Events.o
                                  0xbd (size before relaxing)
- .debug_str     0x0000231c       0x44 obj/HostStandardReq.o
+ .debug_str     0x00002344       0x44 obj/HostStandardReq.o
                                  0xb7 (size before relaxing)
- .debug_str     0x00002360       0x64 obj/USBTask.o
+ .debug_str     0x00002388       0x64 obj/USBTask.o
                                 0x274 (size before relaxing)
- .debug_str     0x000023c4      0x24f obj/AudioClassDevice.o
+ .debug_str     0x000023ec      0x24f obj/AudioClassDevice.o
                                 0x4f4 (size before relaxing)
- .debug_str     0x00002613      0x32d obj/CDCClassDevice.o
+ .debug_str     0x0000263b      0x32d obj/CDCClassDevice.o
                                 0x8d6 (size before relaxing)
- .debug_str     0x00002940      0x203 obj/HIDClassDevice.o
+ .debug_str     0x00002968      0x203 obj/HIDClassDevice.o
                                 0x523 (size before relaxing)
- .debug_str     0x00002b43      0x253 obj/MassStorageClassDevice.o
+ .debug_str     0x00002b6b      0x253 obj/MassStorageClassDevice.o
                                 0x684 (size before relaxing)
- .debug_str     0x00002d96      0x12e obj/MIDIClassDevice.o
+ .debug_str     0x00002dbe      0x12e obj/MIDIClassDevice.o
                                 0x522 (size before relaxing)
- .debug_str     0x00002ec4      0x282 obj/PrinterClassDevice.o
+ .debug_str     0x00002eec      0x282 obj/PrinterClassDevice.o
                                 0x7bc (size before relaxing)
- .debug_str     0x00003146      0x70d obj/RNDISClassDevice.o
+ .debug_str     0x0000316e      0x70d obj/RNDISClassDevice.o
                                 0xbcb (size before relaxing)
- .debug_str     0x00003853       0x54 obj/AndroidAccessoryClassHost.o
+ .debug_str     0x0000387b       0x54 obj/AndroidAccessoryClassHost.o
                                  0xc7 (size before relaxing)
- .debug_str     0x000038a7       0x49 obj/AudioClassHost.o
+ .debug_str     0x000038cf       0x49 obj/AudioClassHost.o
                                  0xbc (size before relaxing)
- .debug_str     0x000038f0       0x47 obj/CDCClassHost.o
+ .debug_str     0x00003918       0x47 obj/CDCClassHost.o
                                  0xba (size before relaxing)
- .debug_str     0x00003937       0x47 obj/HIDClassHost.o
+ .debug_str     0x0000395f       0x47 obj/HIDClassHost.o
                                  0xba (size before relaxing)
- .debug_str     0x0000397e       0x4f obj/MassStorageClassHost.o
+ .debug_str     0x000039a6       0x4f obj/MassStorageClassHost.o
                                  0xc2 (size before relaxing)
- .debug_str     0x000039cd       0x48 obj/MIDIClassHost.o
+ .debug_str     0x000039f5       0x48 obj/MIDIClassHost.o
                                  0xbb (size before relaxing)
- .debug_str     0x00003a15       0x4b obj/PrinterClassHost.o
+ .debug_str     0x00003a3d       0x4b obj/PrinterClassHost.o
                                  0xbe (size before relaxing)
- .debug_str     0x00003a60       0x49 obj/RNDISClassHost.o
+ .debug_str     0x00003a88       0x49 obj/RNDISClassHost.o
                                  0xbc (size before relaxing)
- .debug_str     0x00003aa9       0x4e obj/StillImageClassHost.o
+ .debug_str     0x00003ad1       0x4e obj/StillImageClassHost.o
                                  0xc1 (size before relaxing)
- .debug_str     0x00003af7       0xee obj/irSend.o
+ .debug_str     0x00003b1f       0xee obj/irSend.o
                                 0x1c3 (size before relaxing)
- .debug_str     0x00003be5       0xdf obj/IRremote.o
+ .debug_str     0x00003c0d       0xdf obj/IRremote.o
                                 0x1af (size before relaxing)
- .debug_str     0x00003cc4      0x139 obj/irRecv.o
+ .debug_str     0x00003cec      0x139 obj/irRecv.o
                                 0x271 (size before relaxing)
- .debug_str     0x00003dfd       0xbc obj/irTrans.o
+ .debug_str     0x00003e25       0xbc obj/irTrans.o
                                 0x30e (size before relaxing)
- .debug_str     0x00003eb9       0xb3 obj/led7seg.o
+ .debug_str     0x00003ee1       0xb3 obj/led7seg.o
                                 0x184 (size before relaxing)
- .debug_str     0x00003f6c       0x49 obj/RotEncoder.o
+ .debug_str     0x00003f94       0x49 obj/RotEncoder.o
                                 0x10a (size before relaxing)
- .debug_str     0x00003fb5       0x1b obj/Motor.o
+ .debug_str     0x00003fdd       0x1b obj/Motor.o
                                  0xee (size before relaxing)
 
-.debug_loc      0x00000000     0x416a
+.debug_loc      0x00000000     0x41f2
  *(.debug_loc)
- .debug_loc     0x00000000      0x22d obj/main.o
- .debug_loc     0x0000022d      0x160 obj/Descriptors.o
- .debug_loc     0x0000038d      0x560 obj/HIDParser.o
- .debug_loc     0x000008ed     0x1886 obj/EndpointStream_AVR8.o
- .debug_loc     0x00002173      0x11c obj/Endpoint_AVR8.o
- .debug_loc     0x0000228f      0x2c7 obj/ConfigDescriptors.o
- .debug_loc     0x00002556      0x23c obj/DeviceStandardReq.o
- .debug_loc     0x00002792      0x25d obj/AudioClassDevice.o
- .debug_loc     0x000029ef      0x524 obj/CDCClassDevice.o
- .debug_loc     0x00002f13      0x141 obj/HIDClassDevice.o
- .debug_loc     0x00003054       0x96 obj/MassStorageClassDevice.o
- .debug_loc     0x000030ea      0x19a obj/MIDIClassDevice.o
- .debug_loc     0x00003284      0x3bc obj/PrinterClassDevice.o
- .debug_loc     0x00003640      0x464 obj/RNDISClassDevice.o
- .debug_loc     0x00003aa4      0x16c obj/irSend.o
- .debug_loc     0x00003c10      0x143 obj/IRremote.o
- .debug_loc     0x00003d53      0x1c2 obj/irRecv.o
- .debug_loc     0x00003f15      0x162 obj/irTrans.o
- .debug_loc     0x00004077       0xab obj/led7seg.o
- .debug_loc     0x00004122       0x48 obj/Motor.o
+ .debug_loc     0x00000000      0x2b5 obj/main.o
+ .debug_loc     0x000002b5      0x160 obj/Descriptors.o
+ .debug_loc     0x00000415      0x560 obj/HIDParser.o
+ .debug_loc     0x00000975     0x1886 obj/EndpointStream_AVR8.o
+ .debug_loc     0x000021fb      0x11c obj/Endpoint_AVR8.o
+ .debug_loc     0x00002317      0x2c7 obj/ConfigDescriptors.o
+ .debug_loc     0x000025de      0x23c obj/DeviceStandardReq.o
+ .debug_loc     0x0000281a      0x25d obj/AudioClassDevice.o
+ .debug_loc     0x00002a77      0x524 obj/CDCClassDevice.o
+ .debug_loc     0x00002f9b      0x141 obj/HIDClassDevice.o
+ .debug_loc     0x000030dc       0x96 obj/MassStorageClassDevice.o
+ .debug_loc     0x00003172      0x19a obj/MIDIClassDevice.o
+ .debug_loc     0x0000330c      0x3bc obj/PrinterClassDevice.o
+ .debug_loc     0x000036c8      0x464 obj/RNDISClassDevice.o
+ .debug_loc     0x00003b2c      0x16c obj/irSend.o
+ .debug_loc     0x00003c98      0x143 obj/IRremote.o
+ .debug_loc     0x00003ddb      0x1c2 obj/irRecv.o
+ .debug_loc     0x00003f9d      0x162 obj/irTrans.o
+ .debug_loc     0x000040ff       0xab obj/led7seg.o
+ .debug_loc     0x000041aa       0x48 obj/Motor.o
 
 .debug_macinfo
  *(.debug_macinfo)
