@@ -79,6 +79,15 @@ void CheckJoystickMovement(void);
 #include "irTrans.h"
 #include "Motor.h"
 
+
+//global
+uint16_t joy1a_fix = 0;
+uint16_t joy1b_fix = 0;
+uint16_t joy2a_fix = 0;
+uint16_t joy2b_fix = 0;
+
+
+
 // ------------------------------------------------------------
 
 void SelectADChannel(int ch){
@@ -219,7 +228,7 @@ void IrTransmissionProc(int cmd)
 			if(ir_cmd_mode == 20 || ir_cmd_mode == 40){		//ジャイロモード
 				IrSend(enc_data);
 			}else{			//レバーモード
-				IrSend(-joy2a/3 + 100);
+				IrSend(-joy2a_fix/3 + 100);
 			}
 			
 			
@@ -303,10 +312,6 @@ int main(void)
 	int data = 0;
 	static int prev_motor_on = 0;
 	static int prev_motor_on_inv = 0;
-	uint16_t joy1a_fix = 0;
-	uint16_t joy1b_fix = 0;
-	uint16_t joy2a_fix = 0;
-	uint16_t joy2b_fix = 0;
 
 	char str[256];
 	for(cnt = 0; ; cnt++){
@@ -340,23 +345,26 @@ int main(void)
 			if(rdata > 120) rdata = 120;
 
 			//不感帯の設定
-			if((410+10)<joy2a && joy2a<(620+10)){		 //右レバー左右
-				joy2a_fix = 515;
-			}else{
-				if(joy2a<10){
-					joy2a_fix=0;
-				}else{
-					joy2a_fix = joy2a-10;
-				}
-			}
-
 			if((410-5)<joy2b && joy2b<(620-5)){		//右レバー上下
 				joy2b_fix = 515;
 			}else{
 				joy2b_fix = joy2b+5;
 			}
 
-			if(410<joy1a && joy1a<620){
+			//if((410+10)<joy2a && joy2a<(620+10)){		 //右レバー左右
+			
+			
+			if((100)<joy2a && joy2a<(900)){		 //右レバー左右
+				joy2a_fix = 515;
+			}else{
+				if(joy2a<10){
+					joy2a_fix=0;
+				}else{		//右レバー上下が中央の場合だけ、右レバー左右を動作
+					joy2a_fix = joy2a-10;
+				}
+			}
+
+			if(410<joy1a && joy1a<620){	
 				joy1a_fix = 515;
 			}else{
 				joy1a_fix = joy1a;
