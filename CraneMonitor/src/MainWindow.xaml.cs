@@ -84,23 +84,41 @@ namespace CraneMonitor
             //meters.Background = System.Windows.Media.Brushes.Black.Clone();
             //meters.Background.Opacity = 0.5;
 
+            float PwmVal(int n)
+            {
+                int i = meter_select[n];
+                int k = i / 3;
+                int j = i % 3;
+                return (float)((motor[k].mode[j] == 0) ? motor[k].pwm_ref[j] : motor[k].pwm[j]) / (float)(motor[k].pwmMax);
+            }
+
+            float VelVal(int n)
+            {
+                int i = meter_select[n];
+                int k = i / 3;
+                int j = i % 3;
+                return (float)((motor[k].mode[j] == 0) ? vel[i] : motor[k].vel_ref[j]) / (float)(motor[k].velMax);
+            }
+
+            float PosVal(int n)
+            {
+                int i = meter_select[n];
+                int k = i / 3;
+                int j = i % 3;
+                return motor[k].pos[j];
+            }
+
             meters.UpdateDisplayLayout(
                 new MeasureObj[] {
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor[0].mode[0] == 0) ? motor[0].pwm_ref[0] : motor[0].pwm[0]) / (float)(motor[0].pwmMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor[0].mode[1] == 0) ? motor[0].pwm_ref[1] : motor[0].pwm[1]) / (float)(motor[0].pwmMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor[0].mode[2] == 0) ? motor[0].pwm_ref[2] : motor[0].pwm[2]) / (float)(motor[0].pwmMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor[0].mode[0] == 0) ? vel[0] : motor[0].vel_ref[0]) / (float)(motor[0].velMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor[0].mode[1] == 0) ? vel[1] : motor[0].vel_ref[1]) / (float)(motor[0].velMax); })),
-                    new MeasurePercent(new GetRealValue(delegate() {return (float)((motor[0].mode[2] == 0) ? vel[2] : motor[0].vel_ref[2]) / (float)(motor[0].velMax); })),
-#if true
-                    mpos1 = new MeasurePos(new GetRealValue(delegate() {return motor[0].pos[0]; })),
-                    mpos2 = new MeasurePos(new GetRealValue(delegate() {return motor[0].pos[1]; })),
-                    mpos3 = new MeasurePos(new GetRealValue(delegate() {return motor[0].pos[2]; })),
-#else   // for debug
-                    mpos1 = new MeasurePos(new GetRealValue(delegate() {return (float)controller.axis[0]; })),
-                    mpos2 = new MeasurePos(new GetRealValue(delegate() {return (float)controller.axis[1]; })),
-                    mpos3 = new MeasurePos(new GetRealValue(delegate() {return (float)controller.axis[2]; })),
-#endif
+                    new MeasurePercent(new GetRealValue(delegate() { return PwmVal(0); })),
+                    new MeasurePercent(new GetRealValue(delegate() { return PwmVal(1); })),
+                    new MeasurePercent(new GetRealValue(delegate() { return PwmVal(2); })),
+                    new MeasurePercent(new GetRealValue(delegate() { return VelVal(0); })),
+                    new MeasurePercent(new GetRealValue(delegate() { return VelVal(1); })),
+                    new MeasurePercent(new GetRealValue(delegate() { return VelVal(2); })),
+                    mpos1 = new MeasurePos(new GetRealValue(delegate() { return PosVal(0); })),
+                    mpos2 = new MeasurePos(new GetRealValue(delegate() { return PosVal(1); })),
+                    mpos3 = new MeasurePos(new GetRealValue(delegate() { return PosVal(2); })),
                     new MeasurePercent(new GetRealValue(delegate() {return (float)(sensor.pot[0] / (float)(sensor.potMax)); })),
                     null,
                     null
@@ -131,17 +149,18 @@ namespace CraneMonitor
             controller.PushButtons = new EnableButton[] { BtnRegister };
             controller.SyncButtons = new EnableButton[] { null, BtnPause, null, BtnStart, null, null, BtnHalt, null, null, null };
 
+            OnMotorChanged();
+
             // 初期自動接続
             BtnJoystick.Enabled = true;
-            BtnMotor.Enabled = true;
+            BtnMotor1.Enabled = true;
+            BtnMotor2.Enabled = true;
+            BtnSensor.Enabled = true;
             //BtnCtrl.Enabled = true;
             BtnLight.Enabled = true;
 
-            motor[0].Init();
-            motor[1].Init();
-            sensor  .Init();
-
-            OnMotorChanged();
+            BtnDispRank.Enabled = true;
+            BtnDispAzim.Enabled = true;
 
             // インターバルタイマ
             DispatcherTimer dispatcherTimer = new DispatcherTimer(DispatcherPriority.Normal);
@@ -152,56 +171,67 @@ namespace CraneMonitor
 
         // ------------------------------------------------------------
 
+        private const int NUM_SOURCE = 6;
         private int freqdiv_count = 0;
-        private double[] axis = new double[3];
-        private double[] vel = new double[3];
-        private int[] prev_pos = new int[3];
+        private double[] vel = new double[NUM_SOURCE];
+        private int[] prev_pos = new int[NUM_SOURCE];
+        private double prev_azimuth = -1;
+        private const int SOURCE_INVALID = -1;
+        private const int SOURCE_LIGHT = -2;
+        private int[] source_select = new int[NUM_SOURCE] { 0, 1, 2, SOURCE_INVALID, SOURCE_INVALID, SOURCE_INVALID };
+        private const int NUM_METER = 3;
+        private int[] meter_select = new int[NUM_METER] { 0, 1, 2 };
 
         void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             double dt = 0.001 * param.UpdateInterval;
 
-            if (BtnJoystick.Enabled)
+            double select(double[] axis, int select_id)
             {
-                joystick.Update();
-                axis[0] = joystick.axis[0];
-                axis[1] = joystick.axis[1];
-                axis[2] = joystick.axis[2];
-            }
-            else
-            {
-                axis[0] = controller.axis[0];
-                axis[1] = controller.axis[1];
-                axis[2] = controller.axis[2];
+                switch (select_id)
+                {
+                    case SOURCE_LIGHT:
+                        return light.output;
+                    default:
+                        return (select_id >= 0) ? axis[select_id] : 0;
+                }
             }
 
-            // motor[0]:
-            // ch0 : axis[0]
-            // ch1 : axis[1]
-            // ch2 : axis[2]
-            for (int j = 0; j < 3; j++)
+            for (int i = 0; i < NUM_SOURCE; i++)
             {
-                // haltが押されていたら指令値を0
-                if (BtnHalt.Enabled)
+                double source;
+                if (BtnJoystick.Enabled)
                 {
-                    motor[0].pwm_ref[j] = 0;
-                    motor[0].vel_ref[j] = 0;
+                    joystick.Update();
+                    source = select(joystick.axis, source_select[i]);
                 }
                 else
                 {
-                    if (motor[0].mode[j] == 0)
-                        motor[0].pwm_ref[j] = (int)(motor[0].pwmMax * axis[j]);
+                    source = select(controller.axis, source_select[i]);
+                }
+                int j = i % 3;
+                int k = i / 3;
+                // haltが押されていたら指令値を0
+                if (BtnHalt.Enabled)
+                {
+                    motor[k].pwm_ref[j] = 0;
+                    motor[k].vel_ref[j] = 0;
+                }
+                else
+                {
+                    if (motor[k].mode[j] == 0)
+                        motor[k].pwm_ref[j] = (int)(motor[k].pwmMax * source);
                     else
-                        motor[0].vel_ref[j] = (int)(motor[0].velMax * axis[j]);
+                        motor[k].vel_ref[j] = (int)(motor[k].velMax * source);
 
-                    vel[j] = (motor[0].pos[j] - prev_pos[j]) * 1000 / param.UpdateInterval;
-                    prev_pos[j] = motor[0].pos[j];
+                    vel[j] = (motor[k].pos[j] - prev_pos[i]) * 1000 / param.UpdateInterval;
+                    prev_pos[i] = motor[k].pos[j];
                 }
             }
             motor[0].Update(dt);
+            motor[1].Update(dt);
 
-            // motor[1]:
-            // ch0 : light
+            // Update Light
             if (BtnLight.Enabled)
             {
                 light.Update(dt);
@@ -210,19 +240,13 @@ namespace CraneMonitor
             {
                 light.output = 0;
             }
-            motor[1].mode[0] = 0;
-            motor[1].mode[1] = 0;
-            motor[1].mode[2] = 0;
-            motor[1].pwm_ref[0] = light.output;
-            motor[1].pwm_ref[1] = 0;
-            motor[1].pwm_ref[2] = 0;
-            motor[1].Update(dt);
 
+            // Update Meter
             meters.Update(false);
 
             // カメラ動画 ------------------------------
             if (camera[0].Update()) image1.Source = camera[0].image;
-            if (camera[1].Update()) image1.Source = camera[1].image;
+            if (camera[1].Update()) image2.Source = camera[1].image;
 
             // 頻度の低い更新（分周比 1/5） ------------------------------
 
@@ -237,20 +261,25 @@ namespace CraneMonitor
             }
 
             freqdiv_count--;
-        }
 
+#if true
+            if (prev_azimuth != 0)
+            {
+                Azimuth.MeterValue = 0;
+                prev_azimuth = Azimuth.MeterValue;
+            }
+#endif
+        }
+        
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            motor[0].Close();
-            motor[1].Close();
-            sensor.Close();
-
             log.CloseAsHide = false;
             log.Close();
 
-            //camera.Close();
             BtnJoystick.Enabled = false;
-            BtnMotor.Enabled = false;
+            BtnMotor1.Enabled = false;
+            BtnMotor2.Enabled = false;
+            BtnSensor.Enabled = false;
             BtnCtrl.Enabled = false;
             BtnCamera1.Enabled = false;
             BtnCamera2.Enabled = false;
@@ -275,27 +304,70 @@ namespace CraneMonitor
             sensor.comPort = param.SensorComPort;
             controller.comPort = param.ControllerComPort;
 
+            LabMotor1.Text = param.MotorComPort1;
+            LabMotor2.Text = param.MotorComPort2;
+            LabSensor.Text = param.SensorComPort;
+            LabCtrl.Text = param.ControllerComPort;
+
             // set camera id
             camera[0].id = param.UsbCameraId[0];
             camera[1].id = param.UsbCameraId[1];
 
+            LabCamera1.Text = param.UsbCameraId[0].ToString();
+            LabCamera2.Text = param.UsbCameraId[1].ToString();
+
             BtnFbMode0.Enabled = param.MotorFbMode[0];
             BtnFbMode1.Enabled = param.MotorFbMode[1];
             BtnFbMode2.Enabled = param.MotorFbMode[2];
+            BtnFbMode3.Enabled = param.MotorFbMode[3];
+            BtnFbMode4.Enabled = param.MotorFbMode[4];
+            BtnFbMode5.Enabled = param.MotorFbMode[5];
 
             BtnJ0.Enabled = param.MotorDirection[0];
             BtnJ1.Enabled = param.MotorDirection[1];
             BtnJ2.Enabled = param.MotorDirection[2];
+            BtnJ3.Enabled = param.MotorDirection[3];
+            BtnJ4.Enabled = param.MotorDirection[4];
+            BtnJ5.Enabled = param.MotorDirection[5];
 
             BtnP0.Enabled = param.EncoderDirection[0];
             BtnP1.Enabled = param.EncoderDirection[1];
             BtnP2.Enabled = param.EncoderDirection[2];
+            BtnP3.Enabled = param.EncoderDirection[3];
+            BtnP4.Enabled = param.EncoderDirection[4];
+            BtnP5.Enabled = param.EncoderDirection[5];
+
+            LabAxisCh0.Text = param.Source[0];
+            LabAxisCh1.Text = param.Source[1];
+            LabAxisCh2.Text = param.Source[2];
+            LabAxisCh3.Text = param.Source[3];
+            LabAxisCh4.Text = param.Source[4];
+            LabAxisCh5.Text = param.Source[5];
+
+            LabMeter0.Text = param.MeterLabel[0];
+            LabMeter1.Text = param.MeterLabel[1];
+            LabMeter2.Text = param.MeterLabel[2];
 
             light.amplitude = param.LightAmplitude;
             light.frequency = param.LightFrequency;
 
+            LabLight.Text = param.LightFrequency.ToString();
+
             sensor.potLower[0] = param.PotentioLower;
             sensor.potUpper[0] = param.PotentioUpper;
+
+            for (int i = 0, j = 0; i < NUM_SOURCE; i++)
+            {
+                string src = param.Source[i];
+                if (src.Length == 0 || src.Length > 2)
+                    source_select[i] = SOURCE_INVALID;
+                else
+                {
+                    string src_num = src.Substring(0, 1);
+                    source_select[i] = (src_num[0] == 'L' || src_num[0] == 'l') ? SOURCE_LIGHT : int.Parse(src_num);
+                    if(src.Length == 2 && j < NUM_METER) meter_select[j++] = i;
+                }
+            }
         }
 
         private void BtnSaveParam_Click(object sender, RoutedEventArgs e)
@@ -314,14 +386,23 @@ namespace CraneMonitor
             param.MotorFbMode[0] = BtnFbMode0.Enabled;
             param.MotorFbMode[1] = BtnFbMode1.Enabled;
             param.MotorFbMode[2] = BtnFbMode2.Enabled;
+            param.MotorFbMode[3] = BtnFbMode3.Enabled;
+            param.MotorFbMode[4] = BtnFbMode4.Enabled;
+            param.MotorFbMode[5] = BtnFbMode5.Enabled;
 
             param.MotorDirection[0] = BtnJ0.Enabled;
             param.MotorDirection[1] = BtnJ1.Enabled;
             param.MotorDirection[2] = BtnJ2.Enabled;
+            param.MotorDirection[3] = BtnJ3.Enabled;
+            param.MotorDirection[4] = BtnJ4.Enabled;
+            param.MotorDirection[5] = BtnJ5.Enabled;
 
             param.EncoderDirection[0] = BtnP0.Enabled;
             param.EncoderDirection[1] = BtnP1.Enabled;
             param.EncoderDirection[2] = BtnP2.Enabled;
+            param.EncoderDirection[3] = BtnP3.Enabled;
+            param.EncoderDirection[4] = BtnP4.Enabled;
+            param.EncoderDirection[5] = BtnP5.Enabled;
 
             Param.Save(param);
         }
@@ -338,30 +419,59 @@ namespace CraneMonitor
             motor[0].mot_pol[0] = BtnJ0.Enabled ? 1 : 0;
             motor[0].mot_pol[1] = BtnJ1.Enabled ? 1 : 0;
             motor[0].mot_pol[2] = BtnJ2.Enabled ? 1 : 0;
-            motor[1].mot_pol[0] = 0;
-            motor[1].mot_pol[1] = 0;
-            motor[1].mot_pol[2] = 0;
+            motor[1].mot_pol[0] = BtnJ3.Enabled ? 1 : 0;
+            motor[1].mot_pol[1] = BtnJ4.Enabled ? 1 : 0;
+            motor[1].mot_pol[2] = BtnJ5.Enabled ? 1 : 0;
 
             motor[0].enc_pol[0] = BtnP0.Enabled ? 1 : 0;
             motor[0].enc_pol[1] = BtnP1.Enabled ? 1 : 0;
             motor[0].enc_pol[2] = BtnP2.Enabled ? 1 : 0;
-            motor[1].enc_pol[0] = 0;
-            motor[1].enc_pol[1] = 0;
-            motor[1].enc_pol[2] = 0;
+            motor[1].enc_pol[0] = BtnP3.Enabled ? 1 : 0;
+            motor[1].enc_pol[1] = BtnP4.Enabled ? 1 : 0;
+            motor[1].enc_pol[2] = BtnP5.Enabled ? 1 : 0;
 
             motor[0].SetMode(0, BtnFbMode0.Enabled ? 1 : 0);
             motor[0].SetMode(1, BtnFbMode1.Enabled ? 1 : 0);
             motor[0].SetMode(2, BtnFbMode2.Enabled ? 1 : 0);
-            motor[1].SetMode(0, 0);
-            motor[1].SetMode(1, 0);
-            motor[1].SetMode(2, 0);
+            motor[1].SetMode(0, BtnFbMode3.Enabled ? 1 : 0);
+            motor[1].SetMode(1, BtnFbMode4.Enabled ? 1 : 0);
+            motor[1].SetMode(2, BtnFbMode5.Enabled ? 1 : 0);
         }
 
-        private bool MotorEnable () {
-            return motor[0].Enable() && motor[1].Enable() && sensor.Enable();
+        private bool Motor1Enable()
+        {
+            motor[0].Init();    // connect serial
+            return motor[0].Enable();
         }
-        private bool MotorDisable() {
-            return motor[0].Disable() && motor[1].Disable() && sensor.Disable();
+        private bool Motor1Disable()
+        {
+            if (!motor[0].Disable()) return false;
+            motor[0].Close();    // disconnect serial
+            return true;
+        }
+
+        private bool Motor2Enable()
+        {
+            motor[1].Init();    // connect serial
+            return motor[1].Enable();
+        }
+        private bool Motor2Disable()
+        {
+            if (!motor[1].Disable()) return false;
+            motor[1].Close();    // disconnect serial
+            return true;
+        }
+
+        private bool SensorEnable()
+        {
+            sensor.Init();    // connect serial
+            return sensor.Enable();
+        }
+        private bool SensorDisable()
+        {
+            if (!sensor.Disable()) return false;
+            sensor.Close();    // disconnect serial
+            return true;
         }
 
         private bool Camera1Start() { return camera[0].Init(); }
@@ -383,19 +493,28 @@ namespace CraneMonitor
         private bool GameStartPause() { return ranking.GameStartPause(); }
         private bool GameStopPause() { return ranking.GameStopPause(); }
 
+        private void OnDispRankChanged()
+        {
+            PanelRanking.Visibility = BtnDispRank.Enabled ? Visibility.Visible : Visibility.Collapsed;
+            PanelPlayer.Visibility = BtnDispRank.Enabled ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void OnDispAzimChanged()
+        {
+            PanelAzimuth.Visibility = BtnDispAzim.Enabled ? Visibility.Visible : Visibility.Collapsed;
+        }
+
         private int CollapseMode = 0;
 
         private void Window_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            CollapseMode = (CollapseMode + 1) % 4;
+            CollapseMode = (CollapseMode + 1) % 3;
             switch (CollapseMode)
             {
                 case 0:
                     PanelFunc.Visibility = Visibility.Visible;
                     PanelEnable.Visibility = Visibility.Visible;
                     PanelMotor.Visibility = Visibility.Visible;
-                    PanelRanking.Visibility = Visibility.Visible;
-                    PanelPlayer.Visibility = Visibility.Visible;
                     PanelMeter.Visibility = Visibility.Visible;
                     break;
                 case 1:
@@ -404,10 +523,6 @@ namespace CraneMonitor
                     PanelMotor.Visibility = Visibility.Collapsed;
                     break;
                 case 2:
-                    PanelRanking.Visibility = Visibility.Collapsed;
-                    PanelPlayer.Visibility = Visibility.Collapsed;
-                    break;
-                case 3:
                     PanelMeter.Visibility = Visibility.Collapsed;
                     break;
             }

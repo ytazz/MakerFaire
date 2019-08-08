@@ -5,12 +5,22 @@
   <MotorComPort2>COM7</MotorComPort2>
   <SensorComPort>COM9</SensorComPort>
   <ControllerComPort>COM6</ControllerComPort>
+  <UsbCameraId>
+    <int>2</int>
+    <int>1</int>
+  </UsbCameraId>
   <MotorFbMode>
-    <boolean>true</boolean>
+    <boolean>false</boolean>
+    <boolean>false</boolean>
+    <boolean>false</boolean>
+    <boolean>false</boolean>
     <boolean>false</boolean>
     <boolean>false</boolean>
   </MotorFbMode>
   <MotorDirection>
+    <boolean>false</boolean>
+    <boolean>false</boolean>
+    <boolean>false</boolean>
     <boolean>false</boolean>
     <boolean>false</boolean>
     <boolean>false</boolean>
@@ -19,11 +29,25 @@
     <boolean>true</boolean>
     <boolean>true</boolean>
     <boolean>true</boolean>
+    <boolean>false</boolean>
+    <boolean>false</boolean>
+    <boolean>false</boolean>
   </EncoderDirection>
-  <UsbCameraId>
-    <int>0</int>
-    <int>1</int>
-  </UsbCameraId>
+  <Source>
+    <string>0*</string>
+    <string>1*</string>
+    <string>3*</string>
+    <string>L</string>
+    <string />
+    <string />
+  </Source>
+  <MeterLabel>
+    <string>1</string>
+    <string>2</string>
+    <string>3</string>
+  </MeterLabel>
   <LightAmplitude>255</LightAmplitude>
-  <LightFrequency>1</LightFrequency>
+  <LightFrequency>0.3</LightFrequency>
+  <PotentioLower>0</PotentioLower>
+  <PotentioUpper>1024</PotentioUpper>
 </Param>

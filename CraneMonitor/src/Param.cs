@@ -19,12 +19,14 @@ namespace CraneMonitor
         public string MotorComPort2 { get; set; }
         public string SensorComPort { get; set; }
         public string ControllerComPort { get; set; }
+        public int[] UsbCameraId { get; set; }
 
         public bool[] MotorFbMode { get; set; }
         public bool[] MotorDirection { get; set; }
         public bool[] EncoderDirection { get; set; }
+        public string[] Source { get; set; }
 
-        public int[] UsbCameraId { get; set; }
+        public string[] MeterLabel { get; set; }
 
         public double LightAmplitude { get; set; }
         public double LightFrequency { get; set; }
@@ -44,11 +46,13 @@ namespace CraneMonitor
             // serial port of controller box
             ControllerComPort = "COM3";
 
+            UsbCameraId = new int[] { 0, 1 };
+
             MotorFbMode = new bool[] { true, true, true, true, true, true };
             MotorDirection = new bool[] { true, true, true, true, true, true };
             EncoderDirection = new bool[] { true, true, true, true, true, true };
-
-            UsbCameraId = new int[] { 0, 1 };
+            Source = new string[] { "0", "1", "2", "L", "", "" };
+            MeterLabel = new string[] { "1", "2", "3"};
 
             LightAmplitude = 255;
             LightFrequency = 1.0;

@@ -98,6 +98,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AzimuthMeter.xaml.cs">
+      <DependentUpon>AzimuthMeter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BoeingMeter.xaml.cs">
       <DependentUpon>BoeingMeter.xaml</DependentUpon>
     </Compile>
@@ -123,6 +126,10 @@
     <Compile Include="SensorBoard.cs" />
     <Compile Include="SocketClient.cs" />
     <Compile Include="TitleBar.xaml.cs" />
+    <Page Include="AzimuthMeter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="BoeingMeter.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
