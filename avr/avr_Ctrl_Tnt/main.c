@@ -1,5 +1,5 @@
 /**
-	Maker Faire 2019 - Grapple with a reaction wheel(Tnt)
+    Maker Faire 2018 - Grapple with a reaction wheel
  **/
 
 #include <avr/io.h>
@@ -80,9 +80,13 @@ void CheckJoystickMovement(void);
 #include "Motor.h"
 
 
-
 //global
-int ir_data;	//赤外線データ→シリアル通信（デバッグ用）
+uint16_t joy1a_fix = 0;
+uint16_t joy1b_fix = 0;
+uint16_t joy2a_fix = 0;
+uint16_t joy2b_fix = 0;
+
+
 
 // ------------------------------------------------------------
 
@@ -120,6 +124,7 @@ uint16_t GetAD(int ch){
 	return val;
 }
 
+/*
 #if 0
 			uint16_t joy1a  = GetAD( 9);
 			uint16_t joy1b  = GetAD(10);
@@ -139,83 +144,54 @@ uint16_t GetAD(int ch){
 		else
 			PORTC &= ~_BV(7);
 #endif
+*/
 
 void IrReceiveProc()
 {
 	int data = IrReceive();
-	ir_data = data;
-	static int ir_cmd_mode=0;
-	int RW_pow_level = 2;
-	
+
 	switch(data){
 	case IR_CODE_INVALID:
 		break;
 	case IR_CODE_RELAY_ON:
-		MotorPwm_RW(data);
-		//RELAY_ON;
-		//LEDG_ON;
+		RELAY_ON;
+		LEDG_ON;
 		break;
 	case IR_CODE_RELAY_OFF:
-		MotorPwm_RW(0);
-		//RELAY_OFF;
-		//LEDG_OFF;
+		RELAY_OFF;
+		LEDG_OFF;
 		break;
 	case IR_CODE_MOTOR_OFF:
 		MotorPwm(0);
-		MotorPwm_RW(0);
 		break;
 	default:
-		//if(-256 < data && data < 256) MotorPwm(data);
-		
-		if(-90 < data && data< 90){		//制御モード
-			//Grapple close mode コントローラのレバーボタン左ON→data>0の時
-			ir_cmd_mode = data;
-
-		}else if(100< data && data < 440){		//RW出力
-			if(data>290){
-				MotorPwm_RW((data-270)* RW_pow_level);
-				MOTOR_INV_1_RW;
-			}else if(data<250){
-				MotorPwm_RW((270-data)* RW_pow_level);
-				MOTOR_INV_0_RW;
-			}else{
-				MotorPwm_RW(0);
-			}
-		}else if(-400<data && data < -90){		//グラップル出力
-			if(data==-200){			//左SW、グラップル閉じる
-				if(LIMIT_SW_IN){
-					MotorPwm(0);
-					MOTOR_INV_0;
-				}else{
-					MotorPwm(300);
-					MOTOR_INV_0;
-				}
-			}else if(data==-300){
-				if(LIMIT_SW_OUT){
-					MotorPwm(0);
-					MOTOR_INV_1;
-				}else{
-					MotorPwm(300);
-					MOTOR_INV_1;
-				}
-			}else{
-				MotorPwm(0);
-			}
-		}
-
+		if(-256 < data && data < 256) MotorPwm(data);
 		break;
 	}
 	//fprintf(&USBSerialStream, "received : %d\r\n", sdata);
 }
 
-void IrTransmissionProc()
+void IrTransmissionProc(int cmd)
 {
 	{
 		static int prev_data = 0;
+		static int prev_relay = 0;
 		int data = 0;
-		int rdata = 3 * RotEncoderGetVal();	// 3 is due to usability
-		if(rdata <= -256) rdata = -255;
-		if(rdata > 256) rdata = 255;
+		int rdata = 0;
+		static int ir_cmd_mode=0;
+		int enc_data=0;
+		
+		uint16_t joy2a  = GetAD(7);		//右レバー左右（RWレバーmode用）
+		uint8_t  sw_LR	= !(PINB & _BV(5));
+		uint8_t  sw_RL	= !(PINB & _BV(7));
+		uint8_t  sw_joy1= !(PINB & _BV(3));		//左レバーのスイッチ
+		uint8_t  sw_joy2= !(PINB & _BV(6));		//右レバーのスイッチ
+		
+		
+		enc_data = 3 * RotEncoderGetVal();	// 3 is due to usability
+		if(enc_data <= -120) enc_data = -120;
+		if(enc_data > 120) enc_data = 120;
+
 		if(SW_MOTOR_ON == 0){
 			data = rdata;
 			LEDR_ON;
@@ -228,14 +204,66 @@ void IrTransmissionProc()
 		}else{
 			LEDB_OFF;
 		}
-		if(prev_data != data){
-			IrSend(data);
-			prev_data = data;
+
+		//IrSend(data);
+		if(cmd==0){		//制御mode設定
+			if(sw_LR == 0){			//RWレバーモード
+				if(sw_RL == 0){		//グラップル低速
+					ir_cmd_mode = 10;
+					IrSend(ir_cmd_mode);
+				}else{				//グラップル高速
+					ir_cmd_mode = 30;
+					IrSend(ir_cmd_mode);	
+				}
+			}else if(sw_LR == 1){	//RWジャイロモード
+				if(sw_RL == 0){		//グラップル低速
+					ir_cmd_mode = 20;
+					IrSend(ir_cmd_mode);
+				}else{				//グラップル高速
+					ir_cmd_mode = 40;
+					IrSend(ir_cmd_mode);
+				}
+			}
+		}else if(cmd==1){			//RW出力
+			if(ir_cmd_mode == 20 || ir_cmd_mode == 40){		//ジャイロモード
+				IrSend(enc_data);
+			}else{			//レバーモード
+				IrSend(-joy2a_fix/3 + 100);
+			}
+			
+			
+			//IrSend(-20);
+		}else if(cmd==2){			//グラップル出力
+			if(sw_RL ==0){		//グラップル低速
+				if(sw_joy1==1){		//
+					IrSend(-200);
+				}else if(sw_joy2==1){
+					IrSend(-300);
+				}else{
+					IrSend(-100);
+				}
+			}else{				//グラップル高速
+				if(sw_joy1==1){		//
+					IrSend(-200);
+				}else if(sw_joy2==1){
+					IrSend(-300);
+				}else{
+					IrSend(-100);
+				}
+			}
+			
+			//IrSend(20);
+		}else{
+			IrSend(1);
 		}
+			
+		prev_data = data;
+		prev_relay = SW_RELAY;
+
 	}
 #if TEST_BOARD
 	{
-		static int prev_relay = 0;
+		//static int prev_relay = 0;
 		int relay = (SW_RELAY == 0) ? 0 : 1;
 		if(prev_relay != relay){
 			IrSend((relay == 0) ? IR_CODE_RELAY_OFF : IR_CODE_RELAY_ON);
@@ -244,32 +272,29 @@ void IrTransmissionProc()
 		}
 	}
 #endif
+
 }
 
 void DebugLed(int cnt)
 {
 #if IR_RECEIVER
-	/*
 	RELAY_OFF;
 	if(cnt % 4 == 0) RELAY_ON;
 	LEDR_OFF;
 	LEDG_OFF;
 	if(cnt % 2 == 0) LEDR_ON;
 	if(cnt % 2 == 1) LEDG_ON;
-	*/
 #else
-	/*
 	LEDM_OFF;
 	LEDR_OFF;
 	LEDG_OFF;
-	//LEDB_OFF;
+	LEDB_OFF;
 	LEDW_OFF;
 	if(cnt % 2 == 0) LEDM_ON;
 	if(cnt % 4 == 0) LEDR_ON;
 	if(cnt % 4 == 1) LEDG_ON;
-	//if(cnt % 4 == 2) LEDB_ON;
+	if(cnt % 4 == 2) LEDB_ON;
 	if(cnt % 4 == 3) LEDW_ON;
-	*/
 #endif
 }
 
@@ -282,8 +307,13 @@ int main(void)
 	GlobalInterruptEnable();
 
 	int  cnt;
+	static int prev_relay = 0;
+	static int prev_data  = 0;
+	int data = 0;
+	static int prev_motor_on = 0;
+	static int prev_motor_on_inv = 0;
+
 	char str[256];
-	
 	for(cnt = 0; ; cnt++){
 		char c = CDC_Device_ReceiveByte(&VirtualSerial_CDC_Interface);
 		if(isalpha(c)){
@@ -291,35 +321,105 @@ int main(void)
 			fputc('\n', &USBSerialStream);
 		}
 
-		if(LIMIT_SW_IN){
-			LEDB_ON;
-		}else{
-			LEDB_OFF;
-		}
-		
-		//デバッグ用シリアル出力（デバッグ終了後、コメントアウトすること）
-		//sprintf(str, "%d \r\n", cnt);
-		
-		if(ir_data<1000){
-			sprintf(str, "%d \r\n", ir_data);
+		if(cnt % 100 == 0){			//20
+			uint16_t joy1a  = GetAD(4);
+			uint16_t joy1b  = GetAD(5);
+			uint16_t joy2a  = GetAD(7);
+			uint16_t joy2b  = GetAD(6);
+			uint8_t  sw_LL	= !(PINB & _BV(4));
+			uint8_t  sw_LR	= !(PINB & _BV(5));
+			uint8_t  sw_joy1= !(PINB & _BV(3));
+			uint8_t  sw_RL	= !(PINB & _BV(7));
+			uint8_t  sw_RR	= !(PINE & _BV(6));
+			uint8_t  sw_joy2= !(PINB & _BV(6));
+			uint8_t  sw_EMG	= !!(PIND & _BV(0));
+			uint8_t  sw_HOME= !(PIND & _BV(1));
+			uint8_t  GRAP_rot;
+			uint8_t  sw_C1	= !(PIND & _BV(4));
+			uint8_t  sw_C2	= !(PIND & _BV(5));
+			uint8_t  sw_C3	= !(PIND & _BV(6));
+
+			
+			int rdata = 3 * RotEncoderGetVal();	// 3 is due to usability
+			if(rdata <= -120) rdata = -120;
+			if(rdata > 120) rdata = 120;
+
+			//不感帯の設定
+			if((410-5)<joy2b && joy2b<(620-5)){		//右レバー上下
+				joy2b_fix = 515;
+			}else{
+				joy2b_fix = joy2b+5;
+			}
+
+			//if((410+10)<joy2a && joy2a<(620+10)){		 //右レバー左右
+			
+			
+			if((100)<joy2a && joy2a<(900)){		 //右レバー左右
+				joy2a_fix = 515;
+			}else{
+				if(joy2a<10){
+					joy2a_fix=0;
+				}else{		//右レバー上下が中央の場合だけ、右レバー左右を動作
+					joy2a_fix = joy2a-10;
+				}
+			}
+
+			if(410<joy1a && joy1a<620){	
+				joy1a_fix = 515;
+			}else{
+				joy1a_fix = joy1a;
+			}
+
+			if(410<joy1b && joy1b<620){
+				joy1b_fix = 515;
+			}else{
+				joy1b_fix = joy1b;
+			}
+
+			
+			GRAP_rot = data;
+			sprintf(str, "%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\r\n",
+		     joy1a_fix, joy1b_fix, joy2a_fix, joy2b_fix,
+		     sw_HOME, sw_LL, sw_LR, sw_C2,
+		     sw_RL, sw_C3, sw_RR, sw_EMG,
+		     sw_joy1, sw_C1, sw_joy2, GRAP_rot);
+
 			fputs(str, &USBSerialStream);
+			
+			
+			
+			//赤外線出力
+			/*if(cnt % 6000 == 0){
+				IrTransmissionProc();
+				cnt = 0;
+			}*/
+			if(cnt == 2000){
+				IrTransmissionProc(0);
+			}else if(cnt == 4000){
+				IrTransmissionProc(1);
+			}else if(cnt == 6000){
+				IrTransmissionProc(2);
+				cnt = 0;
+			}
+			
+		//cnt = 0;
 		}
 			
 #if IR_RECEIVER
 		IrReceiveProc();
 #else
-		IrTransmissionProc();
+		//IrTransmissionProc();
 #endif
+
 		CDC_Device_USBTask(&VirtualSerial_CDC_Interface);
 		USB_USBTask();
 		
 #if IR_RECEIVER
 		_delay_ms(100);
 #else
-		_delay_us(1500);
+		//_delay_us(1500);	
 #endif
 	}
-	
 }
 
 void SetupHardware(void)
@@ -345,16 +445,68 @@ void SetupHardware(void)
 
 	// ------------------------------------------------------------
 
-	sbi(DDRC, 7);	// BOARD LED
+
 
 #if IR_RECEIVER
-	sbi(DDRB, 0);	// Motor(RW) DIR
-	sbi(DDRB, 1);	// Motor(Grapple) DIR
+	sbi(DDRB, 1);	// RELAY
 	sbi(DDRF, 4);	// LED0
 	sbi(DDRF, 5);	// LED1
 	sbi(DDRF, 6);	// LED2
-	cbi(DDRB, 2);	// Input: Limit Switch1(Grapple in)
-	cbi(DDRB, 3);	// Input: Limit Swtich2(GRapple out)
+#else
+#if TEST_BOARD
+	sbi(DDRF, 4);	// LED0
+	sbi(DDRF, 5);	// LED1
+	sbi(DDRF, 6);	// LED2
+	sbi(DDRF, 7);	// LED3
+	cbi(DDRB, 4);	// SW RELAY
+	cbi(DDRB, 5);	// SW MOTOR ON
+	cbi(DDRB, 6);	// SW MOTOR ON INV
+	sbi(PORTB, 5);	// pull-up enable
+	sbi(PORTB, 6);	// pull-up enable
+#endif
+	cbi(DDRB,4);	//sw_LL
+	cbi(DDRB,5);	//sw_LR
+	cbi(DDRB,3);	//sw_joy1
+	cbi(DDRB,7);	//sw_RL
+	cbi(DDRE,6);	//sw_RR
+	cbi(DDRB,6);	//sw_joy2
+	cbi(DDRD,0);	//EMG
+	cbi(DDRD,1);	//HOME
+	cbi(DDRD,2);	//ENC-A
+	cbi(DDRD,3);	//ENC-B
+	cbi(DDRD,4);	//sw_c1
+	cbi(DDRD,5);	//sw_c2
+	cbi(DDRD,6);	//sw_c3
+
+	sbi(DDRC, 7);	// BOARD LED
+	sbi(DDRC, 6);	//IR-LED
+	sbi(DDRB, 0);	//7seg
+	sbi(DDRB, 1);	//7seg
+	sbi(DDRB, 2);	//7seg
+
+
+	// ADC
+	ADMUX = 0x44;			; //0100 0100
+	ADCSRA |= _BV(ADPS0);  // prescaler 128 -> ADC clock 125kHz
+	ADCSRA |= _BV(ADPS1);
+	ADCSRA |= _BV(ADPS2);
+	ADCSRA |= _BV(ADEN); // A/D enable
+	
+	sbi(PORTB,4);	//pull-up enable (sw_LL)
+	sbi(PORTB,5);	//pull-up enable (sw_LR)
+	sbi(PORTB,3);	//pull-up enable (sw_joy1)
+	sbi(PORTB,7);	//pull-up enable (sw_RL)
+	sbi(PORTE,6);	//pull-up enable (sw_RR)
+
+	sbi(PORTB,6);	//pull-up enable (sw_joy2)
+	sbi(PORTD,0);	//pull-up enable (EMG)
+	sbi(PORTD,1);	//pull-up enable (HOME)
+	sbi(PORTD,4);	//pull-up enable (sw_c1)
+
+	sbi(PORTD,5);	//pull-up enable (sw_c2)
+	sbi(PORTD,6);	//pull-up enable (sw_c3)
+	
+
 	
 #endif
 
