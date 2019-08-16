@@ -61,17 +61,25 @@ namespace CraneMonitor
             PotentioUpper = 1024;
         }
 
+        private static string GetSettingPath()
+        {
+            string[] PathCandidates = new string[] { "settings.xml", "..\\settings.xml", "" };
+            //ユーザ毎のアプリケーションデータディレクトリに保存する
+            PathCandidates[2] = String.Format(
+                "{0}\\{1}",
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "CraneMonitor\\settings.xml");
+
+            for (int i = 0; i < 2/* 3 */; i++) if (File.Exists(PathCandidates[i])) return PathCandidates[i];
+            return PathCandidates[0];   // default is current path
+        }
+
         //設定をファイルから読み込む
         public static Param Load()
         {
-            Param param = new Param();
+            Param param = null;
 
-            //ユーザ毎のアプリケーションデータディレクトリに保存する
-            //String path = String.Format(
-            //    "{0}\\{1}",
-            //    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            //    "CraneMonitor\\settings.xml");
-            String path = "..\\settings.xml"; 
+            String path = GetSettingPath();
 
             if (File.Exists(path))
             {
@@ -82,14 +90,10 @@ namespace CraneMonitor
                     param = serializer.Deserialize(stream) as Param;
                 }
             }
-            //else
-            //{
-            //    String folderPath = String.Format(
-            //        "{0}\\{1}",
-            //        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            //        "CraneMonitor");
-            //    System.IO.Directory.CreateDirectory(folderPath);
-            //}
+            else
+            {
+                param = new Param();
+            }
 
             return param;
         }
@@ -97,11 +101,7 @@ namespace CraneMonitor
         //設定をファイルに保存する
         public static void Save(Param param)
         {
-            //String path = String.Format(
-            //    "{0}\\{1}",
-            //    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            //    "CraneMonitor\\settings.xml");
-            String path = "..\\settings.xml";
+            String path = GetSettingPath();
             XmlSerializer serializer = new XmlSerializer(typeof(Param));
 
             using (FileStream stream = new FileStream(path, FileMode.Create))
