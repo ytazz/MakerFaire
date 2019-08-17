@@ -16,6 +16,7 @@ namespace CraneMonitor
         public bool[] PushButtonState;   //< button state {0, 1}
         public bool[] SyncButtonState;   //< button state {0, 1}
         public bool[] PrevPushButtonState;   //< button state {0, 1}
+        public int encval;    // value of Rotary Encoder
         //public bool           initialized = true;
         //public bool[]         swRequests = new bool[] { false, false, false, false };
         //public bool[]         ledSwRequests = new bool[] { false, false, false, false };
@@ -31,9 +32,10 @@ namespace CraneMonitor
         //public double outY = 0;
         //public double outZ = 0;
 
-        public int NumValues = 4;
-        public int NumPushButtons = 1;
-        public int NumSyncButtons = 10;
+        public const int NumValues = 4;
+        public const int NumPushButtons = 1;
+        public const int NumSyncButtons = 10;
+        public const int NumEncValues = 1;
 
         public Controller(){
             comPort = "COM1";
@@ -41,6 +43,7 @@ namespace CraneMonitor
             PushButtonState = new bool[NumPushButtons];
             PrevPushButtonState = new bool[NumPushButtons];
             SyncButtonState = new bool[NumSyncButtons];
+            encval = 0;
             com = new SerialClient();
         }
 
@@ -107,6 +110,7 @@ namespace CraneMonitor
                 for (int j = 0; j < NumValues; j++, i++) axis[j] = (double)(int.Parse(tok[i]) - 512) / 512;
                 for (int j = 0; j < NumPushButtons; j++, i++) PushButtonState[j] = (int.Parse(tok[i]) != 0);
                 for (int j = 0; j < NumSyncButtons; j++, i++) SyncButtonState[j] = (int.Parse(tok[i]) != 0);
+                for (int j = 0; j < NumEncValues; j++, i++) encval = int.Parse(tok[i]);
 #else
                 for (int j = 0; j < NumValues; j++, i++) axis[j] = (double)(int.Parse(tok[i]) - 512) / 512;
                 for (int j = 0; j < NumSyncButtons; j++, i++)

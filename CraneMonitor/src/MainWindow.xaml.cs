@@ -193,7 +193,7 @@ namespace CraneMonitor
                     case SOURCE_LIGHT:
                         return light.output;
                     default:
-                        return (select_id >= 0) ? axis[select_id] : 0;
+                        return (select_id >= 0 && select_id < axis.Length) ? axis[select_id] : 0;
                 }
             }
 
@@ -244,6 +244,13 @@ namespace CraneMonitor
             // Update Meter
             meters.Update(false);
 
+            // Grapple Azimuth
+            if (prev_azimuth != controller.encval)
+            {
+                Azimuth.MeterValue = controller.encval;
+                prev_azimuth = controller.encval;
+            }
+
             // カメラ動画 ------------------------------
             if (camera[0].Update()) image1.Source = camera[0].image;
             if (camera[1].Update()) image2.Source = camera[1].image;
@@ -261,14 +268,6 @@ namespace CraneMonitor
             }
 
             freqdiv_count--;
-
-#if true
-            if (prev_azimuth != 0)
-            {
-                Azimuth.MeterValue = 0;
-                prev_azimuth = Azimuth.MeterValue;
-            }
-#endif
         }
         
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
