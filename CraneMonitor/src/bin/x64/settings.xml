@@ -46,7 +46,7 @@
     <string>2</string>
     <string>3</string>
   </MeterLabel>
-  <LightAmplitude>255</LightAmplitude>
+  <LightAmplitude>1</LightAmplitude>
   <LightFrequency>0.3</LightFrequency>
   <PotentioLower>0</PotentioLower>
   <PotentioUpper>1024</PotentioUpper>

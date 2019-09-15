@@ -23,7 +23,7 @@ namespace CraneMonitor
 
         public Joystick()
         {
-            axis = new double[3];
+            axis = new double[4];
             button = new bool[6];
         }
 
@@ -96,9 +96,13 @@ namespace CraneMonitor
                     case JoystickOffset.Y:
                         axis[1] = Math.Min(Math.Max(-1.0, ((double)(state.Value - 32768) / (double)32768)), 1.0);
                         break;
+                    // left stick rotation : [0, 65535] = [up max, down max]
+                    case JoystickOffset.RotationZ:
+                        axis[2] = Math.Min(Math.Max(-1.0, ((double)(state.Value - 32768) / (double)32768)), 1.0);
+                        break;
                     // left throttle: [32768, 65535] = [neutral, full]
-                    case JoystickOffset.Z:
-                        axis[2] = Math.Min(Math.Max(0.0, ((double)(state.Value - 32768) / (double)32768)), 1.0);
+                    case JoystickOffset.Sliders0:
+                        axis[3] = -Math.Min(Math.Max(-1.0, ((double)(state.Value - 32768) / (double)32768)), 1.0);
                         break;
                     // A button: [zero, nonzero] = [release, push]
                     case JoystickOffset.Buttons0:
